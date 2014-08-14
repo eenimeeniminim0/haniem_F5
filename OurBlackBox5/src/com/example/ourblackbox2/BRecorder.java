@@ -89,8 +89,9 @@ public class BRecorder extends MediaRecorder
 	
 	public void resetRecorder(){
 	
-		//registerVideo();
+		stop();
 		reset();
+		//registerVideo();
 		isRecording=false;
 		videoCurrentTime=0;
 	}
