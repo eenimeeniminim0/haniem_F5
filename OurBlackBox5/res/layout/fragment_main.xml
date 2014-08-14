@@ -1,0 +1,35 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.ourblackbox2.MainActivity$PlaceholderFragment" >
+
+    <Button 
+        android:id="@id/Recording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="레코드액티비티"
+        />
+    
+    <Button 
+        android:id="@id/Preference"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="설정액티비티"
+        />
+    
+   <Button 
+       android:id="@id/PhotoGallery"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="사진갤러리"
+       />
+   <Button 
+       android:id="@id/VideoGallery"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:text="동영상갤러리"
+       />
+
+</LinearLayout>

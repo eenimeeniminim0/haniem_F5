@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+     <!-- 메인액티비티 전용아이디들 -->
+    
+    <item type="id" name="Recording"/>
+    <item type="id" name="Preference"/>
+    <item type="id" name="PhotoGallery"/>
+    <item type="id" name="VideoGallery"/>
+    
+    <!-- 레코딩액티비티전용아이디들 -->
+    
+    <item type="id" name="CameraPreview"/>
+    <item type="id" name="VideoCapture"/>
+    <item type="id" name="Snapshot"/>
+    <item type="id" name="Tools"/>
+   
+    
+    
+</resources>
