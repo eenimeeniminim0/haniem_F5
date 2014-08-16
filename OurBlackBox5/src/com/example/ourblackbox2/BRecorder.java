@@ -37,9 +37,9 @@ public class BRecorder extends MediaRecorder
 	
 	// 동영상촬영관련  메소드들.
 
-	public void startRecorder(BSurfaceView bSurface)
+	public void startRecorder()
 	{	
-		bSurface.getBSurfaceView().setVisibility(View.VISIBLE);		
+		BSurfaceView.bSurface.getBSurfaceView().setVisibility(View.VISIBLE);		
 		Path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+biostream.createName(System.currentTimeMillis());
 		
 		if(bRecorder==null){
@@ -48,9 +48,9 @@ public class BRecorder extends MediaRecorder
 			reset();
 		}
 		
-		bSurface.getCamera().stopPreview();
-		bSurface.getCamera().unlock();
-		setCamera(bSurface.getCamera());
+		BSurfaceView.bSurface.getCamera().stopPreview();
+		BSurfaceView.bSurface.getCamera().unlock();
+		setCamera(BSurfaceView.bSurface.getCamera());
 		
 		setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 		setAudioSource(MediaRecorder.AudioSource.DEFAULT);
@@ -65,7 +65,7 @@ public class BRecorder extends MediaRecorder
 		setMaxFileSize(5000000);//최대파일크기 5메가
 		
 		setOutputFile(Path);
-		setPreviewDisplay(bSurface.getSurfaceHolder().getSurface());
+		setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
 		
 		
 		try{	
@@ -96,7 +96,7 @@ public class BRecorder extends MediaRecorder
 		videoCurrentTime=0;
 	}
 
-	public void stopRecorder(BSurfaceView bSurface)
+	public void stopRecorder()
 	{	
 		stop();
 		reset();
@@ -104,15 +104,15 @@ public class BRecorder extends MediaRecorder
 		videoCurrentTime=0;
 		bRecorder=null;
 		isRecording=false;
-		bSurface.getCamera().lock();//카메라객체 잠금
+		BSurfaceView.bSurface.getCamera().lock();//카메라객체 잠금
 
 		try {
-			bSurface.getCamera().setPreviewDisplay(bSurface.getSurfaceHolder());//카메라객체를 preview display에 할당함.
+			BSurfaceView.bSurface.getCamera().setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder());//카메라객체를 preview display에 할당함.
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		bSurface.getCamera().startPreview();//카메라객체에서 받아들이는 화면에 서비스뷰에 프리뷰가 보이는것 시작.
+		BSurfaceView.bSurface.getCamera().startPreview();//카메라객체에서 받아들이는 화면에 서비스뷰에 프리뷰가 보이는것 시작.
 	}
 	
 	public void destroyRecorder()

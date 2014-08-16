@@ -15,6 +15,7 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 {
 	SurfaceHolder bHolder;
 	Camera bCamera;
+	public static BSurfaceView bSurface;
 		
 	public BSurfaceView(Context context, AttributeSet attrs)
 	{

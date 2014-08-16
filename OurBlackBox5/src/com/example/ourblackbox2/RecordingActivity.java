@@ -18,12 +18,14 @@ import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
-	BSurfaceView bSurface;
-	BRecorder bRecorder;
-	ToggleButton VideoCapture, SnapShot;
-	Button Tools;
-	Thread videotimerUpdate;
-	Handler videotimerUpdateHandler;
+	
+	//public BSurfaceView bSurface;
+	private BRecorder bRecorder;
+	private ToggleButton VideoCapture, SnapShot;
+	private Button Tools;
+	private Thread videotimerUpdate;
+	private Handler videotimerUpdateHandler;
+	
 	private long lastTime; // 센서변화를 감지한 가장 최근시간 
     private float speed; // 속력
     private float lastX; // 기존 x갑
@@ -37,6 +39,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     private static final int DATA_Z = SensorManager.DATA_Z;
     private SensorManager sensorManager;//센서를 불러오기위한 매니져
     private Sensor accelerormeterSensor;//가속도계 센서를 받는 객체
+    //public static BSurfaceView bSurface;
 
 	
 	@Override
@@ -56,7 +59,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 		bRecorder=new BRecorder();
 		
-		bSurface=(BSurfaceView)findViewById(R.id.CameraPreview);		
+		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
         SnapShot=(ToggleButton)findViewById(R.id.Snapshot);
         Tools=(Button)findViewById(R.id.Tools);
@@ -75,14 +78,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     public void onStart() {
         super.onStart();
         if (accelerormeterSensor != null)
-            sensorManager.registerListener(this, accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
+        	sensorManager.registerListener(this, accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     }
  
     @Override
     public void onStop() {
         super.onStop();
         if (sensorManager != null)
-            sensorManager.unregisterListener(this);
+        	sensorManager.unregisterListener(this);
     }
 	
 
@@ -101,7 +104,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     						Log.v("스레드님","몇번돌아갔나요="+i);
 
     						if(bRecorder.videoCurrentTime==0){
-    							bRecorder.startRecorder(bSurface);
+    							bRecorder.startRecorder();
     						}
     						bRecorder.videoCurrentTime++;
     						Log.v("videoCurrentTime","time="+bRecorder.videoCurrentTime);
@@ -123,7 +126,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		{
     			if(bRecorder.isRecording==true){
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
-    				bRecorder.stopRecorder(bSurface);
+    				bRecorder.stopRecorder();
         			if(bRecorder.isVideotimerRunning==true)//만약 비디오스레드가 돌아가고있으면
         			{
         				videotimerUpdateHandler.removeCallbacks(videotimerUpdate);
@@ -151,7 +154,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	super.onDestroy();
     	bRecorder.destroyRecorder();
     }
-    
+
     public void onSensorChanged(SensorEvent event) {//센서가 감지되면 불린다.
 		// TODO Auto-generated method stub
 		
@@ -168,7 +171,8 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	 
 	                if (speed > SHAKE_THRESHOLD) {//속도가 지정한 임계치보다 높으면
 	                    // 이벤트발생!!
-	                	Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
+	                	Log.v("모래반지 빵야빵야","허허허허="+20000000);
+	                	//Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
 	                }
 	 
 	                lastX = event.values[DATA_X];
@@ -185,6 +189,8 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		// TODO Auto-generated method stub
 		
 	}
+    
+
 
 }
 
