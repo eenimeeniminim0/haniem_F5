@@ -37,8 +37,8 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     private static final int DATA_X = SensorManager.DATA_X; 
     private static final int DATA_Y = SensorManager.DATA_Y;
     private static final int DATA_Z = SensorManager.DATA_Z;
-    private SensorManager sensorManager;//센서를 불러오기위한 매니져
-    private Sensor accelerormeterSensor;//가속도계 센서를 받는 객체
+    private static SensorManager sensorManager;//센서를 불러오기위한 매니져
+    private static Sensor accelerormeterSensor;//가속도계 센서를 받는 객체
     //public static BSurfaceView bSurface;
 
 	
@@ -69,23 +69,23 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         Tools.setOnClickListener(this);
         
       //센서관련
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        RecordingActivity.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        RecordingActivity.accelerormeterSensor = RecordingActivity.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		
 	}
 	
 	@Override
     public void onStart() {
         super.onStart();
-        if (accelerormeterSensor != null)
-        	sensorManager.registerListener(this, accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
+        if (RecordingActivity.accelerormeterSensor != null)
+        	RecordingActivity.sensorManager.registerListener(this, RecordingActivity.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     }
  
     @Override
     public void onStop() {
         super.onStop();
-        if (sensorManager != null)
-        	sensorManager.unregisterListener(this);
+        if (RecordingActivity.sensorManager != null)
+        	RecordingActivity.sensorManager.unregisterListener(this);
     }
 	
 
@@ -155,6 +155,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	bRecorder.destroyRecorder();
     }
 
+    @Override
     public void onSensorChanged(SensorEvent event) {//센서가 감지되면 불린다.
 		// TODO Auto-generated method stub
 		
@@ -183,6 +184,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		 }
 		
 	}
+
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
