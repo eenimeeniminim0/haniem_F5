@@ -1,6 +1,10 @@
 package com.example.ourblackbox2;
 
 import android.content.pm.ActivityInfo;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -13,13 +17,27 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class RecordingActivity extends ActionBarActivity implements OnClickListener  {
+public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
 	BSurfaceView bSurface;
 	BRecorder bRecorder;
 	ToggleButton VideoCapture, SnapShot;
 	Button Tools;
 	Thread videotimerUpdate;
 	Handler videotimerUpdateHandler;
+	private long lastTime; // 센서변화를 감지한 가장 최근시간 
+    private float speed; // 속력
+    private float lastX; // 기존 x갑
+    private float lastY; // ,,
+    private float lastZ; //,,
+    private float x, y, z;// 지금받은 x값
+ 
+    private static final int SHAKE_THRESHOLD = 1000;//충격의 임계치, 임계치 넘어가면 작동
+    private static final int DATA_X = SensorManager.DATA_X; 
+    private static final int DATA_Y = SensorManager.DATA_Y;
+    private static final int DATA_Z = SensorManager.DATA_Z;
+    private SensorManager sensorManager;//센서를 불러오기위한 매니져
+    private Sensor accelerormeterSensor;//가속도계 센서를 받는 객체
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -46,10 +64,26 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         VideoCapture.setOnClickListener(this);
         SnapShot.setOnClickListener(this);
         Tools.setOnClickListener(this);
-
-	
+        
+      //센서관련
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        accelerormeterSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		
 	}
+	
+	@Override
+    public void onStart() {
+        super.onStart();
+        if (accelerormeterSensor != null)
+            sensorManager.registerListener(this, accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
+    }
+ 
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (sensorManager != null)
+            sensorManager.unregisterListener(this);
+    }
 	
 
     @Override
@@ -68,7 +102,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 
     						if(bRecorder.videoCurrentTime==0){
     							bRecorder.startRecorder(bSurface);
-    	    					//bRecorder.startRecorder();
     						}
     						bRecorder.videoCurrentTime++;
     						Log.v("videoCurrentTime","time="+bRecorder.videoCurrentTime);
@@ -118,5 +151,40 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	super.onDestroy();
     	bRecorder.destroyRecorder();
     }
+    
+    public void onSensorChanged(SensorEvent event) {//센서가 감지되면 불린다.
+		// TODO Auto-generated method stub
+		
+		 if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {//가속도계 타입의 센서가 감지되면
+	            long currentTime = System.currentTimeMillis();
+	            long gabOfTime = (currentTime - lastTime);
+	            if (gabOfTime > 100) {
+	                lastTime = currentTime;
+	                x = event.values[SensorManager.DATA_X];
+	                y = event.values[SensorManager.DATA_Y];
+	                z = event.values[SensorManager.DATA_Z];
+	 
+	                speed = Math.abs(x + y + z - lastX - lastY - lastZ) / gabOfTime * 10000;
+	 
+	                if (speed > SHAKE_THRESHOLD) {//속도가 지정한 임계치보다 높으면
+	                    // 이벤트발생!!
+	                	Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
+	                }
+	 
+	                lastX = event.values[DATA_X];
+	                lastY = event.values[DATA_Y];
+	                lastZ = event.values[DATA_Z];
+	            }
+	            
+		 }
+		
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
