@@ -106,9 +106,9 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     						if(bRecorder.videoCurrentTime==0){
     							bRecorder.startRecorder();
     						}
-    						bRecorder.videoCurrentTime++;
     						Log.v("videoCurrentTime","time="+bRecorder.videoCurrentTime);
-    						videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
+    						videotimerUpdateHandler.postDelayed(videotimerUpdate, 15000);
+    						bRecorder.videoCurrentTime+=15;
     					}else if(bRecorder.videoCurrentTime == BRecorder.SECONDS_BETWEEN_VIDEO){
     						
     						bRecorder.resetRecorder();
@@ -127,12 +127,11 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     			if(bRecorder.isRecording==true){
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
     				bRecorder.stopRecorder();
-        			if(bRecorder.isVideotimerRunning==true)//만약 비디오스레드가 돌아가고있으면
-        			{
-        				videotimerUpdateHandler.removeCallbacks(videotimerUpdate);
-        				bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
-        			}
-
+    				
+    				if(videotimerUpdate != null && videotimerUpdate.isAlive()){
+    					videotimerUpdate.interrupt();
+    					videotimerUpdateHandler.removeCallbacks(videotimerUpdate);
+    				}
     				
     			}
     		}

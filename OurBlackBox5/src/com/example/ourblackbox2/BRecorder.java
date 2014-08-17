@@ -6,14 +6,15 @@ import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
-public class BRecorder extends MediaRecorder
+public class BRecorder
 {
 	
 	BIOstream biostream;
-	BRecorder bRecorder;
+	MediaRecorder bRecorder;
 	String filePath;	
 	File videoFile;
 	boolean isRecording;//현재녹화중인지나타내는것
@@ -33,6 +34,7 @@ public class BRecorder extends MediaRecorder
 		Path="";
 		videoCurrentTime=0;
 		biostream = new BIOstream();
+		bRecorder= new MediaRecorder();
 	}
 	
 	// 동영상촬영관련  메소드들.
@@ -43,34 +45,34 @@ public class BRecorder extends MediaRecorder
 		Path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+biostream.createName(System.currentTimeMillis());
 		
 		if(bRecorder==null){
-			bRecorder= new BRecorder();
+			bRecorder= new MediaRecorder();
 		}else{
-			reset();
+			bRecorder.reset();
 		}
 		
 		BSurfaceView.bSurface.getCamera().stopPreview();
 		BSurfaceView.bSurface.getCamera().unlock();
-		setCamera(BSurfaceView.bSurface.getCamera());
+		bRecorder.setCamera(BSurfaceView.bSurface.getCamera());
 		
-		setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-		setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+		bRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+		bRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 		
-		setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
 		
 		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 		//bRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 		
-		setMaxDuration(50000);//최대캡쳐시간 50초
-		setMaxFileSize(5000000);//최대파일크기 5메가
+		bRecorder.setMaxDuration(50000);//최대캡쳐시간 50초
+		bRecorder.setMaxFileSize(5000000);//최대파일크기 5메가
 		
-		setOutputFile(Path);
-		setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
+		bRecorder.setOutputFile(Path);
+		bRecorder.setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
 		
 		
 		try{	
-			prepare();
-			start();
+			bRecorder.prepare();
+			bRecorder.start();
 			Log.v("is playing?","really?="+20000);
 		}catch(IllegalStateException e){
 			e.printStackTrace();
@@ -89,8 +91,8 @@ public class BRecorder extends MediaRecorder
 	
 	public void resetRecorder(){
 	
-		stop();
-		reset();
+		bRecorder.stop();
+		bRecorder.reset();
 		//registerVideo();
 		isRecording=false;
 		videoCurrentTime=0;
@@ -98,13 +100,16 @@ public class BRecorder extends MediaRecorder
 
 	public void stopRecorder()
 	{	
-		stop();
-		reset();
-		//registerVideo
+		bRecorder.stop();
+		bRecorder.reset();
+		//registerVideo()
+		
+		isVideotimerRunning=false;
 		videoCurrentTime=0;
 		bRecorder=null;
 		isRecording=false;
 		BSurfaceView.bSurface.getCamera().lock();//카메라객체 잠금
+	
 
 		try {
 			BSurfaceView.bSurface.getCamera().setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder());//카메라객체를 preview display에 할당함.
@@ -115,21 +120,15 @@ public class BRecorder extends MediaRecorder
 		BSurfaceView.bSurface.getCamera().startPreview();//카메라객체에서 받아들이는 화면에 서비스뷰에 프리뷰가 보이는것 시작.
 	}
 	
+	
 	public void destroyRecorder()
 	{
 		if(bRecorder !=null)
 		{
-			release();
+			bRecorder.release();
 			bRecorder=null;
 		}
 	}
-	
-	/*public boolean getIsRecording()
-	{
-		return this.isRecording;
-	}*/
-	
-
 }
 
 
