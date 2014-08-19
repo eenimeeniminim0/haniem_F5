@@ -2,11 +2,11 @@ package com.example.ourblackbox2;
 
 import java.io.File;
 import java.io.IOException;
+
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Environment;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -45,7 +45,7 @@ public class BRecorder
 	public void startRecorder()
 	{	
 		BSurfaceView.bSurface.getBSurfaceView().setVisibility(View.VISIBLE);		
-		Path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+biostream.createName(System.currentTimeMillis());
+		Path=biostream.createFolder()+"/"+biostream.createName(System.currentTimeMillis());
 		
 		if(bRecorder==null){
 			bRecorder= new MediaRecorder();
@@ -71,6 +71,8 @@ public class BRecorder
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
+		
+		biostream.createVideoPath(System.currentTimeMillis());
 		
 		
 		try{	

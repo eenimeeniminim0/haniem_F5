@@ -24,6 +24,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private Button Tools;
 	private Thread videotimerUpdate;
 	private Handler videotimerUpdateHandler;
+	private BIOstream biostream;
 	
 	private BSensor bSensor;
 
@@ -45,6 +46,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 		bRecorder=new BRecorder();
 		bSensor= new BSensor();
+		biostream = new BIOstream();
 		
 		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
@@ -62,8 +64,9 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	}
 	
 	@Override
-    public void onStart() {
+    public void onStart() {	
         super.onStart();
+        biostream.createFolder();
        // if (BSensor.accelerormeterSensor != null)
        // 	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     }

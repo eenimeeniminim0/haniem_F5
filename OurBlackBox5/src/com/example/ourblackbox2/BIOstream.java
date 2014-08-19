@@ -1,30 +1,52 @@
 package com.example.ourblackbox2;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.content.ContentValues;
+import android.os.Environment;
+import android.provider.MediaStore.Video;
+import android.text.format.DateFormat;
+import android.util.Log;
+
 public class BIOstream  {
 	
+	private String videoFileName = null;	
+	private ContentValues videoValues = null;
+	String dir = null;
 	
-	String createName(long dateTaken){
+	
+	public String createName(long dateTaken){
 		Date date= new Date(dateTaken);
 		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH.mm.ss");
 		return dateFormat.format(date)+".mp4";
 	}
 	
-/*	private void registerVideo(File videoFile){
-
-		ContentValues values = new ContentValues();
-		values.put(Video.Media.TITLE, "OurVideo");
-		values.put(Video.Media.DISPLAY_NAME, videoFile.getName());
-		values.put(Video.Media.DATE_TAKEN, System.currentTimeMillis());
-		values.put(Video.Media.MIME_TYPE, "video/mp4");
-		values.put(Video.Media.DATA, videoFile.getPath());
-		values.put(Video.Media.SIZE, videoFile.length());
-		this.getContentResolver().insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values); // 액티비티에서만 사용가능
-		Toast.makeText(this, "video saved", Toast.LENGTH_SHORT).show();	
+	public String createFolder(){
 		
-	}*/
+		String dir=Environment.getExternalStorageDirectory().getPath() + "/OurBlackBox";
+		File folder = new File(dir);
+		folder.mkdirs();
+		return dir;
+    	
+	}
+	
+	void createVideoPath(long dateTaken) {
+		String dirName = "OurBlackBox";
+		File cameraDir = new File(dirName);
+    	cameraDir.mkdirs();
+		String title = createName(dateTaken);
+		String filename = title;
+		ContentValues values = new ContentValues(8);
+		values.put(Video.Media.TITLE, title);
+		values.put(Video.Media.DISPLAY_NAME, title + ".mp4");
+		values.put(Video.Media.DATE_TAKEN, dateTaken);
+		values.put(Video.Media.MIME_TYPE, "video/mp4");
+		values.put(Video.Media.DATA, filename);
+		videoFileName = filename;
+		videoValues = values;
+	}
 	
 	
 }
