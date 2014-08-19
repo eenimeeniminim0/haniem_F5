@@ -25,6 +25,9 @@ public class BRecorder
 	//
 	boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
 	
+	//private Thread videotimerUpdate;
+	//private Handler videotimerUpdateHandler; 
+	
 	
 	public BRecorder()
 	{
@@ -109,7 +112,7 @@ public class BRecorder
 		bRecorder=null;
 		isRecording=false;
 		BSurfaceView.bSurface.getCamera().lock();//카메라객체 잠금
-	
+		
 
 		try {
 			BSurfaceView.bSurface.getCamera().setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder());//카메라객체를 preview display에 할당함.
@@ -129,7 +132,11 @@ public class BRecorder
 			bRecorder=null;
 		}
 	}
+			
+
 }
+
+
 
 
     
