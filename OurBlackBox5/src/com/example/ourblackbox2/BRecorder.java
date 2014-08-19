@@ -41,7 +41,7 @@ public class BRecorder
 
 	public void startRecorder()
 	{	
-		BSurfaceView.bSurface.getBSurfaceView().setVisibility(View.VISIBLE);		
+		BSurfaceView.bSurface.setVisibility(View.VISIBLE);		
 		Path=biostream.createFolder()+"/"+biostream.createName(System.currentTimeMillis());
 		
 		if(bRecorder==null){

@@ -85,9 +85,5 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	{
 		return this.bHolder;
 	}
-	public BSurfaceView getBSurfaceView()
-	{
-		return this;
-	}
 	
 }
