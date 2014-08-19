@@ -25,6 +25,8 @@ public class BRecorder
 	//
 	boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
 	
+	//RecorderThread bThread;
+	
 	//private Thread videotimerUpdate;
 	//private Handler videotimerUpdateHandler; 
 	
@@ -38,6 +40,7 @@ public class BRecorder
 		videoCurrentTime=0;
 		biostream = new BIOstream();
 		bRecorder= new MediaRecorder();
+		//bThread=new RecorderThread();
 	}
 	
 	// 동영상촬영관련  메소드들.
@@ -45,7 +48,7 @@ public class BRecorder
 	public void startRecorder()
 	{	
 		BSurfaceView.bSurface.getBSurfaceView().setVisibility(View.VISIBLE);		
-		Path=biostream.createFolder()+"/"+biostream.createName(System.currentTimeMillis());
+		Path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+biostream.createName(System.currentTimeMillis());
 		
 		if(bRecorder==null){
 			bRecorder= new MediaRecorder();
@@ -71,8 +74,6 @@ public class BRecorder
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
-		
-		biostream.createVideoPath(System.currentTimeMillis());
 		
 		
 		try{	
@@ -134,11 +135,14 @@ public class BRecorder
 			bRecorder=null;
 		}
 	}
-			
+	
 
 }
+	
 
 
 
 
+
+    
     

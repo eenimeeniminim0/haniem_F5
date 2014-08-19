@@ -22,11 +22,11 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private BRecorder bRecorder;
 	private ToggleButton VideoCapture, SnapShot;
 	private Button Tools;
-	private Thread videotimerUpdate;
-	private Handler videotimerUpdateHandler;
-	private BIOstream biostream;
+	//private Thread videotimerUpdate;
+	//private Handler videotimerUpdateHandler;
 	
 	private BSensor bSensor;
+	RecorderThread bThread;
 
 	
 	@Override
@@ -42,11 +42,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         setContentView(R.layout.recording);//레코딩 레이아웃
 		Toast.makeText(getApplicationContext(), "레코딩액티비티 시작", Toast.LENGTH_SHORT).show();
 		
-		videotimerUpdateHandler=new Handler();
+		//videotimerUpdateHandler=new Handler();
 		
 		bRecorder=new BRecorder();
-		bSensor= new BSensor();
-		biostream = new BIOstream();
+		bSensor=new BSensor();
+		bThread=new RecorderThread();
+		
+
+
 		
 		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
@@ -64,9 +67,8 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	}
 	
 	@Override
-    public void onStart() {	
+    public void onStart() {
         super.onStart();
-        biostream.createFolder();
        // if (BSensor.accelerormeterSensor != null)
        // 	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     }
@@ -85,33 +87,13 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	switch(v.getId()){
     	
     	case R.id.VideoCapture:
+    		
+    		
     		if(VideoCapture.isChecked())
-    		{  	
+    		{ 
+    			bThread.threadStart();
     			if (BSensor.accelerormeterSensor != null)
     	        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
-    			videotimerUpdate= new Thread(new Runnable(){
-    				int i=0;
-    				public void run(){   
-    					
-    					if(bRecorder.videoCurrentTime < BRecorder.SECONDS_BETWEEN_VIDEO){
-    						Log.v("스레드님","몇번돌아갔나요="+i);
-
-    						if(bRecorder.videoCurrentTime==0){
-    							bRecorder.startRecorder();
-    						}
-    						Log.v("videoCurrentTime","time="+bRecorder.videoCurrentTime);
-    						bRecorder.videoCurrentTime++;
-    						videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
-    						
-    					}else if(bRecorder.videoCurrentTime == BRecorder.SECONDS_BETWEEN_VIDEO){
-    						
-    						bRecorder.resetRecorder();
-    						i++;
-    						videotimerUpdateHandler.post(videotimerUpdate);		
-    					}
-    				}
-    			});
-    			videotimerUpdate.start();
     			Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
     			
     		}
@@ -122,15 +104,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
-    				if(bRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
-					{
-					videotimerUpdateHandler.removeCallbacks(videotimerUpdate);//스레드강제중지	
-					bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
-					}
-    				
-    				bRecorder.stopRecorder();
-    				
-    				
+    				bThread.threadStop();
     			}
     		}
       		break;
@@ -187,6 +161,60 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	class RecorderThread  {
+		
+		int i=0;
+		private Thread videotimerUpdate;
+		private Handler videotimerUpdateHandler;
+		
+		
+		public RecorderThread()
+		{
+			videotimerUpdateHandler=new Handler();
+			
+		}
+		public void threadStart()
+		{
+			Log.v("스레드님제발요?","울고싶다?="+20000);
+			videotimerUpdate= new Thread(new Runnable(){
+				int i=0;
+				public void run(){    
+					if(bRecorder.videoCurrentTime < bRecorder.SECONDS_BETWEEN_VIDEO){
+						Log.v("스레드님","몇번돌아갔나요="+i);
+
+						if(bRecorder.videoCurrentTime==0){
+							bRecorder.startRecorder();
+							bRecorder.isVideotimerRunning=true;
+						}
+						Log.v("videoCurrentTime","time="+bRecorder.videoCurrentTime);
+						bRecorder.videoCurrentTime++;
+						videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
+						
+					}else if(bRecorder.videoCurrentTime == BRecorder.SECONDS_BETWEEN_VIDEO){
+						
+						bRecorder.resetRecorder();
+						i++;
+						videotimerUpdateHandler.post(videotimerUpdate);		
+					}
+				}
+			});
+			videotimerUpdate.start();
+		}
+		
+		public void threadStop()
+		{
+			if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
+			{
+				Log.v("여기로 가긴 하는거니??","울고싶다?="+20000);
+				videotimerUpdateHandler.removeCallbacks(videotimerUpdate);//스레드강제중지	
+				bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
+				videotimerUpdate.interrupt();
+				bRecorder.stopRecorder();
+			}
+
+		}
 	}
     
 
