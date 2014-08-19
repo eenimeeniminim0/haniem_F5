@@ -10,13 +10,24 @@ public class BSensor {
 	protected float lastY; // ,,
 	protected float lastZ; //,,
 	protected float x, y, z;// 지금받은 x값
+	protected boolean isSensorDetected;
  
-	protected static final int SHAKE_THRESHOLD = 1000;//충격의 임계치, 임계치 넘어가면 작동
-	protected static final int DATA_X = SensorManager.DATA_X; 
-	protected static final int DATA_Y = SensorManager.DATA_Y;
-	protected static final int DATA_Z = SensorManager.DATA_Z;
+	protected static  int SHAKE_THRESHOLD;//충격의 임계치, 임계치 넘어가면 작동
+	protected static  int DATA_X; 
+	protected static  int DATA_Y;
+	protected static  int DATA_Z;
     public static SensorManager sensorManager;//센서를 불러오기위한 매니져
     public static Sensor accelerormeterSensor;//가속도계 센서를 받는 객체
+    
+    public BSensor()
+    {
+    	isSensorDetected=false;
+    	SHAKE_THRESHOLD = 1000;
+    	DATA_X = SensorManager.DATA_X; 
+    	DATA_Y = SensorManager.DATA_Y;
+    	DATA_Z = SensorManager.DATA_Z;
+    	
+    }
    
 
 }

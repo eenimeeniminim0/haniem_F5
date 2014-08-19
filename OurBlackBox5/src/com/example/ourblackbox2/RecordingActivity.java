@@ -128,6 +128,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	                if (bSensor.speed > BSensor.SHAKE_THRESHOLD) {//속도가 지정한 임계치보다 높으면
 	                    // 이벤트발생!!
 	                	Log.v("모래반지 빵야빵야","허허허허="+20000000);
+	                	bSensor.isSensorDetected=true;
 	                	//Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
 	                }
 	 
@@ -164,7 +165,15 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 			Log.v("스레드님제발요?","울고싶다?="+20000);
 			videotimerUpdate= new Thread(new Runnable(){
 				int i=0;
-				public void run(){    
+				public void run(){   
+					
+					if(bSensor.isSensorDetected==true)
+					{
+						bRecorder.SECONDS_BETWEEN_VIDEO=bRecorder.videoCurrentTime+15;
+						Log.v("충격 감지시 돌아가는 시간은요?","궁금합니당="+bRecorder.SECONDS_BETWEEN_VIDEO);
+						bSensor.isSensorDetected=false;
+						
+					}
 					if(bRecorder.videoCurrentTime < bRecorder.SECONDS_BETWEEN_VIDEO){
 						Log.v("스레드님","몇번돌아갔나요="+i);
 
@@ -176,7 +185,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 						bRecorder.videoCurrentTime++;
 						videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
 						
-					}else if(bRecorder.videoCurrentTime == BRecorder.SECONDS_BETWEEN_VIDEO){
+					}else{
 						
 						bRecorder.resetRecorder();
 						i++;

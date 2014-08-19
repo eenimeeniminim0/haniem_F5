@@ -13,23 +13,17 @@ import android.view.View;
 public class BRecorder
 {
 	
-	BIOstream biostream;
-	MediaRecorder bRecorder;
-	String filePath;	
-	File videoFile;
-	boolean isRecording;//현재녹화중인지나타내는것
-	String Path;
+	protected BIOstream biostream;
+	protected MediaRecorder bRecorder;
+	protected String filePath;	
+	protected File videoFile;
+	protected String Path;
 	//
-	static int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
-	int videoCurrentTime;//처음 시작 시간
+	protected int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
+	protected int videoCurrentTime;//처음 시작 시간
 	//
-	boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
-	
-	//RecorderThread bThread;
-	
-	//private Thread videotimerUpdate;
-	//private Handler videotimerUpdateHandler; 
-	
+	protected boolean isRecording;//현재녹화중인지나타내는것
+	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
 	
 	public BRecorder()
 	{
