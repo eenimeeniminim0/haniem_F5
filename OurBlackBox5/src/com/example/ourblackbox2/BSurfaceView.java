@@ -23,7 +23,8 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		bHolder=getHolder();
 		bHolder.addCallback(this);
 	}
-		
+	
+	
 	public void surfaceCreated(SurfaceHolder holder)
 	{
 		bCamera=Camera.open();

@@ -25,7 +25,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	//private Thread videotimerUpdate;
 	//private Handler videotimerUpdateHandler;
 	private BSensor bSensor;
-	RecorderThread bThread;
+	private BThredRecorder bThread;
 
 	
 	@Override
@@ -45,7 +45,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 		bRecorder=new BRecorder();
 		bSensor=new BSensor();
-		bThread=new RecorderThread();
+		bThread=new BThredRecorder();
 
 
 		
@@ -147,14 +147,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 	}
 	
-	class RecorderThread  {
+	class BThredRecorder  {
 		
 		int i=0;
 		private Thread videotimerUpdate;
 		private Handler videotimerUpdateHandler;
 		
 		
-		public RecorderThread()
+		public BThredRecorder()
 		{
 			videotimerUpdateHandler=new Handler();
 			
