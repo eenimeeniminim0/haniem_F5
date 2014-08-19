@@ -24,7 +24,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private Button Tools;
 	//private Thread videotimerUpdate;
 	//private Handler videotimerUpdateHandler;
-	
+	private BIOstream biostream;
 	private BSensor bSensor;
 	RecorderThread bThread;
 
@@ -47,7 +47,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		bRecorder=new BRecorder();
 		bSensor=new BSensor();
 		bThread=new RecorderThread();
-		
 
 
 		
