@@ -32,7 +32,7 @@ public class BIOstream  {
     	
 	}
 	
-	void createVideoPath(long dateTaken) {
+	/*void createVideoPath(long dateTaken) {
 		String dirName = "OurBlackBox";
 		File cameraDir = new File(dirName);
     	cameraDir.mkdirs();
@@ -46,7 +46,7 @@ public class BIOstream  {
 		values.put(Video.Media.DATA, filename);
 		videoFileName = filename;
 		videoValues = values;
-	}
+	}*/
 	
 	
 }

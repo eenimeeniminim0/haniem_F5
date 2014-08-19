@@ -24,7 +24,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private Button Tools;
 	//private Thread videotimerUpdate;
 	//private Handler videotimerUpdateHandler;
-	private BIOstream biostream;
 	private BSensor bSensor;
 	RecorderThread bThread;
 
@@ -64,20 +63,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		
 	}
-	
-	@Override
-    public void onStart() {
-        super.onStart();
-       // if (BSensor.accelerormeterSensor != null)
-       // 	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
-    }
- 
-    @Override
-    public void onStop() {
-        super.onStop();
-        //if (BSensor.sensorManager != null)
-        //	BSensor.sensorManager.unregisterListener(this);
-    }
 	
 
     @Override
