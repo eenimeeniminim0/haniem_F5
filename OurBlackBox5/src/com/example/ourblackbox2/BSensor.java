@@ -10,7 +10,7 @@ public class BSensor {
 	protected float lastY; // ,,
 	protected float lastZ; //,,
 	protected float x, y, z;// 지금받은 x값
-	protected boolean isSensorDetected;
+	protected static boolean isSensorDetected;
  
 	protected static  int SHAKE_THRESHOLD;//충격의 임계치, 임계치 넘어가면 작동
 	protected static  int DATA_X; 

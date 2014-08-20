@@ -128,7 +128,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	                if (bSensor.speed > BSensor.SHAKE_THRESHOLD) {//속도가 지정한 임계치보다 높으면
 	                    // 이벤트발생!!
 	                	Log.v("모래반지 빵야빵야","허허허허="+20000000);
-	                	bSensor.isSensorDetected=true;
+	                	BSensor.isSensorDetected=true;
 	                	//Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
 	                }
 	 
@@ -166,28 +166,23 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 			videotimerUpdate= new Thread(new Runnable(){
 				int i=0;
 				public void run(){   
-					
-					if(bSensor.isSensorDetected==true)
-					{
-						bRecorder.SECONDS_BETWEEN_VIDEO=bRecorder.videoCurrentTime+15;
-						Log.v("충격 감지시 돌아가는 시간은요?","궁금합니당="+bRecorder.SECONDS_BETWEEN_VIDEO);
-						bSensor.isSensorDetected=false;
-						
-					}
-					if(bRecorder.videoCurrentTime < bRecorder.SECONDS_BETWEEN_VIDEO){
+		
+					if(BRecorder.videoCurrentTime < bRecorder.checkRecordTime(BSensor.isSensorDetected)){
+						Log.v("충격 감지시 돌아가는 시간은요?","궁금합니당="+BRecorder.SECONDS_BETWEEN_VIDEO);
 						Log.v("스레드님","몇번돌아갔나요="+i);
 
-						if(bRecorder.videoCurrentTime==0){
+						if(BRecorder.videoCurrentTime==0){
 							bRecorder.startRecorder();
 							bRecorder.isVideotimerRunning=true;
 						}
-						Log.v("videoCurrentTime","time="+bRecorder.videoCurrentTime);
-						bRecorder.videoCurrentTime++;
+						Log.v("videoCurrentTime","time="+BRecorder.videoCurrentTime);
+						BRecorder.videoCurrentTime++;
 						videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
 						
 					}else{
-						
 						bRecorder.resetRecorder();
+						BSensor.isSensorDetected=false;
+						BRecorder.isTimeChange=false;
 						i++;
 						videotimerUpdateHandler.post(videotimerUpdate);		
 					}
@@ -205,6 +200,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 				bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
 				videotimerUpdate.interrupt();
 				bRecorder.stopRecorder();
+				BSensor.isSensorDetected=false;
 			}
 
 		}

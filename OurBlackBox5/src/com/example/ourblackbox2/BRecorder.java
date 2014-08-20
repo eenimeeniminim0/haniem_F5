@@ -19,17 +19,19 @@ public class BRecorder
 	protected File videoFile;
 	protected String Path;
 	//
-	protected int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
-	protected int videoCurrentTime;//처음 시작 시간
+	protected static int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
+	protected static int videoCurrentTime;//처음 시작 시간
 	//
 	protected boolean isRecording;//현재녹화중인지나타내는것
 	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
+	protected static boolean isTimeChange;
 	
 	public BRecorder()
 	{
 		videoFile=null;
 		isRecording=false;
 		isVideotimerRunning=false;
+		isTimeChange=false;
 		Path="";
 		videoCurrentTime=0;
 		biostream = new BIOstream();
@@ -122,6 +124,34 @@ public class BRecorder
 		BSurfaceView.bSurface.getCamera().startPreview();//카메라객체에서 받아들이는 화면에 서비스뷰에 프리뷰가 보이는것 시작.
 	}
 	
+	public int checkRecordTime(boolean isSensorDetected)
+	{
+		if(isSensorDetected && SECONDS_BETWEEN_VIDEO==15){
+			isTimeChange=true;
+			BSensor.isSensorDetected=false;
+			SECONDS_BETWEEN_VIDEO=videoCurrentTime+15;
+			return SECONDS_BETWEEN_VIDEO;
+		}
+		else if(isSensorDetected && SECONDS_BETWEEN_VIDEO!=15){
+			isTimeChange=true;
+			BSensor.isSensorDetected=false;
+			SECONDS_BETWEEN_VIDEO=videoCurrentTime+15;
+			return SECONDS_BETWEEN_VIDEO;
+		}
+		else if(!isSensorDetected && SECONDS_BETWEEN_VIDEO!=15){
+			if(isTimeChange){
+				//isTimeChange=false;
+				return SECONDS_BETWEEN_VIDEO;
+			}
+			else{	
+			SECONDS_BETWEEN_VIDEO=15;
+			return SECONDS_BETWEEN_VIDEO;}
+		}
+		
+		else 
+			return SECONDS_BETWEEN_VIDEO;
+
+	}
 	
 	public void destroyRecorder()
 	{
