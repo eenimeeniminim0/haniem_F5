@@ -6,7 +6,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,13 +18,10 @@ import android.widget.ToggleButton;
 
 public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
 	
-	private BRecorder bRecorder;
 	private ToggleButton VideoCapture, SnapShot;
 	private Button Tools;
-	//private Thread videotimerUpdate;
-	//private Handler videotimerUpdateHandler;
 	private BSensor bSensor;
-	private BThredRecorder bThread;
+	private BThreadRecorder bThread;
 
 	
 	@Override
@@ -41,14 +37,9 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         setContentView(R.layout.recording);//레코딩 레이아웃
 		Toast.makeText(getApplicationContext(), "레코딩액티비티 시작", Toast.LENGTH_SHORT).show();
 		
-		//videotimerUpdateHandler=new Handler();
-		
-		bRecorder=new BRecorder();
 		bSensor=new BSensor();
-		bThread=new BThredRecorder();
+		bThread=new BThreadRecorder();
 
-
-		
 		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
         SnapShot=(ToggleButton)findViewById(R.id.Snapshot);
@@ -72,7 +63,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	
     	case R.id.VideoCapture:
     		
-    		
     		if(VideoCapture.isChecked())
     		{ 
     			bThread.threadStart();
@@ -84,12 +74,10 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		
     		else
     		{
-    			if(bRecorder.isRecording==true){
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
     				bThread.threadStop();
-    			}
     		}
       		break;
     		    		
@@ -107,7 +95,8 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     public void onDestroy()
     {
     	super.onDestroy();
-    	bRecorder.destroyRecorder();
+    	//bRecorder.destroyRecorder();
+    	bThread.getBRecorder().destroyRecorder();
     }
 
     @Override
@@ -148,64 +137,4 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 	}
 	
-	class BThredRecorder  {
-		
-		int i=0;
-		private Thread videotimerUpdate;
-		private Handler videotimerUpdateHandler;
-		
-		
-		public BThredRecorder()
-		{
-			videotimerUpdateHandler=new Handler();
-			
-		}
-		public void threadStart()
-		{
-			Log.v("스레드님제발요?","울고싶다?="+20000);
-			videotimerUpdate= new Thread(new Runnable(){
-				int i=0;
-				public void run(){   
-		
-					if(BRecorder.videoCurrentTime < bRecorder.checkRecordTime(BSensor.isSensorDetected)){
-						Log.v("충격 감지시 돌아가는 시간은요?","궁금합니당="+BRecorder.SECONDS_BETWEEN_VIDEO);
-						Log.v("스레드님","몇번돌아갔나요="+i);
-
-						if(BRecorder.videoCurrentTime==0){
-							bRecorder.startRecorder();
-							bRecorder.isVideotimerRunning=true;
-						}
-						Log.v("videoCurrentTime","time="+BRecorder.videoCurrentTime);
-						BRecorder.videoCurrentTime++;
-						videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
-						
-					}else{
-						bRecorder.resetRecorder();
-						BSensor.isSensorDetected=false;
-						BRecorder.isTimeChange=false;
-						i++;
-						videotimerUpdateHandler.post(videotimerUpdate);		
-					}
-				}
-			});
-			videotimerUpdate.start();
-		}
-		
-		public void threadStop()
-		{
-			if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
-			{
-				Log.v("여기로 가긴 하는거니??","울고싶다?="+20000);
-				videotimerUpdateHandler.removeCallbacks(videotimerUpdate);//스레드강제중지	
-				bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
-				videotimerUpdate.interrupt();
-				bRecorder.stopRecorder();
-				BSensor.isSensorDetected=false;
-			}
-
-		}
-	}
-    
-
-
 }
