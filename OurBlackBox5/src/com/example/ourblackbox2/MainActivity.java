@@ -98,10 +98,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	protected void onStart() {
   		// TODO Auto-generated method stub
   		super.onStart();
-  		  recording=(Button)findViewById(R.id.Recording);//·¹ÄÚµù¾×Æ¼ºñÆ¼·Î°¡´Â¹öÆ°
-  	       preference=(Button)findViewById(R.id.Preference);//È¯°æ¼³Á¤¾×Æ¼ºñÆ¼·Î°¡´Â¹öÆ°
-  	       photogallery=(Button)findViewById(R.id.PhotoGallery);//°¶·¯¸®¾×Æ¼ºñÆ¼·Î°¡´Â¹öÆ°
-  	       videogallery=(Button)findViewById(R.id.VideoGallery);//ºñµð¿À¾Ù¹ü¾×Æ¼ºñÆ¼·Î°¡´Â¹öÆ°
+  		  recording=(Button)findViewById(R.id.Recording);//ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Æ¼ï¿½Î°ï¿½ï¿½Â¹ï¿½Æ°
+  	       preference=(Button)findViewById(R.id.Preference);//È¯ï¿½æ¼³ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Æ¼ï¿½Î°ï¿½ï¿½Â¹ï¿½Æ°
+  	       photogallery=(Button)findViewById(R.id.PhotoGallery);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Æ¼ï¿½Î°ï¿½ï¿½Â¹ï¿½Æ°
+  	       videogallery=(Button)findViewById(R.id.VideoGallery);//ï¿½ï¿½ï¿½ï¿½ï¿½Ù¹ï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Æ¼ï¿½Î°ï¿½ï¿½Â¹ï¿½Æ°
   	       
   	       recording.setOnClickListener(this);
   	       preference.setOnClickListener(this);
@@ -117,19 +117,20 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if(v==recording){
-			Toast.makeText(getApplicationContext(), "·¹ÄÚµù¾×Æ¼ºñÆ¼·Î", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Æ¼ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 	    	Intent intent=new Intent(this,RecordingActivity.class);
 	    	startActivity(intent);
 			
 		}else if(v==preference){
-			Toast.makeText(getApplicationContext(), "È¯°æ¼³Á¤À¸·Î", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "È¯ï¿½æ¼³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 			
 		}else if(v==photogallery){
-			Toast.makeText(getApplicationContext(), "»çÁø°¶·¯¸®", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 			
 		}else if(v==videogallery){
-			Toast.makeText(getApplicationContext(), "ºñµð¿À°¶·¯¸®", Toast.LENGTH_SHORT).show();
-			
+			Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
+			Intent intent=new Intent(this,GalleryActivity.class);
+	    	startActivity(intent);
 		}
 		
 	}
