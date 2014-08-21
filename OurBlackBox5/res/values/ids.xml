@@ -16,6 +16,11 @@
     <item type="id" name="Snapshot"/>
     <item type="id" name="Tools"/>
    
+    <!-- 갤러리 리스트뷰 -->
+    <item type="id" name="ListView"/>
+    <item type="id" name="ImageView"/>
+    <item type="id" name="TextView01"/>
+    <item type="id" name="TextView"/>
     
     
 </resources>

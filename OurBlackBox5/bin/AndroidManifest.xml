@@ -26,6 +26,7 @@
             android:name=".RecordingActivity"
             android:screenOrientation="landscape"
             ></activity>
+        <activity android:name="GalleryActivity"></activity>
         
     </application>
     
