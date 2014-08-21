@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -34,12 +35,13 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 	    super.onCreate(savedInstanceState);
 	
 	    
-//	    requestWindowFeature(Window.FEATURE_NO_TITLE);// Ÿ��Ʋ ���ֱ�
+	    requestWindowFeature(Window.FEATURE_NO_TITLE);//Ÿ��Ʋ ���ֱ�
+//	    requestWindowFeature(Window.FEATURE_NO_TITLE);// 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);// ȭ��Ǯ��ũ��
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//ȭ�� ���μ���
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);//
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//
 
-		setContentView(R.layout.gallery);// ���ڵ� ���̾ƿ�
+		setContentView(R.layout.gallery);//
 	    // TODO Auto-generated method stub
 		
 		ListView listView = (ListView) this.findViewById(R.id.ListView);
@@ -75,7 +77,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 					Log.v("VideoGallery", "Thumb" + newVVI.thumbPath);
 				}
 				
-				newVVI.filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));////////////////////////////////////////연결
+				newVVI.filePath = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));//////////////////////////////////////
 				newVVI.title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.TITLE));
 				Log.v("VideoGallery", "Title" + newVVI.title);
 				newVVI.mimeType = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media.MIME_TYPE));
