@@ -36,7 +36,6 @@ public class BRecorder
 		videoCurrentTime=0;
 		biostream = new BIOstream();
 		bRecorder= new MediaRecorder();
-		//bThread=new RecorderThread();
 	}
 	
 	// 동영상촬영관련  메소드들.
@@ -114,43 +113,6 @@ public class BRecorder
 		isRecording=false;
 		BSurfaceView.bSurface.getCamera().lock();//카메라객체 잠금
 		
-
-		try {
-			BSurfaceView.bSurface.getCamera().setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder());//카메라객체를 preview display에 할당함.
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		BSurfaceView.bSurface.getCamera().startPreview();//카메라객체에서 받아들이는 화면에 서비스뷰에 프리뷰가 보이는것 시작.
-	}
-	
-	public int checkRecordTime(boolean isSensorDetected)
-	{
-		if(isSensorDetected && SECONDS_BETWEEN_VIDEO==15){
-			isTimeChange=true;
-			BSensor.isSensorDetected=false;
-			SECONDS_BETWEEN_VIDEO=videoCurrentTime+15;
-			return SECONDS_BETWEEN_VIDEO;
-		}
-		else if(isSensorDetected && SECONDS_BETWEEN_VIDEO!=15){
-			isTimeChange=true;
-			BSensor.isSensorDetected=false;
-			SECONDS_BETWEEN_VIDEO=videoCurrentTime+15;
-			return SECONDS_BETWEEN_VIDEO;
-		}
-		else if(!isSensorDetected && SECONDS_BETWEEN_VIDEO!=15){
-			if(isTimeChange){
-				//isTimeChange=false;
-				return SECONDS_BETWEEN_VIDEO;
-			}
-			else{	
-			SECONDS_BETWEEN_VIDEO=15;
-			return SECONDS_BETWEEN_VIDEO;}
-		}
-		
-		else 
-			return SECONDS_BETWEEN_VIDEO;
-
 	}
 	
 	public void destroyRecorder()
