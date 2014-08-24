@@ -5,6 +5,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -52,6 +53,11 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
       //센서관련
         BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        
+      //AudioManager mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE); //카메라 무음하려했는데 소리만 무음됨....
+	  //mAudioManager.setStreamVolume(AudioManager.STREAM_SYSTEM,0, 0);
+      //mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 0.1), 0);
+
 		
 	}
 	
@@ -95,7 +101,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     public void onDestroy()
     {
     	super.onDestroy();
-    	//bRecorder.destroyRecorder();
     	bThread.getBRecorder().destroyRecorder();
     }
 

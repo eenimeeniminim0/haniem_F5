@@ -5,10 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.ContentValues;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
-import android.provider.MediaStore.Video;
-import android.text.format.DateFormat;
-import android.util.Log;
 
 public class BIOstream  {
 	
@@ -32,6 +31,16 @@ public class BIOstream  {
     	
 	}
 	
+	public void fileScan()
+	{
+		Intent intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+		Uri uri= Uri.parse("file://"+BRecorder.Path);
+		intent.setData(uri);
+		//sendBroadcast(intent);
+		
+	}
+
+	
 	/*void createVideoPath(long dateTaken) {
 		String dirName = "OurBlackBox";
 		File cameraDir = new File(dirName);
@@ -47,6 +56,31 @@ public class BIOstream  {
 		videoFileName = filename;
 		videoValues = values;
 	}*/
+	
+	/*	private void stopRecording() {
+	Log.d(Config.TAG, toString() + ".stopRecording(): stop recording...");
+	recorder.stop();
+	Log.d(Config.TAG, toString() + ".stopRecording(): Recorded video filename:" + videoFileName);
+
+	videoValues.put(Video.Media.DURATION, System.currentTimeMillis()
+			- recordingStarted);
+	videoValues.put(Video.Media.SIZE, new File(videoFileName).length());
+	Uri videoUri = act_.getContentResolver().insert(
+			MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoValues);
+	if (videoUri == null) {
+		Log.d(Config.TAG, toString() + ".stopRecording(): Content resolver failed");
+		return;
+	}
+	Log.d(Config.TAG, toString() + ".stopRecording(): Video URI = " + videoUri.getPath());
+	videoValues = null;
+
+	// Force Media scanner to refresh now. Technically, this is
+	// unnecessary, as the media scanner will run periodically but
+	// helpful for testing.
+	act_.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+			videoUri));
+	Log.d(Config.TAG, toString() + ".stopRecording(): Video file published");
+}*/
 	
 	
 }
