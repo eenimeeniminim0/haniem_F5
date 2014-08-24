@@ -37,7 +37,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 	
 	    
 	    requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 없애기
-//	    requestWindowFeature(Window.FEATURE_NO_TITLE);// 
+	    requestWindowFeature(Window.FEATURE_NO_TITLE);// 
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);//
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//
