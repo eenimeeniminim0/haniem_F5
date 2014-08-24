@@ -15,7 +15,7 @@ public class BIOstream  {
 	private String videoFileName = null;	
 	private ContentValues videoValues = null;
 	String dir = null;
-	
+	String name = "OurblackBox";
 	
 	public String createName(long dateTaken){
 		Date date= new Date(dateTaken);
@@ -25,7 +25,7 @@ public class BIOstream  {
 	
 	public String createFolder(){
 		
-		String dir=Environment.getExternalStorageDirectory().getPath() + "/OurBlackBox";
+		String dir=Environment.getExternalStorageDirectory().getPath() + "/" + name;
 		File folder = new File(dir);
 		folder.mkdirs();
 		return dir;

@@ -29,6 +29,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 	
 	Cursor cursor;
 
+	//MediaStore.Video.Media 로 되어있는 값들을 다 BIOstream에서 만든 함수나 변수들로 바꿔주면 되지않을까...
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
