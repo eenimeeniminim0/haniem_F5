@@ -34,7 +34,7 @@ public class BIOstream  {
 	public void fileScan()
 	{
 		Intent intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		Uri uri= Uri.parse("file://"+BRecorder.Path);
+		Uri uri= Uri.parse("file://"+createFolder());
 		intent.setData(uri);
 		//sendBroadcast(intent);
 		

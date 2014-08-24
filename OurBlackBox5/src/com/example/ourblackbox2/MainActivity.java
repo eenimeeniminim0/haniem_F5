@@ -123,7 +123,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			
 		}else if(v==preference){
 		//	Toast.makeText(getApplicationContext(), "ȯ�漳������", Toast.LENGTH_SHORT).show();
-			
+			Intent intent=new Intent(this,SettingActivity.class);
+	    	startActivity(intent);	
 		}else if(v==photogallery){
 		//	Toast.makeText(getApplicationContext(), "����������", Toast.LENGTH_SHORT).show();
 			
@@ -131,6 +132,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		//	Toast.makeText(getApplicationContext(), "����������", Toast.LENGTH_SHORT).show();
 			Intent intent=new Intent(this,GalleryActivity.class);
 	    	startActivity(intent);
+	    	
 		}
 		
 	}
