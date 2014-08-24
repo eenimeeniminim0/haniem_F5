@@ -1,14 +1,8 @@
 package com.example.ourblackbox2;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
-<<<<<<< HEAD
-import android.graphics.Color;
-=======
-import android.hardware.SensorManager;
->>>>>>> branch 'master' of https://github.com/haniemF5/haniem_F5.git
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -28,14 +22,13 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
 	private Button bAudio;
 	protected static boolean isButtonPushed=false;
 	//private Button bBack;
-<<<<<<< HEAD
+
 	private Context context; 
-=======
+
 	
 	SettingControl remote= new SettingControl();
 	BQualityCommand bQCommand= new BQualityCommand();
 	
->>>>>>> branch 'master' of https://github.com/haniemF5/haniem_F5.git
 
 	
 	@Override
@@ -97,7 +90,6 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     		//저장설정
     	
     	case R.id.button4:
-<<<<<<< HEAD
     		
     		/*
     		if(bLED.isChecked())
@@ -120,21 +112,18 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
       		break;
       		
     		
-=======
     		//무선네트워크 설정
->>>>>>> branch 'master' of https://github.com/haniemF5/haniem_F5.git
+
     	case R.id.button5:
     
     	}
     }
-<<<<<<< HEAD
+
     public Notification.Builder  setLights (int argb, int onMs, int offMs){
 		return null;
     	
     }
 
-=======
->>>>>>> branch 'master' of https://github.com/haniemF5/haniem_F5.git
 
 
 
