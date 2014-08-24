@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import android.hardware.Camera;
+import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -17,7 +17,7 @@ public class BRecorder
 	protected MediaRecorder bRecorder;
 	protected String filePath;	
 	protected File videoFile;
-	protected String Path;
+	protected static String Path;
 	//
 	protected static int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
 	protected static int videoCurrentTime;//처음 시작 시간
@@ -72,6 +72,9 @@ public class BRecorder
 		
 		//biostream.createVideoPath(System.currentTimeMillis());
 		
+		//AudioManager mAudioManager = (AudioManager) getSystemService(Context, AUDIO_SERVICE); 카메라 무음
+	 	//mAudioManager.setStreamVolume(AudioManager.STREAM_SYSTEM,0, 0);
+		
 		
 		try{	
 			bRecorder.prepare();
@@ -107,6 +110,7 @@ public class BRecorder
 		bRecorder.reset();
 		//registerVideo()
 		
+		biostream.fileScan();
 		isVideotimerRunning=false;
 		videoCurrentTime=0;
 		bRecorder=null;
@@ -123,7 +127,6 @@ public class BRecorder
 			bRecorder=null;
 		}
 	}
-	
 
 }
 	

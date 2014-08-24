@@ -67,6 +67,9 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 		{
 			do{
 				VideoViewInfo newVVI = new VideoViewInfo();
+				//Outer.Inner oi = ot.new Inner();
+
+
 				
 				int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
 				
@@ -109,7 +112,17 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 		}
 	}
 	
-	class VideoViewInfo {
+	 class VideoViewInfo {
+			
+			String filePath;
+			String mimeType;
+			String thumbPath;
+			String title;
+
+		}
+
+	
+	/*class VideoViewInfo {
 		String filePath;
 		String mimeType;
 		String thumbPath;
@@ -152,5 +165,5 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 			
 			return videoRow;
 		}
-	}
+	}*/
 }

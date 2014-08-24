@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.hardware.Camera;
+import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.Size;
 import android.util.AttributeSet;
 import android.view.SurfaceHolder;
@@ -30,6 +31,7 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		bCamera=Camera.open();
 		try{
 			bCamera.setPreviewDisplay(bHolder);
+			bSurface.bCamera.autoFocus(mAutoFocus);// 와이 왜 오토포커스가 안되는건지 알수가 없습니다.
 			if(this.getResources().getConfiguration().orientation!=Configuration.ORIENTATION_LANDSCAPE){
 				bCamera.setDisplayOrientation(90);
 			}
@@ -85,5 +87,11 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	{
 		return this.bHolder;
 	}
+	
+	AutoFocusCallback mAutoFocus= new AutoFocusCallback(){
+		public void onAutoFocus(boolean success, Camera camera){
+			
+		}
+	};
 	
 }

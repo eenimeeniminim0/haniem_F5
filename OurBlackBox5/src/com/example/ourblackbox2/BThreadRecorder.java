@@ -9,6 +9,7 @@ public class BThreadRecorder  {
 	private Thread videotimerUpdate;
 	private Handler videotimerUpdateHandler;
 	private BRecorder bRecorder;
+	protected static boolean isTimeChange;
 	
 	
 	public BThreadRecorder()

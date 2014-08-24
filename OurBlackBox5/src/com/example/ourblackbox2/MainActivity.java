@@ -98,10 +98,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	protected void onStart() {
   		// TODO Auto-generated method stub
   		super.onStart();
-  		  recording=(Button)findViewById(R.id.Recording);//���ڵ���Ƽ��Ƽ�ΰ��¹�ư
-  	       preference=(Button)findViewById(R.id.Preference);//ȯ�漳����Ƽ��Ƽ�ΰ��¹�ư
-  	       photogallery=(Button)findViewById(R.id.PhotoGallery);//��������Ƽ��Ƽ�ΰ��¹�ư
-  	       videogallery=(Button)findViewById(R.id.VideoGallery);//�����ٹ���Ƽ��Ƽ�ΰ��¹�ư
+  		  recording=(Button)findViewById(R.id.Recording);//
+  	       preference=(Button)findViewById(R.id.Preference);//
+  	       photogallery=(Button)findViewById(R.id.PhotoGallery);//
+  	       videogallery=(Button)findViewById(R.id.VideoGallery);//
   	       
   	       recording.setOnClickListener(this);
   	       preference.setOnClickListener(this);
