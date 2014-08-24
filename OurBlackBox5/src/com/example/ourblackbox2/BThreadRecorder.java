@@ -30,6 +30,7 @@ public class BThreadRecorder  {
 					Log.v("스레드님","몇번돌아갔나요="+i);
 
 					if(BRecorder.videoCurrentTime==0){
+						bRecorder.initRecorder();
 						bRecorder.startRecorder();
 						bRecorder.isVideotimerRunning=true;
 					}

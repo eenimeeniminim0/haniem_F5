@@ -38,10 +38,19 @@ public class BRecorder
 		bRecorder= new MediaRecorder();
 	}
 	
+	public void setQuality()
+	{
+		if(SettingActivity.isButtonPushed==true)
+			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+		else
+			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
+	}
+	
 	// 동영상촬영관련  메소드들.
 
-	public void startRecorder()
-	{	
+	
+	public void initRecorder()
+	{
 		BSurfaceView.bSurface.setVisibility(View.VISIBLE);		
 		Path=biostream.createFolder()+"/"+biostream.createName(System.currentTimeMillis());
 		
@@ -58,11 +67,15 @@ public class BRecorder
 		bRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 		bRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 		
-		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+		//bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
+		
+		setQuality();
 		
 		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
 		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 		//bRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+		//bRecorder.setVideoFrameRate(24);
+		//bRecorder.setVideoSize(720,480);
 		
 		bRecorder.setMaxDuration(50000);//최대캡쳐시간 50초
 		bRecorder.setMaxFileSize(5000000);//최대파일크기 5메가
@@ -72,9 +85,12 @@ public class BRecorder
 		
 		//biostream.createVideoPath(System.currentTimeMillis());
 		
-		//AudioManager mAudioManager = (AudioManager) getSystemService(Context, AUDIO_SERVICE); 카메라 무음
-	 	//mAudioManager.setStreamVolume(AudioManager.STREAM_SYSTEM,0, 0);
-		
+	}
+	
+	
+	
+	public void startRecorder()
+	{	
 		
 		try{	
 			bRecorder.prepare();
