@@ -31,7 +31,6 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		bCamera=Camera.open();
 		try{
 			bCamera.setPreviewDisplay(bHolder);
-			bSurface.bCamera.autoFocus(mAutoFocus);// 와이 왜 오토포커스가 안되는건지 알수가 없습니다.
 			if(this.getResources().getConfiguration().orientation!=Configuration.ORIENTATION_LANDSCAPE){
 				bCamera.setDisplayOrientation(90);
 			}
@@ -54,6 +53,7 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) 
 	{	
 		Camera.Parameters params = bCamera.getParameters();
+		params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE); 
 		List<Size> arSize =params.getSupportedPreviewSizes();
 		if(arSize==null)
 		{
@@ -88,10 +88,16 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		return this.bHolder;
 	}
 	
-	AutoFocusCallback mAutoFocus= new AutoFocusCallback(){
+	public void startAutofocus()
+	{
+		bCamera.autoFocus(bAutofocus);
+	}
+	
+	AutoFocusCallback bAutofocus= new AutoFocusCallback(){
 		public void onAutoFocus(boolean success, Camera camera){
 			
 		}
 	};
+	
 	
 }
