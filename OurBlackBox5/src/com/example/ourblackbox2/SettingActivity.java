@@ -1,8 +1,12 @@
 package com.example.ourblackbox2;
 
 import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -24,11 +28,11 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
 	//private Button bBack;
 
 	private Context context; 
+	private final static int MESSAGE_ID = 1;
+	private NotificationManager mNotificationManager = null;
 
-	
 	SettingControl remote= new SettingControl();
-	BQualityCommand bQCommand= new BQualityCommand();
-	
+	BQualityCommand bQCommand= new BQualityCommand();	
 
 	
 	@Override
@@ -41,10 +45,10 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//화면 가로로 설정
 		
         setContentView(R.layout.setting_activity);
-		Toast.makeText(getApplicationContext(), "레코딩액티비티 시작", Toast.LENGTH_SHORT).show();
+		Toast.makeText(getApplicationContext(), "설정액티비티 시작", Toast.LENGTH_SHORT).show();
 		
-		remote.setCommand(bQCommand);
-		
+		remote.setCommand(bQCommand);		
+		mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		
 		bQuality=(ToggleButton)findViewById(R.id.button1);
 		bResolution=(Button)findViewById(R.id.button2);
@@ -53,7 +57,6 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
 		bAudio=(Button)findViewById(R.id.button5);
 		
 		bQuality.setOnClickListener(this);
-		
 		bLED.setOnClickListener(this);
 
 	}
@@ -90,25 +93,17 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     		//저장설정
     	
     	case R.id.button4:
-    		
-    		/*
-    		if(bLED.isChecked())
-    		{ 
-    			NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-    	        Notification notif = new Notification();
-    	        Notification.Builder noti = new Notification.Builder(context);
-    	        setLights(Color.RED,1000,1000);
-    	        notif.defaults = 0;
-    	        notif.flags = Notification.FLAG_SHOW_LIGHTS;
-    	        nm.notify(0, notif);
-    	        Toast.makeText(getApplicationContext(), "LED 켜짐", Toast.LENGTH_SHORT).show();
-    		}
-    		
-    		else
-    		{
+    		//LED
+    		if(bLED.isChecked()){
+    			
+    			ledOn();
     			
     		}
-    		*/
+    		else{
+    			
+    			ledOff();
+    		
+    		}
       		break;
       		
     		
@@ -118,12 +113,77 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     
     	}
     }
-
-    public Notification.Builder  setLights (int argb, int onMs, int offMs){
-		return null;
+    
+/*
+	public void ledOn(){
+    	String ticker = "OurblackBox가 실행중입니다";
+    	String title = "OurblackBox";
+    	String text = "실행중";
+    	
+    	Notification noti = new Notification();
+    	
+    	//noti.flags |= Notification.FLAG_AUTO_CANCEL; //알림 클릭시 자동으로 알림 취소
+    	//noti.flags |= Notification.FLAG_SHOW_LIGHTS;
+    	
+    	Intent intent = new Intent(this, RecordingActivity.class);
+    	PendingIntent pendingIntent = PendingIntent.getActivity(SettingActivity.this, 0, intent, 0);
+    	
+    	noti.flags = Notification.DEFAULT_LIGHTS|Notification.FLAG_AUTO_CANCEL|Notification.FLAG_ONGOING_EVENT;
+    	
+    	
+    	noti.icon = android.R.drawable.ic_input_add;
+    	noti.tickerText = ticker;
+    	noti.when = System.currentTimeMillis(); 
+    	noti.defaults = 0;
+    	noti.ledARGB = 0xff0000ff;
+    	noti.ledOnMS = 300;
+    	noti.ledOffMS = 300;
+    	
+    	
+    	noti.setLatestEventInfo(this, title, text, pendingIntent);
+    
+    	bNotificationManager.notify(MESSAGE_ID, noti);
+    }
+ */
+    public void ledOn(){
+    	
+    	String ticker = "OurblackBox가 실행중입니다";
+    	String title = "OurblackBox";
+    	String text = "실행중";
+    	String ns = Context.NOTIFICATION_SERVICE;
+    	NotificationManager mNotificationManager = (NotificationManager)getSystemService(ns);
+    	
+    	Intent intent = new Intent(this, RecordingActivity.class);
+    	PendingIntent pendingIntent = PendingIntent.getActivity(SettingActivity.this, 0, intent, 0);
+    	
+    	int icon = android.R.drawable.ic_input_add;
+    	CharSequence tickerText = ticker;
+    	long when = System.currentTimeMillis();
+    	Notification.Builder builder = new Notification.Builder(SettingActivity.this);
+    	builder.setSmallIcon(icon).setTicker(tickerText).setWhen(when);
+    	builder.setContentTitle(title);
+    	builder.setContentText(text);
+    	builder.setLights(Color.GREEN,500,500);
+    	builder.build();
+    	
+    	Notification notification = builder.getNotification();
+    	notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+    	notification.flags |= Notification.FLAG_INSISTENT;
+    	
+    	notification.setLatestEventInfo(this, title, text, pendingIntent);
+    	mNotificationManager.notify(MESSAGE_ID, notification);
+    	
+    	
+    	
+    	
     	
     }
-
+    
+    public void ledOff(){
+    	
+    	mNotificationManager.cancel(MESSAGE_ID);
+    
+    }
 
 
 
