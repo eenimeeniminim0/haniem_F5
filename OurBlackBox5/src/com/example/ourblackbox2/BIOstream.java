@@ -3,18 +3,21 @@ package com.example.ourblackbox2;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Vector;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
-public class BIOstream  {
+public class BIOstream {
 	
 	private String videoFileName = null;	
 	private ContentValues videoValues = null;
+	public static Intent intent;
 	String dir = null;
 	String name = "OurblackBox";
+	Vector<String> pathSaver= new Vector<String>(10,5);
 	
 	public String createName(long dateTaken){
 		Date date= new Date(dateTaken);
@@ -30,15 +33,20 @@ public class BIOstream  {
 		return dir;
     	
 	}
-	
-	public void fileScan()
-	{
-		Intent intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-		Uri uri= Uri.parse("file://"+createFolder());
-		intent.setData(uri);
-		//sendBroadcast(intent);
+	/*public void pathSave(String path){
 		
-	}
+		pathSaver.addElement(path);
+	}*/
+	
+	/*public void fileScan()
+	{
+		intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE); //패스 선언을 이 클래스에서!!
+		Uri uri= Uri.parse("file://"+BRecorder.Path);
+		intent.setData(uri);
+		
+	}*/
+	
+	
 
 	
 	/*void createVideoPath(long dateTaken) {

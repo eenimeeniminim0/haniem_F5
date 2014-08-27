@@ -1,73 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
- <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-    <FrameLayout android:layout_width="fill_parent" 
-        		android:layout_height="fill_parent">
-
-	        
-	  <com.example.ourblackbox2.BSurfaceView
-	      android:id="@+id/CameraPreview"
-	      android:layout_width="fill_parent"
-	      android:layout_height="fill_parent"
-	      />
-	    
-	      <LinearLayout 
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="horizontal"
-	        >
-   
-	        <ToggleButton 
-	            android:id="@+id/VideoCapture"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textOn="video stop"
-	            android:textOff="video start"
-	            />
-	        
-	        <ToggleButton 
-	            android:id="@+id/Snapshot"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:textOn="snapshot stop"
-	            android:textOff="snapshot start"
-	            />
-	        
-	        <Button 
-	            android:id="@+id/Tools"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:text="tool"
-	            />
-	             
-	    </LinearLayout>
-        
-    </FrameLayout>
-
-</LinearLayout>
-
-
-<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/FrameLayout1"
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="${relativePackage}.${activityClass}" >
-
-	  <com.example.ourblackbox2.BSurfaceView
-	      android:id="@+id/CameraPreview"
-	      android:layout_width="fill_parent"
-	      android:layout_height="fill_parent"
-	      />
-	    
-    <RelativeLayout
+    android:orientation="vertical" >
+   
+     
+    <com.example.ourblackbox2.BSurfaceView
+		android:id="@+id/CameraPreview"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	 />
+    
+     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-
-        <Button
+   
+	        
+	    <Button
             android:id="@+id/home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -80,7 +29,7 @@
             android:layout_toRightOf="@id/home"
             android:text="현재 녹화 상태 표시" />
 
-        <Button
+       <!--  <Button
             android:id="@+id/camera_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,14 +41,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/camera_switch"
-            android:text="캡쳐" />
+            android:text="캡쳐" />-->
 
-        <Button
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="녹화 시작/중지" />
+        <ToggleButton 
+	            android:id="@+id/VideoCapture"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentBottom="true"
+	            android:textOn="녹화 중지"
+	            android:textOff="녹화 시작"
+	            />
         
         <Button
             android:id="@+id/parking"
@@ -116,7 +67,8 @@
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@id/parking"
             android:text="사고 발생" />
-
-    </RelativeLayout>
-
-</FrameLayout>-->
+         
+	    	             
+	    </RelativeLayout>
+        
+</FrameLayout>

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import android.hardware.Camera;
-import android.media.AudioManager;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.util.Log;
@@ -12,47 +11,45 @@ import android.view.View;
 
 public class BRecorder
 {
-	
-	protected BIOstream biostream;
 	protected MediaRecorder bRecorder;
 	protected String filePath;	
 	protected File videoFile;
+	protected BIOstream biostream;
 	protected static String Path;
-	//
-	protected static int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
-	protected static int videoCurrentTime;//처음 시작 시간
+	protected static String File;
 	//
 	protected boolean isRecording;//현재녹화중인지나타내는것
 	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
-	protected static boolean isTimeChange;
+
 	
 	public BRecorder()
 	{
 		videoFile=null;
 		isRecording=false;
 		isVideotimerRunning=false;
-		isTimeChange=false;
 		Path="";
-		videoCurrentTime=0;
-		biostream = new BIOstream();
+		File="";
 		bRecorder= new MediaRecorder();
+		biostream=new BIOstream();
 	}
 	
+	// 동영상 설정 관련 메소드
 	public void setQuality()
 	{
 		if(SettingActivity.isButtonPushed==true)
-			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
-		else
 			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
+		else
+			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
 	}
 	
-	// 동영상촬영관련  메소드들.
-
 	
+	// 동영상 촬영 관련  메소드
 	public void initRecorder()
 	{
-		BSurfaceView.bSurface.setVisibility(View.VISIBLE);		
-		Path=biostream.createFolder()+"/"+biostream.createName(System.currentTimeMillis());
+		BSurfaceView.bSurface.setVisibility(View.VISIBLE);	
+		File=biostream.createFolder();
+		Path=File+"/"+biostream.createName(System.currentTimeMillis());
+		//biostream.pathSave(Path);
 		
 		if(bRecorder==null){
 			bRecorder= new MediaRecorder();
@@ -67,18 +64,16 @@ public class BRecorder
 		bRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 		bRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 		
-		//bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
-		
 		setQuality();
 		
-		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); //인코딩 어떻게 할건지
 		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 		//bRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 		//bRecorder.setVideoFrameRate(24);
 		//bRecorder.setVideoSize(720,480);
 		
-		bRecorder.setMaxDuration(50000);//최대캡쳐시간 50초
-		bRecorder.setMaxFileSize(5000000);//최대파일크기 5메가
+		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초
+		bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
@@ -115,20 +110,18 @@ public class BRecorder
 	
 		bRecorder.stop();
 		bRecorder.reset();
+		//fileScan();
 		//registerVideo();
 		isRecording=false;
-		videoCurrentTime=0;
 	}
 
 	public void stopRecorder()
 	{	
 		bRecorder.stop();
 		bRecorder.reset();
-		//registerVideo()
-		
-		biostream.fileScan();
+		//fileScan();
+		//registerVideo();
 		isVideotimerRunning=false;
-		videoCurrentTime=0;
 		bRecorder=null;
 		isRecording=false;
 		BSurfaceView.bSurface.getCamera().lock();//카메라객체 잠금
@@ -143,7 +136,7 @@ public class BRecorder
 			bRecorder=null;
 		}
 	}
-
+	
 }
 	
 

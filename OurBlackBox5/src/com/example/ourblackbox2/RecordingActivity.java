@@ -1,11 +1,12 @@
 package com.example.ourblackbox2;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -19,8 +20,8 @@ import android.widget.ToggleButton;
 
 public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
 	
-	private ToggleButton VideoCapture, SnapShot;
-	private Button Tools;
+	private ToggleButton VideoCapture;
+	private Button Home,Parking,Accident;
 	private BSensor bSensor;
 	private BThreadRecorder bThread;
 
@@ -43,22 +44,20 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 
 		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
-        SnapShot=(ToggleButton)findViewById(R.id.Snapshot);
-        Tools=(Button)findViewById(R.id.Tools);
-
+        Home=(Button)findViewById(R.id.home);
+        Parking=(Button)findViewById(R.id.parking);
+        Accident=(Button)findViewById(R.id.accident);
+        
         VideoCapture.setOnClickListener(this);
-        SnapShot.setOnClickListener(this);
-        Tools.setOnClickListener(this);
+        Home.setOnClickListener(this);
+        Parking.setOnClickListener(this);
+        Accident.setOnClickListener(this);
+        
         
       //센서관련
         BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        
-      //AudioManager mAudioManager = (AudioManager) getSystemService(AUDIO_SERVICE); //카메라 무음하려했는데 소리만 무음됨....
-	  //mAudioManager.setStreamVolume(AudioManager.STREAM_SYSTEM,0, 0);
-      //mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC) * 0.1), 0);
-
-		
+        	
 	}
 	
 
@@ -70,7 +69,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	case R.id.VideoCapture:
     		
     		if(VideoCapture.isChecked())
-    		{ 
+    		{
     			bThread.threadStart();
     			if (BSensor.accelerormeterSensor != null)
     	        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
@@ -81,18 +80,23 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		else
     		{
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
+       				bThread.threadStop();
+       				//fileScan();
+       				sendBroadcast(bThread.fileScan());
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
-    				bThread.threadStop();
     		}
       		break;
     		    		
-    	case R.id.Snapshot:
-    		Toast.makeText(this, "스냅샷이 될까요?", Toast.LENGTH_SHORT).show();
+    	case R.id.home:
+    		Toast.makeText(this, "뒤로 갈까요?", Toast.LENGTH_SHORT).show();
     		break;
     		
-    	case R.id.Tools:
-    		Toast.makeText(this, "도구", Toast.LENGTH_SHORT).show();
+    	case R.id.parking:
+    		Toast.makeText(this, "주차모드로 들어갈까요?", Toast.LENGTH_SHORT).show();
+    		
+    	case R.id.accident:
+    		Toast.makeText(this, "사고가 났나요?", Toast.LENGTH_SHORT).show();
     
     	}
     }
@@ -142,4 +146,17 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 	}
 	
+	/*public void fileScan()
+	{
+		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!
+		Uri uri= Uri.parse("file://"+BRecorder.File);
+		intent.setData(uri);
+		sendBroadcast(intent);
+		
+		//sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+		
+	}*/
+	
+	
+
 }
