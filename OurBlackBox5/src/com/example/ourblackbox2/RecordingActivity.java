@@ -82,9 +82,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     				Toast.makeText(this, "ºñµð¿ÀÄ¸ÃÄOff", Toast.LENGTH_SHORT).show();
        				bThread.threadStop();
        				//fileScan();
+       				
+       				
+       				
        				sendBroadcast(bThread.fileScan());
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
+    		        	
+       				
     		}
       		break;
     		    		
