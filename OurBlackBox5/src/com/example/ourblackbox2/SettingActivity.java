@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -20,10 +21,10 @@ import android.widget.ToggleButton;
 public class SettingActivity extends ActionBarActivity implements OnClickListener {
 	
 	private ToggleButton bQuality;
-	private Button bResolution;
-	private Button bTerm;
+	private ImageButton bResolution;
+	private ImageButton bTerm;
 	private ToggleButton bLED;
-	private Button bAudio;
+	private ImageButton bAudio;
 	protected static boolean isButtonPushed=false;
 	//private Button bBack;
 
@@ -50,11 +51,11 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
 		remote.setCommand(bQCommand);		
 		mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		
-		bQuality=(ToggleButton)findViewById(R.id.button1);
-		bResolution=(Button)findViewById(R.id.button2);
-		bTerm=(Button)findViewById(R.id.button3);
-		bLED=(ToggleButton)findViewById(R.id.button4);
-		bAudio=(Button)findViewById(R.id.button5);
+		bQuality=(ToggleButton)findViewById(R.id.button01);
+		bResolution=(ImageButton)findViewById(R.id.button02);
+		bTerm=(ImageButton)findViewById(R.id.button03);
+		bLED=(ToggleButton)findViewById(R.id.button04);
+		bAudio=(ImageButton)findViewById(R.id.button05);
 		
 		bQuality.setOnClickListener(this);
 		bLED.setOnClickListener(this);
@@ -70,7 +71,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     	
     	switch(v.getId()){
     	
-    	case R.id.button1:
+    	case R.id.button01:
     		//녹화품질
     		 if(bQuality.isChecked())
     		 {
@@ -85,14 +86,14 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     		 }
     		break;
     		    		
-    	case R.id.button2:
+    	case R.id.button02:
     		//화면 해상도
     		break;
     		
-    	case R.id.button3:
+    	case R.id.button03:
     		//저장설정
     	
-    	case R.id.button4:
+    	case R.id.button04:
     		//LED
     		if(bLED.isChecked()){
     			
@@ -109,7 +110,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     		
     		//무선네트워크 설정
 
-    	case R.id.button5:
+    	case R.id.button05:
     
     	}
     }
