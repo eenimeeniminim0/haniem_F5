@@ -3,7 +3,7 @@ package com.example.ourblackbox2;
 import android.util.Log;
 
 
-public class BQualityCommand implements Command {
+/*public class BQualityCommand implements Command {
 	
 	public void execute(){
 		SettingActivity.isButtonPushed=true;
@@ -14,6 +14,6 @@ public class BQualityCommand implements Command {
 		SettingActivity.isButtonPushed=false;
 	}
 
-}
+}*/
 
 

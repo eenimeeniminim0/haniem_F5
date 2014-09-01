@@ -32,6 +32,12 @@
             android:name=".SettingActivity"
             android:screenOrientation="landscape"
             ></activity>
+        <activity android:name="SensorSetting"></activity>
+        <activity android:name="StorageSetting"></activity>
+        <activity android:name="RecordingSetting"></activity>
+        <activity android:name="NoticeSetting"></activity>
+        <activity android:name="GpsSetting"></activity>
+        <activity android:name="EmergencySetting"></activity>
     </application>
     
     <!-- permissions -->
