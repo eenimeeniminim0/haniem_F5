@@ -34,6 +34,7 @@ public class BRecorder
 	}
 	
 	// 동영상 설정 관련 메소드
+	/*
 	public void setQuality()
 	{
 		if(SettingActivity.isButtonPushed==true)
@@ -41,7 +42,7 @@ public class BRecorder
 		else
 			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
 	}
-	
+	*/
 	
 	// 동영상 촬영 관련  메소드
 	public void initRecorder()
@@ -64,7 +65,8 @@ public class BRecorder
 		bRecorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
 		bRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 		
-		setQuality();
+		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
+		//setQuality();
 		
 		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); //인코딩 어떻게 할건지
 		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);

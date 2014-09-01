@@ -31,8 +31,29 @@ public class BIOstream {
 		File folder = new File(dir);
 		folder.mkdirs();
 		return dir;
+    		
+	}
+	
+	/*public String exCreateFolder(){
+		
+		String dir=Environment.getExternalStorageDirectory().getPath() + "/mnt/sdcard" + "/" + name;
+		File folder = new File(dir);
+		folder.mkdirs();
+		return dir;
     	
 	}
+	
+	public String inCreateFolder(){
+		
+		String dir2=Environment.getExternalStorageDirectory().getPath() + "/" + name;
+		File folder = new File(dir2);
+		folder.mkdirs();
+		return dir2;
+    		
+	}
+	*/
+	
+	
 	/*public void pathSave(String path){
 		
 		pathSaver.addElement(path);
