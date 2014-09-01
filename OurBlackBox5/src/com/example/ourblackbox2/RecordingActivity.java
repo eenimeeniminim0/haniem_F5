@@ -1,7 +1,12 @@
 package com.example.ourblackbox2;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -24,6 +29,10 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private Button Home,Parking,Accident;
 	private BSensor bSensor;
 	private BThreadRecorder bThread;
+	
+	private Context context; 
+	private final static int MESSAGE_ID = 1;
+	private NotificationManager mNotificationManager = null;
 
 	
 	@Override
@@ -52,6 +61,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         Home.setOnClickListener(this);
         Parking.setOnClickListener(this);
         Accident.setOnClickListener(this);
+		mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         
         
       //센서관련
@@ -74,6 +84,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     			if (BSensor.accelerormeterSensor != null)
     	        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     			Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
+    			ledOn();
     			
     		}
     		
@@ -156,6 +167,47 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		//sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
 		
 	}*/
+	
+    public void ledOn(){
+    	
+    	String ticker = "OurblackBox가 실행중입니다";
+    	String title = "OurblackBox";
+    	String text = "실행중";
+    	String ns = Context.NOTIFICATION_SERVICE;
+    	NotificationManager mNotificationManager = (NotificationManager)getSystemService(ns);
+    	
+    	Intent intent = new Intent(this, RecordingActivity.class);
+    	PendingIntent pendingIntent = PendingIntent.getActivity(RecordingActivity.this, 0, intent, 0);
+    	
+    	int icon = android.R.drawable.ic_input_add;
+    	CharSequence tickerText = ticker;
+    	long when = System.currentTimeMillis();
+    	Notification.Builder builder = new Notification.Builder(RecordingActivity.this);
+    	builder.setSmallIcon(icon).setTicker(tickerText).setWhen(when);
+    	builder.setContentTitle(title);
+    	builder.setContentText(text);
+    	builder.setLights(Color.GREEN,500,500);
+    	builder.build();
+    	
+    	Notification notification = builder.getNotification();
+    	notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+    	notification.flags |= Notification.FLAG_INSISTENT;
+    	//notification.flags |= Notification.FLAG_AUTO_CANCEL; //알림 클릭시 자동으로 알림 취소
+    	
+    	notification.setLatestEventInfo(this, title, text, pendingIntent);
+    	mNotificationManager.notify(MESSAGE_ID, notification);
+    	
+    	
+    	
+    	
+    	
+    }
+    
+    public void ledOff(){
+    	
+    	mNotificationManager.cancel(MESSAGE_ID);
+    
+    }
 	
 	
 

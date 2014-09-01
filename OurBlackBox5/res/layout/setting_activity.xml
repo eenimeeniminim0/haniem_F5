@@ -13,17 +13,19 @@
         android:weightSum="1" >
 
 
-     <ToggleButton 
+     <ImageButton 
 	    android:id="@+id/button01"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 	    android:layout_weight="0.5"
+	    android:src= "@drawable/sensor_button" 
 	    android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-	    android:textOn="quality stop"
-	    android:textOff="quality start"/>
+	    android:scaleType="centerCrop"
+        android:background="#a0000000"
+	    />
         
          <ImageButton
             android:id="@+id/button02"
@@ -59,17 +61,19 @@
           android:scaleType="centerCrop"
           android:background="#a0000000"/>
 
-     <ToggleButton 
+     <ImageButton 
 	    android:id="@+id/button04"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 	    android:layout_weight="0.5"
+	    android:src= "@drawable/sensor_button" 
 	    android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-	    android:textOn="LEDoff"
-	    android:textOff="LEDon"/>
+	    android:scaleType="centerCrop"
+        android:background="#a0000000"
+	    />
     </LinearLayout>
 
     <LinearLayout

@@ -20,18 +20,18 @@ import android.widget.ToggleButton;
 
 public class SettingActivity extends ActionBarActivity implements OnClickListener {
 	
-	private ToggleButton bQuality;
+	private ImageButton bQuality;
 	private ImageButton bResolution;
 	private ImageButton bTerm;
-	private ToggleButton bLED;
+	private ImageButton bLED;
 	private ImageButton bAudio;
 	protected static boolean isButtonPushed=false;
 	//private Button bBack;
 
-	private Context context; 
+/*	private Context context; 
 	private final static int MESSAGE_ID = 1;
 	private NotificationManager mNotificationManager = null;
-
+*/
 	SettingControl remote= new SettingControl();
 	BQualityCommand bQCommand= new BQualityCommand();	
 
@@ -49,12 +49,12 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
 		Toast.makeText(getApplicationContext(), "설정액티비티 시작", Toast.LENGTH_SHORT).show();
 		
 		remote.setCommand(bQCommand);		
-		mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+	//	mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		
-		bQuality=(ToggleButton)findViewById(R.id.button01);
+		bQuality=(ImageButton)findViewById(R.id.button01);
 		bResolution=(ImageButton)findViewById(R.id.button02);
 		bTerm=(ImageButton)findViewById(R.id.button03);
-		bLED=(ToggleButton)findViewById(R.id.button04);
+		bLED=(ImageButton)findViewById(R.id.button04);
 		bAudio=(ImageButton)findViewById(R.id.button05);
 		
 		bQuality.setOnClickListener(this);
@@ -73,7 +73,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     	
     	case R.id.button01:
     		//녹화품질
-    		 if(bQuality.isChecked())
+    		/* if(bQuality.isChecked())
     		 {
     			 Toast.makeText(this, "녹화품질On", Toast.LENGTH_SHORT).show();
     	    		remote.selected();
@@ -83,7 +83,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     			 Toast.makeText(this, "녹화품질Off", Toast.LENGTH_SHORT).show();
     			 remote.unSelected();
     			 
-    		 }
+    		 }*/
     		break;
     		    		
     	case R.id.button02:
@@ -95,7 +95,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     	
     	case R.id.button04:
     		//LED
-    		if(bLED.isChecked()){
+    		/*if(bLED.isChecked()){
     			
     			ledOn();
     			
@@ -106,7 +106,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     		
     		}
       		break;
-      		
+      		*/
     		
     		//무선네트워크 설정
 
@@ -146,7 +146,7 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     	bNotificationManager.notify(MESSAGE_ID, noti);
     }
  */
-    public void ledOn(){
+ /*   public void ledOn(){
     	
     	String ticker = "OurblackBox가 실행중입니다";
     	String title = "OurblackBox";
@@ -186,6 +186,6 @@ public class SettingActivity extends ActionBarActivity implements OnClickListene
     
     }
 
-
+*/
 
 }
