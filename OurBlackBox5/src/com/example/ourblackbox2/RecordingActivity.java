@@ -46,16 +46,20 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//화면 가로로 설정
         
         setContentView(R.layout.recording);//레코딩 레이아웃
+        
 		Toast.makeText(getApplicationContext(), "레코딩액티비티 시작", Toast.LENGTH_SHORT).show();
 		
 		bSensor=new BSensor();
 		bThread=new BThreadRecorder();
 
-		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);		
+		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
+		
+		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
         Home=(Button)findViewById(R.id.home);
         Parking=(Button)findViewById(R.id.parking);
         Accident=(Button)findViewById(R.id.accident);
+        
         
         VideoCapture.setOnClickListener(this);
         Home.setOnClickListener(this);
@@ -91,11 +95,12 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		else
     		{
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
-       				bThread.threadStop();
-       				//fileScan();
+       				bThread.threadStop();	
        				sendBroadcast(bThread.fileScan());
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
+    		        	
+       				
     		}
       		break;
     		    		
