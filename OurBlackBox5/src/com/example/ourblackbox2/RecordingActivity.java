@@ -13,6 +13,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -34,16 +35,26 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private final static int MESSAGE_ID = 1;
 	private NotificationManager mNotificationManager = null;
 
+	PowerManager pm;
+	PowerManager.WakeLock wakeLock;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
         
+
+		
+		
         requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 없애기
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);//화면풀스크린
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//화면 가로로 설정
+		
+		//pm=(PowerManager)getSystemService(Context.POWER_SERVICE);
+		
+		//wakeLock=pm.newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, "MY TAG");
+		//wakeLock.acquire();
         
         setContentView(R.layout.recording);//레코딩 레이아웃
         
@@ -122,6 +133,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     {
     	super.onDestroy();
     	bThread.getBRecorder().destroyRecorder();
+    	//wakeLock.release();
     }
 
     @Override

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="저장 설정">
+        <ListPreference 
+            android:key="storageLocation"
+            android:title="저장 위치"
+           	android:summary="저장할 위치를 선택하세요."
+           	android:dialogTitle="저장 위치 선택"
+           	android:entries="@array/storageLocation_value"
+           	android:entryValues="@array/storageLocation_key"/>
+        
+        <ListPreference 
+            android:key="storageMaximum"
+            android:title="저장 최대 용량"
+           	android:summary="저장 최대 용량를 선택하세요."
+           	android:dialogTitle="저장 최대 용량 선택"
+           	android:entries="@array/storageMaximum_value"
+           	android:entryValues="@array/storageMaximum_key"/>
+    </PreferenceCategory>
+</PreferenceScreen>

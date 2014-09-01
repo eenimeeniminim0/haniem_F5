@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="촬영 설정" >
+        <ListPreference
+            android:dialogTitle="녹화 품질"
+            android:entries="@array/recQuality_value"
+            android:entryValues="@array/recQuality_key"
+            android:key="recQuality"
+            android:summary="녹화 품질을 선택하세요."
+            android:title="녹화 품질" />
+        <ListPreference
+            android:dialogTitle="화면 해상도"
+            android:entries="@array/resolution_value"
+            android:entryValues="@array/resolution_key"
+            android:key="resolution"
+            android:summary="화면 해상도를 선택하세요."
+            android:title="화면 해상도" />
+        <ListPreference
+            android:dialogTitle="녹화 주기"
+            android:entries="@array/recPeriod_value"
+            android:entryValues="@array/recPeriod_key"
+            android:key="recPeriod"
+            android:summary="녹화 주기를 선택하세요."
+            android:title="녹화 주기" />
+
+        <CheckBoxPreference
+            android:key="recLed"
+            android:summary="촬영시 LED를 사용할지 설정합니다."
+            android:title="촬영시 LED 사용" />
+        <CheckBoxPreference
+            android:key="recAudio"
+            android:summary="오디오 녹음을 사용할지 설정합니다."
+            android:title="오디오 녹음" />
+        <CheckBoxPreference
+            android:key="recBackground"
+            android:summary="백그라운드 녹화를 사용할지 설정합니다."
+            android:title="백그라운드 녹화" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory android:title="위급상황 설정" >
+        <MultiSelectListPreference
+            android:dialogTitle="연락 수단 선택"
+            android:entries="@array/emerOccur_value"
+            android:entryValues="@array/emerOccur_key"
+            android:key="emerOccur"
+            android:summary="연락 수단을 선택하세요."
+            android:title="위급상황시 연락 수단" />
+
+        <EditTextPreference
+            android:key="emerPhonenum"
+            android:summary="전화번호를 설정합니다."
+            android:title="위급상황시 연결한 전화번호 설정" />
+        <EditTextPreference
+            android:key="emerMessage"
+            android:summary="보낼 문자 메세지를 설정합니다."
+            android:title="문자 메세지 설정" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

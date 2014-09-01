@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory 
+        android:title="센서 설정">
+        <ListPreference 
+            android:key="sensitivity"
+            android:title="충격 감지 센서"
+           	android:summary="충격 민감도를 선택하세요."
+           	android:dialogTitle="충격 민감도 선택"
+           	android:entries="@array/sensitivity_value"
+           	android:entryValues="@array/sensitivity_key"/>
+        
+        <ListPreference 
+            android:key="illumination"
+            android:title="조도 센서"
+           	android:summary="밝기를 선택하세요."
+           	android:dialogTitle="밝기 선택"
+           	android:entries="@array/illumination_value"
+           	android:entryValues="@array/illumination_key"/>
+    </PreferenceCategory>
+
+    
+</PreferenceScreen>

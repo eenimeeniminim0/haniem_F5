@@ -1,26 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    
-     <!-- 메인액티비티 전용아이디들 -->
-    
-    <item type="id" name="Recording"/>
-    <item type="id" name="Preference"/>
-    <item type="id" name="PhotoGallery"/>
-    <item type="id" name="VideoGallery"/>
-    
+    <!-- 메인액티비티 전용아이디들 -->
+
+    <item name="Recording" type="id"/>
+    <item name="Preference" type="id"/>
+    <item name="PhotoGallery" type="id"/>
+    <item name="VideoGallery" type="id"/>
+
     <!-- 레코딩액티비티전용아이디들 -->
-    
-    <item type="id" name="CameraPreview"/>
-    <item type="id" name="VideoCapture"/>
-    <item type="id" name="Snapshot"/>
-    <item type="id" name="Tools"/>
-   
+
+    <item name="CameraPreview" type="id"/>
+    <item name="VideoCapture" type="id"/>
+    <item name="Snapshot" type="id"/>
+    <item name="Tools" type="id"/>
+
     <!-- 갤러리 리스트뷰 -->
-    <item type="id" name="ListView"/>
-    <item type="id" name="ImageView"/>
-    <item type="id" name="TextView01"/>
-    <item type="id" name="TextView"/>
-    
-    
+    <item name="ListView" type="id"/>
+    <item name="ImageView" type="id"/>
+    <item name="TextView01" type="id"/>
+    <item name="TextView" type="id"/>
+
+    <!-- 설정 액티비티 전용 아이디들 -->
+
+    <item name="sensor_button" type="id"/>
+    <item name="recording_button" type="id"/>
+    <item name="storage_button" type="id"/>
+    <item name="gps_button" type="id"/>
+    <item name="emergency_button" type="id"/>
+    <item name="notice_button" type="id"/>
+    <item name="update_button" type="id"/>
+
 </resources>
