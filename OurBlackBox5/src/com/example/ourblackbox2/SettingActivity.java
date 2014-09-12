@@ -2,8 +2,11 @@ package com.example.ourblackbox2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -14,6 +17,7 @@ public class SettingActivity extends Activity implements OnClickListener{
 
 	ImageButton sensorButton, recordingButton, storageButton, gpsButton,
 			emergencyButton, noticeButton;
+	
 
 	/** Called when the activity is first created. */
 	@Override
@@ -41,6 +45,7 @@ public class SettingActivity extends Activity implements OnClickListener{
 		gpsButton.setOnClickListener(this);
 		emergencyButton.setOnClickListener(this);
 		noticeButton.setOnClickListener(this);
+		
 
 	}
 
@@ -70,4 +75,37 @@ public class SettingActivity extends Activity implements OnClickListener{
 		}
 
 	}
+	
+	public void onResume() {
+		super.onResume();
+		
+		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this); // 이런식으로 값을 가져와야함....
+		
+		/*--------------------녹화설정--------------------------------------*/
+		Log.v("녹화 품질이 바뀌나요?","궁금합니당="+prefs.getString("recQuality", "<unset>"));
+		BRecordingSetting.recQuality=prefs.getString("recQuality", "<unset>");
+		Log.v("값이 들어갔나용?","궁금합니당="+BRecordingSetting.recQuality);
+		
+		Log.v("녹화 시간이 바뀌나요?","궁금합니당="+prefs.getString("recPeriod", "<unset>"));
+		BRecordingSetting.recPeriod=prefs.getString("recPeriod", "<unset>");
+		Log.v("값이 들어갔나용?","궁금합니당="+BRecordingSetting.recPeriod);
+		
+		Log.v("충격 감도가 바뀌나요?","궁금합니당="+prefs.getString("sensitivity", "<unset>"));
+		BSensorSetting.sensitivity=prefs.getString("sensitivity", "<unset>");
+		Log.v("값이 들어갔나용?","궁금합니당="+BSensorSetting.sensitivity);
+		
+		Log.v("저장소의 위치가 바뀌나요?","궁금합니당="+prefs.getString("storageLocation", "<unset>"));
+		BStorageSetting.storageLocation=prefs.getString("storageLocation", "<unset>");
+		Log.v("값이 들어갔나용?","궁금합니당="+BStorageSetting.storageLocation);
+		
+		
+		//checkbox.setText(new Boolean(prefs.getBoolean("checkbox", false))
+		//		.toString());
+		//ringtone.setText(prefs.getString("ringtone", "<unset>"));
+		//checkbox2.setText(new Boolean(prefs.getBoolean("checkbox2", false))
+		//		.toString());
+		//text.setText(prefs.getString("text", "<unset>"));
+		//list.setText(prefs.getString("list", "<unset>"));
+	}
+
 }

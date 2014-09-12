@@ -3,16 +3,18 @@ package com.example.ourblackbox2;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.ourblackbox2.GalleryActivity.VideoViewInfo;
-
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ourblackbox2.GalleryActivity.VideoViewInfo;
 
 
 public class VideoGalleryAdapter extends BaseAdapter{
@@ -51,6 +53,8 @@ public class VideoGalleryAdapter extends BaseAdapter{
 		
 		return videoRow;
 	}
+	
+
 	
 
 }

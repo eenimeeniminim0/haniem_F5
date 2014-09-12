@@ -21,19 +21,23 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
 	
 	private ToggleButton VideoCapture;
-	private Button Home,Parking,Accident;
+	private Button Home,Accident;
 	private BSensor bSensor;
-	private BThreadRecorder bThread;
+	private TextView recordState;
 	
-	private Context context; 
+	private BThreadRecorder bThread;
+	public static String bRecordingState;
+	public static String a;
 	private final static int MESSAGE_ID = 1;
 	private NotificationManager mNotificationManager = null;
+	
 
 	PowerManager pm;
 	PowerManager.WakeLock wakeLock;
@@ -42,10 +46,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-        
-
-		
-		
+        		
         requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 없애기
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);//화면풀스크린
@@ -68,18 +69,17 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
         Home=(Button)findViewById(R.id.home);
-        Parking=(Button)findViewById(R.id.parking);
         Accident=(Button)findViewById(R.id.accident);
+        recordState = (TextView)findViewById(R.id.record_state);
         
         
         VideoCapture.setOnClickListener(this);
         Home.setOnClickListener(this);
-        Parking.setOnClickListener(this);
         Accident.setOnClickListener(this);
 		mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         
-        
-      //센서관련
+		recordState.setText("촬영 준비");
+		//센서관련
         BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         	
@@ -96,6 +96,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		if(VideoCapture.isChecked())
     		{
     			bThread.threadStart();
+    			recordState.setText("촬영 중");
     			if (BSensor.accelerormeterSensor != null)
     	        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     			Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
@@ -106,24 +107,25 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		else
     		{
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
-       				bThread.threadStop();	
-       				sendBroadcast(bThread.fileScan());
+    				recordState.setText("촬영 준비");
+    				bThread.threadStop();	
+       				//sendBroadcast(bFileScan.fileScan());
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
-    		        	
-       				
+    		        				
     		}
       		break;
     		    		
     	case R.id.home:
     		Toast.makeText(this, "뒤로 갈까요?", Toast.LENGTH_SHORT).show();
+    		Intent intent=new Intent(this,MainActivity.class);
+	    	startActivity(intent);
     		break;
     		
-    	case R.id.parking:
-    		Toast.makeText(this, "주차모드로 들어갈까요?", Toast.LENGTH_SHORT).show();
-    		
     	case R.id.accident:
+    		recordState.setText("사고 모드");
     		Toast.makeText(this, "사고가 났나요?", Toast.LENGTH_SHORT).show();
+    		//삼총사가 만든 ....?
     
     	}
     }
@@ -150,12 +152,12 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	                bSensor.z = event.values[SensorManager.DATA_Z];
 	 
 	                bSensor.speed = Math.abs(bSensor.x + bSensor.y + bSensor.z - bSensor.lastX - bSensor.lastY - bSensor.lastZ) / gabOfTime * 10000;
-	 
 	                if (bSensor.speed > BSensor.SHAKE_THRESHOLD) {//속도가 지정한 임계치보다 높으면
 	                    // 이벤트발생!!
+	                	
 	                	Log.v("모래반지 빵야빵야","허허허허="+20000000);
 	                	BSensor.isSensorDetected=true;
-	                	//Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
+	                	Toast.makeText(getApplicationContext(),"가속도센서감지됨", Toast.LENGTH_SHORT).show();
 	                }
 	 
 	                bSensor.lastX = event.values[BSensor.DATA_X];
@@ -174,16 +176,17 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 	}
 	
-	/*public void fileScan()
+
+	public void scanFile(String path)
 	{
-		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!
-		Uri uri= Uri.parse("file://"+BRecorder.File);
+		Intent intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE); //패스 선언을 이 클래스에서!!
+		Uri uri= Uri.parse("file://"+BRecorder.Path);
 		intent.setData(uri);
 		sendBroadcast(intent);
+	}
 		
-		//sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-		
-	}*/
+	/////LED//////////
+	
 	
     public void ledOn(){
     	

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory 
+        android:title="업데이트">
+        
+        <Preference 
+            android:title="버전설명"
+            android:summary="현재 버전 : OurBlackBox_V1.3 //설정 액티비티 추가"
+            android:key="latest_version" >
+         </Preference>
+         
+        <Preference 
+            android:title="버전 업데이트"
+            android:summary="클릭 시 최신 버전으로 업데이트를 실행합니다.// 는 뻥이고 메인 액티비티로 넘어간당"
+            android:key="version_update" >
+         </Preference>
+                        
+   </PreferenceCategory>
+</PreferenceScreen>
