@@ -6,6 +6,7 @@ import java.io.IOException;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -16,7 +17,8 @@ public class BRecorder
 	protected File videoFile;
 	protected BIOstream biostream;
 	protected static String Path;
-	protected static String File;
+	protected static String Folder;
+	protected static String Name;
 	//
 	protected boolean isRecording;//현재녹화중인지나타내는것
 	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
@@ -28,7 +30,8 @@ public class BRecorder
 		isRecording=false;
 		isVideotimerRunning=false;
 		Path="";
-		File="";
+		Folder="";
+		Name="";
 		bRecorder= new MediaRecorder();
 		biostream=new BIOstream();
 	}
@@ -44,12 +47,30 @@ public class BRecorder
 	}
 	*/
 	
+	public void setStorageLocation()
+	{
+		if(BDirSetting.storageLocation.equals("internal")){
+			Folder=biostream.createInternalFolder();
+			Name=biostream.createName(System.currentTimeMillis());
+			Path=Folder+"/"+Name;
+			Log.v("내장메모리에저장되나용?","궁금합니당="+BDirSetting.storageLocation);
+			
+		}
+		else{
+			Folder=biostream.createExternalFolder();
+			Name=biostream.createName(System.currentTimeMillis());
+			Path=Folder+"/"+Name;
+			Log.v("외장메모리에저장되나용?","궁금합니당="+BDirSetting.storageLocation);
+			
+		}		
+	}
+	
+	
 	// 동영상 촬영 관련  메소드
 	public void initRecorder()
 	{
 		BSurfaceView.bSurface.setVisibility(View.VISIBLE);	
-		File=biostream.createFolder();
-		Path=File+"/"+biostream.createName(System.currentTimeMillis());
+		setStorageLocation();
 		//biostream.pathSave(Path);
 		
 		if(bRecorder==null){

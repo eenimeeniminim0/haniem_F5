@@ -11,7 +11,8 @@ public class BThreadRecorder  {
 	private Thread videotimerUpdate;
 	private Handler videotimerUpdateHandler;
 	private BRecorder bRecorder;
-	protected  boolean isTimeChange;
+	private BIOstream biostream;
+	static  boolean isTimeChange;
 	protected  int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
 	protected  int videoCurrentTime;//처음 시작 시간
 	
@@ -19,6 +20,7 @@ public class BThreadRecorder  {
 	public BThreadRecorder()
 	{
 		bRecorder=new BRecorder();
+		biostream=new BIOstream(); 
 		videotimerUpdateHandler=new Handler();
 		videoCurrentTime=0;
 		isTimeChange=false;
@@ -43,6 +45,7 @@ public class BThreadRecorder  {
 					Log.v("videoCurrentTime","time="+videoCurrentTime);
 					videoCurrentTime++;
 					videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
+					biostream.rename();
 					
 				}else{
 					bRecorder.resetRecorder();
@@ -108,7 +111,7 @@ public class BThreadRecorder  {
 	public Intent fileScan()
 	{
 		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!
-		Uri uri= Uri.parse("file://"+BRecorder.File);
+		Uri uri= Uri.parse("file://"+BRecorder.Folder);
 		intent.setData(uri);
 		return intent;
 		

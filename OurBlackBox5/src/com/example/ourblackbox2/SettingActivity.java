@@ -2,8 +2,11 @@ package com.example.ourblackbox2;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -69,5 +72,16 @@ public class SettingActivity extends Activity implements OnClickListener{
 			startActivity(intent);
 		}
 
+	}
+	
+	public void onResume() {
+		super.onResume();
+		
+		SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this); // 이런식으로 값을 가져와야함....
+		
+		/*--------------------저장설정--------------------------------------*/
+		
+		BDirSetting.storageLocation=prefs.getString("storageLocation", "<unset>");
+		
 	}
 }
