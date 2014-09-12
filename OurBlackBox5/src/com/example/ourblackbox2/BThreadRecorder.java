@@ -15,22 +15,45 @@ public class BThreadRecorder  {
 	static  boolean isTimeChange;
 	protected  int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
 	protected  int videoCurrentTime;//처음 시작 시간
-	
+	public BTimer bTimer;	
+	protected  int REC_PERIOD;
+
+
 	
 	public BThreadRecorder()
 	{
 		bRecorder=new BRecorder();
 		biostream=new BIOstream(); 
+		bTimer=new BTimer();
 		videotimerUpdateHandler=new Handler();
 		videoCurrentTime=0;
 		isTimeChange=false;
 		
 	}
+	
+	//동영상 녹화시간 설정 메소드
+	
+	public void setRecPeriod()
+	{
+		if(BRecordingSetting.recPeriod.equals("1min"))
+			REC_PERIOD=5;
+		
+		else if(BRecordingSetting.recPeriod.equals("3min"))
+			REC_PERIOD=10;
+
+		else
+			REC_PERIOD=15;
+		
+	}
 	public void threadStart()
 	{
+		setRecPeriod();
 		Log.v("스레드님제발요?","울고싶다?="+20000);
 		videotimerUpdate= new Thread(new Runnable(){
+			
 			int i=0;
+			//bTimer.start();
+	
 			public void run(){   
 	
 				if(videoCurrentTime <= checkThreadTime(BSensor.isSensorDetected)){
@@ -43,18 +66,22 @@ public class BThreadRecorder  {
 						bRecorder.isVideotimerRunning=true;
 					}
 					Log.v("videoCurrentTime","time="+videoCurrentTime);
+					//RecordingActivity.bRecordingState=(String)ongoingTime-startTime;
 					videoCurrentTime++;
 					videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
+					
 					biostream.rename();
 					
+
 				}else{
 					bRecorder.resetRecorder();
-					//fileScan();
+					fileScan();
 					videoCurrentTime=0;
 					BSensor.isSensorDetected=false;
 					isTimeChange=false;
 					i++;
-					videotimerUpdateHandler.post(videotimerUpdate);		
+					videotimerUpdateHandler.post(videotimerUpdate);	
+					
 				}
 			}
 		});
@@ -70,33 +97,34 @@ public class BThreadRecorder  {
 			bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
 			videotimerUpdate.interrupt();
 			bRecorder.stopRecorder();
-			//fileScan();
+			fileScan();
 			videoCurrentTime=0;
 			BSensor.isSensorDetected=false;
 		}
 
 	}
-
+	
+	
 	
 	public int checkThreadTime(boolean isSensorDetected)
 	{
-		if(isSensorDetected && SECONDS_BETWEEN_VIDEO==15){
+		if(isSensorDetected && SECONDS_BETWEEN_VIDEO==REC_PERIOD){
 			isTimeChange=true;
 			BSensor.isSensorDetected=false;
-			SECONDS_BETWEEN_VIDEO=videoCurrentTime+15;
+			SECONDS_BETWEEN_VIDEO=videoCurrentTime+REC_PERIOD;
 				return SECONDS_BETWEEN_VIDEO;
 		}
-		else if(isSensorDetected && SECONDS_BETWEEN_VIDEO!=15){
+		else if(isSensorDetected && SECONDS_BETWEEN_VIDEO!=REC_PERIOD){
 			isTimeChange=true;
 			BSensor.isSensorDetected=false;
-			SECONDS_BETWEEN_VIDEO=videoCurrentTime+15;
+			SECONDS_BETWEEN_VIDEO=videoCurrentTime+REC_PERIOD;
 				return SECONDS_BETWEEN_VIDEO;
 		}
-		else if(!isSensorDetected && SECONDS_BETWEEN_VIDEO!=15){
+		else if(!isSensorDetected && SECONDS_BETWEEN_VIDEO!=REC_PERIOD){
 			if(isTimeChange){
 				return SECONDS_BETWEEN_VIDEO;
 			}else{	
-				SECONDS_BETWEEN_VIDEO=15;
+				SECONDS_BETWEEN_VIDEO=REC_PERIOD;
 					return SECONDS_BETWEEN_VIDEO;
 			}
 		}
@@ -104,10 +132,12 @@ public class BThreadRecorder  {
 			return SECONDS_BETWEEN_VIDEO;
 	}
 	
+	
 	public BRecorder getBRecorder(){
 		return bRecorder;
 	}
 	
+
 	public Intent fileScan()
 	{
 		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!

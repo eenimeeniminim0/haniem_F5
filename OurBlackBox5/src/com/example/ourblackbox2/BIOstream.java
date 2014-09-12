@@ -21,6 +21,8 @@ public class BIOstream {
 	String dir = null;
 	String Edir = null;
 	String name = "OurblackBox";
+
+	
 	Vector<String> pathSaver= new Vector<String>(10,5);
 	
 	public String getExternalMounts(){
@@ -112,6 +114,7 @@ public class BIOstream {
 		Efolder.mkdirs();
 		//Log.v("외부 경로가 아디인가요1?","궁금합니당="+Edir);
 		return Edir;
+
 	}
 	
 	public void rename(){
@@ -123,6 +126,79 @@ public class BIOstream {
 			before.renameTo(after);
 		}
 	}
+    
+	
+	/*public void pathSave(String path){
+		
+		pathSaver.addElement(path);
+	}*/
+	
+	/*public void fileScan()
+	{
+		intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE); //패스 선언을 이 클래스에서!!
+		Uri uri= Uri.parse("file://"+BRecorder.Path);
+		intent.setData(uri);
+		
+	}*/
+	
+	
+
+	
+	/*void createVideoPath(long dateTaken) {
+		String dirName = "OurBlackBox";
+		File cameraDir = new File(dirName);
+    	cameraDir.mkdirs();
+		String title = createName(dateTaken);
+		String filename = title;
+		ContentValues values = new ContentValues(8);
+		values.put(Video.Media.TITLE, title);
+		values.put(Video.Media.DISPLAY_NAME, title + ".mp4");
+		values.put(Video.Media.DATE_TAKEN, dateTaken);
+		values.put(Video.Media.MIME_TYPE, "video/mp4");
+		values.put(Video.Media.DATA, filename);
+		videoFileName = filename;
+		videoValues = values;
+	}*/
+	
+	/*	private void stopRecording() {
+	Log.d(Config.TAG, toString() + ".stopRecording(): stop recording...");
+	recorder.stop();
+	Log.d(Config.TAG, toString() + ".stopRecording(): Recorded video filename:" + videoFileName);
+
+	videoValues.put(Video.Media.DURATION, System.currentTimeMillis()
+			- recordingStarted);
+	videoValues.put(Video.Media.SIZE, new File(videoFileName).length());
+	Uri videoUri = act_.getContentResolver().insert(
+			MediaStore.Video.Media.EXTERNAL_CONTENT_URI, videoValues);
+	if (videoUri == null) {
+		Log.d(Config.TAG, toString() + ".stopRecording(): Content resolver failed");
+		return;
+	}
+	Log.d(Config.TAG, toString() + ".stopRecording(): Video URI = " + videoUri.getPath());
+	videoValues = null;
+
+	// Force Media scanner to refresh now. Technically, this is
+	// unnecessary, as the media scanner will run periodically but
+	// helpful for testing.
+	act_.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,
+			videoUri));
+	Log.d(Config.TAG, toString() + ".stopRecording(): Video file published");
+}*/
+	
+
+	
+	/*public String exCreateFolder(){
+		
+		String dir=Environment.getExternalStorageDirectory().getPath() + "/mnt/sdcard" + "/" + name;
+		File folder = new File(dir);
+		folder.mkdirs();
+		return dir;
+    	
+=======
+>>>>>>> branch 'master' of https://github.com/haniemF5/haniem_F5.git
+	}
+	
+	
     
 	
 	/*public void pathSave(String path){
@@ -203,20 +279,7 @@ public class BIOstream {
 	}
 	*/
 	
-	
-	/*public void pathSave(String path){
-		
-		pathSaver.addElement(path);
-	}*/
-	
-	/*public void fileScan()
-	{
-		intent =new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE); //패스 선언을 이 클래스에서!!
-		Uri uri= Uri.parse("file://"+BRecorder.Path);
-		intent.setData(uri);
-		
-	}*/
-	
+
 	
 
 	

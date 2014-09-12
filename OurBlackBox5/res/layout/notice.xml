@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory 
+        android:title="업데이트" >
+        
+       	<TextView
+        	android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+            android:summary="현재 버전: OurBlackBox_V1.3"
+            android:title="버전 정보" />
+        	
+            
+    </PreferenceCategory>
+
+</PreferenceScreen>
+
+
+
+
+
+
+<!-- <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,13 +29,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="현재 버전"
+        android:text="버전 정보"
         android:textSize="20sp" />
     
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OurBlackBox5 ver 1.0"
+        android:text="현재 버전 : OurBlackBox5 ver 1.0"
+        android:textSize="15sp" />
+    
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="현재 설명 : 버전 설명이 들어가겠죠?"
         android:textSize="15sp" />
 
     <Button
@@ -22,4 +50,4 @@
         android:layout_height="wrap_content"
         android:text="업데이트" />
 
-</LinearLayout>
+</LinearLayout> -->

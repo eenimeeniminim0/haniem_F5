@@ -22,11 +22,23 @@ public class BSensor {
     public BSensor()
     {
     	isSensorDetected=false;
-    	SHAKE_THRESHOLD = 1000;
+    	setSensitivity();
     	DATA_X = SensorManager.DATA_X; 
     	DATA_Y = SensorManager.DATA_Y;
     	DATA_Z = SensorManager.DATA_Z;
     	
+    }
+    
+    public void setSensitivity()
+    {
+    		if(BSensorSetting.sensitivity.equals("high"))
+    			SHAKE_THRESHOLD=500;
+    		
+    		else if(BSensorSetting.sensitivity.equals("normal"))
+    			SHAKE_THRESHOLD=1000;
+
+    		else
+    			SHAKE_THRESHOLD=1500;;
     }
    
 

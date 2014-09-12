@@ -2,21 +2,30 @@ package com.example.ourblackbox2;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.GridView;
+import android.widget.Toast;
 
 public class GalleryActivity extends Activity implements OnItemClickListener{
 	
@@ -38,7 +47,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 		setContentView(R.layout.gallery);//
 	    // TODO Auto-generated method stub
 		
-		ListView listView = (ListView) this.findViewById(R.id.ListView);
+		GridView gridView = (GridView)findViewById(R.id.imagegrid);
 		
 		String[] thumbColumns = {
 				MediaStore.Video.Thumbnails.DATA,
@@ -66,8 +75,8 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 				
 				int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
 				
+				//Cursor thumbCursor = managedQuery(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
 				Cursor thumbCursor = managedQuery(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
-				
 				if(thumbCursor.moveToFirst())
 				{
 					newVVI.thumbPath = thumbCursor.getString(thumbCursor.getColumnIndex(MediaStore.Video.Thumbnails.DATA));
@@ -84,8 +93,8 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 			}while (cursor.moveToNext());
 		}
 		
-		listView.setAdapter(new VideoGalleryAdapter(this, videoRows));
-		listView.setOnItemClickListener(this);
+		gridView.setAdapter(new VideoGalleryAdapter(this, videoRows));
+		gridView.setOnItemClickListener(this);
 	}
 	
 	public void onItemClick(AdapterView<?> l, View v, int position, long id) {
@@ -105,6 +114,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 		}
 	}
 	
+	
 	 class VideoViewInfo {
 			
 			String filePath;
@@ -113,4 +123,58 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 			String title;
 
 		}
+	 
+
+	 public class VideoGalleryAdapter extends BaseAdapter{
+			private Context context;
+			private List<VideoViewInfo> videoItems;
+			
+			LayoutInflater inflater;
+			
+			public VideoGalleryAdapter(Context _context, ArrayList<VideoViewInfo> _items) {
+				context = _context;
+				videoItems = _items;
+				
+				inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			}
+			public int getCount(){
+				return videoItems.size();
+			
+		    }
+			
+			public Object getItem(int position){
+				return videoItems.get(position);
+			}
+			public long getItemId(int position){
+				return position;
+			}
+			
+			public View getView(int position, View convertView, ViewGroup parent) {
+				
+				View videoRow = inflater.inflate(R.layout.list_item, null);
+				
+				//ImageView videoThumb = (ImageView) videoRow.findViewById(R.id.ImageView);
+				Bitmap thumb = MediaStore.Video.Thumbnails.getThumbnail(getContentResolver(), position, MediaStore.Video.Thumbnails.MICRO_KIND, null);
+				ImageView videoThumb = (ImageView) videoRow.findViewById(R.id.ImageView);
+				
+				videoThumb.setImageBitmap(thumb);
+				//videoThumb.setLayoutParams(new GridView.LayoutParams(96, 96));
+				//videoThumb.setPadding(8, 8, 8, 8);
+
+				if(videoItems.get(position).thumbPath != null) {
+					videoThumb.setImageURI(Uri.parse(videoItems.get(position).thumbPath));
+					Toast.makeText(getApplicationContext(), "여기까지 오긴하는거냐고!", Toast.LENGTH_SHORT).show();
+					Log.v("진짜 여기까지 오긴하는거냐고?","궁금합니당="+101010);
+				}
+				TextView videoTitle = (TextView) videoRow.findViewById(R.id.TextView);
+				videoTitle.setText(videoItems.get(position).title);
+				
+				return videoRow;
+			}		
+
+		}
+
+	 
+
+
 }
