@@ -18,13 +18,18 @@ public class BThreadRecorder  {
 	
 	public BThreadRecorder()
 	{
+		initBThreadRecorder();
+		
+	}
+	
+	public synchronized void initBThreadRecorder(){
 		bRecorder=new BRecorder();
 		videotimerUpdateHandler=new Handler();
 		videoCurrentTime=0;
 		isTimeChange=false;
-		
 	}
-	public void threadStart()
+	
+	public synchronized void threadStart()
 	{
 		Log.v("스레드님제발요?","울고싶다?="+20000);
 		videotimerUpdate= new Thread(new Runnable(){
@@ -58,7 +63,7 @@ public class BThreadRecorder  {
 		videotimerUpdate.start();
 	}
 	
-	public void threadStop()
+	public synchronized void threadStop()
 	{
 		if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
 		{

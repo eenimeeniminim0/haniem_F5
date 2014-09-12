@@ -3,12 +3,16 @@ package com.example.ourblackbox2;
 import java.io.IOException;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.Size;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -17,17 +21,28 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	SurfaceHolder bHolder;
 	Camera bCamera;
 	public static BSurfaceView bSurface;
+	
+	boolean startOK;
+	 BroadcastReceiver receiver;
 		
 	public BSurfaceView(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
 		bHolder=getHolder();
 		bHolder.addCallback(this);
+		
 	}
 	
 	
 	public void surfaceCreated(SurfaceHolder holder)
 	{
+		
+		
+		Log.v("BSurfaceview", "¸¸.........µé¾î");
+	
+
+		
+		
 		bCamera=Camera.open();
 		try{
 			bCamera.setPreviewDisplay(bHolder);
@@ -44,14 +59,20 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	{
 		if(bCamera != null)
 		{
+			Log.v("BSurfaceview", "ÆÄ.........±«");
+			
 			bCamera.stopPreview();
 			bCamera.release();
 			bCamera=null;
 		}
+		
+
+    	
 	}
 		
 	public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) 
 	{	
+		Log.v("BSurfaceview", "¹Ù.........²ã");
 		Camera.Parameters params = bCamera.getParameters();
 		params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE); 
 		List<Size> arSize =params.getSupportedPreviewSizes();
