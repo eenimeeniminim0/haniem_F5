@@ -98,11 +98,9 @@ public class BServiceRecorder
            catch (IOException e) {
               
                e.printStackTrace();
-           }
+           }	
 		
-		
-		
-		File=biostream.createFolder();
+		File=biostream.createInternalFolder();
 		Path=File+"/"+biostream.createName(System.currentTimeMillis());
 		//biostream.pathSave(Path);
 		
@@ -120,7 +118,6 @@ public class BServiceRecorder
 		bRecorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
 		
 		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
-		//setQuality();
 		
 		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); //인코딩 어떻게 할건지
 		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);

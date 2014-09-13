@@ -27,21 +27,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/home"
-            android:text="현재 녹화 상태 표시" />
+             />
 
-       <!--  <Button
-            android:id="@+id/camera_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="카메라 전환" />
-
-        <Button
-            android:id="@+id/capture"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/camera_switch"
-            android:text="캡쳐" />-->
 
         <ToggleButton 
 	            android:id="@+id/VideoCapture"
@@ -51,21 +38,14 @@
 	            android:textOn="녹화 중지"
 	            android:textOff="녹화 시작"
 	            />
-        
-        <Button
-            android:id="@+id/parking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="주차 녹화" />
 
         <Button
             android:id="@+id/accident"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@id/parking"
+			android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@id/accident"
             android:text="사고 발생" />
          
 	    	             

@@ -58,7 +58,9 @@
     <!-- permissions -->
     <uses-permission android:name="android.permission.CAMERA"/>		<!--카메라사용권한  -->
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/><!-- 내부저장장치사용권한 -->
+    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>		<!-- 외부저장장치사용권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>		<!-- 외부저장장치 저장 사용권한 -->
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>	<!-- 오디오녹음권한 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/> <!-- gps장소권한 -->
 

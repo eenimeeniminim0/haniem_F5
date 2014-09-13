@@ -30,8 +30,6 @@ import android.widget.Toast;
 
 public class RecordingService extends Service  implements SensorEventListener, SurfaceHolder.Callback{
 
-	
-   
 
     private BSensor bSensor;
 	private BServiceThreadRecorder bThread;
@@ -48,58 +46,62 @@ public class RecordingService extends Service  implements SensorEventListener, S
     @Override
     public void onCreate() {
    
-    	
-
+     
+		  //센서관련
+        BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+        BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		
-    
-        initService();
+        
+		if (BSensor.accelerormeterSensor != null)
+        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
+		Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
+
+        
+        
+        Toast.makeText(this, "The new Service was Created", Toast.LENGTH_LONG).show();
+        
+        
+        // Start foreground service to avoid unexpected kill
+        Notification notification = new Notification.Builder(this)
+            .setContentTitle("Background Video Recorder")
+            .setContentText("")
+            .setSmallIcon(R.drawable.ic_launcher)
+            .build();
+        startForeground(1234, notification);
+
+        // Create new SurfaceView, set its size to 1x1, move it to the top left corner and set this service as a callback
+        windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        surfaceView = new SurfaceView(this);
+        LayoutParams layoutParams = new WindowManager.LayoutParams(
+            1, 1,
+            WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
+            PixelFormat.TRANSLUCENT
+        );
+        layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
+        windowManager.addView(surfaceView, layoutParams);
+        surfaceView.getHolder().addCallback(this);
+        
         
         bSensor=new BSensor();
 		bThread=new BServiceThreadRecorder(surfaceView);
         
-        bThread.threadStart();
+      
         super.onCreate();
 
     }
-    
-    public synchronized void initService(){
-        
-    		  //센서관련
-            BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-            BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-    		
-            
-    		if (BSensor.accelerormeterSensor != null)
-            	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
-    		Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
 
-            
-            
-            Toast.makeText(this, "The new Service was Created", Toast.LENGTH_LONG).show();
-            
-            
-            // Start foreground service to avoid unexpected kill
-            Notification notification = new Notification.Builder(this)
-                .setContentTitle("Background Video Recorder")
-                .setContentText("")
-                .setSmallIcon(R.drawable.ic_launcher)
-                .build();
-            startForeground(1234, notification);
 
-            // Create new SurfaceView, set its size to 1x1, move it to the top left corner and set this service as a callback
-            windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
-            surfaceView = new SurfaceView(this);
-            LayoutParams layoutParams = new WindowManager.LayoutParams(
-                1, 1,
-                WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-                PixelFormat.TRANSLUCENT
-            );
-            layoutParams.gravity = Gravity.LEFT | Gravity.TOP;
-            windowManager.addView(surfaceView, layoutParams);
-            surfaceView.getHolder().addCallback(this);
-    	
-    }
+
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		// TODO Auto-generated method stub
+		  bThread.threadStart();
+		
+		return super.onStartCommand(intent, flags, startId);
+	}
+
+
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
@@ -115,7 +117,7 @@ public class RecordingService extends Service  implements SensorEventListener, S
 	 
 	                bSensor.speed = Math.abs(bSensor.x + bSensor.y + bSensor.z - bSensor.lastX - bSensor.lastY - bSensor.lastZ) / gabOfTime * 10000;
 	 
-	                if (bSensor.speed > BSensor.SHAKE_THRESHOLD) {//속도가 지정한 임계치보다 높으면
+	                if (bSensor.speed > 1000) {//속도가 지정한 임계치보다 높으면
 	                    // 이벤트발생!!
 	                	Log.v("모래반지 빵야빵야","허허허허="+20000000);
 	                	BSensor.isSensorDetected=true;

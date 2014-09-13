@@ -9,7 +9,6 @@ import android.view.SurfaceView;
 
 public class BServiceThreadRecorder {
 
-
 	int i=0;
 	private Thread videotimerUpdate;
 	private Handler videotimerUpdateHandler;
@@ -23,22 +22,15 @@ public class BServiceThreadRecorder {
 	
 	public BServiceThreadRecorder(SurfaceView sv)
 	{
-		initServiceThreadRecorder(sv);
-		
-		
-		
-	}
-	public synchronized void initServiceThreadRecorder(SurfaceView sv){
-		
 		mSurfaceView=sv;
 		bServiceRecorder=new BServiceRecorder(mSurfaceView);
 		videotimerUpdateHandler=new Handler();
 		videoCurrentTime=0;
 		isTimeChange=false;
 		
+		
 	}
-	
-	public synchronized void threadStart()
+	public void threadStart()
 	{
 		Log.v("서비스쓰레드","스레드시작");
 		videotimerUpdate= new Thread(new Runnable(){
@@ -72,7 +64,7 @@ public class BServiceThreadRecorder {
 		videotimerUpdate.start();
 	}
 	
-	public synchronized void threadStop()
+	public void threadStop()
 	{
 		if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bServiceRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
 		{
@@ -123,12 +115,11 @@ public class BServiceThreadRecorder {
 	public Intent fileScan()
 	{
 		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!
-		Uri uri= Uri.parse("file://"+BRecorder.File);
+		Uri uri= Uri.parse("file://"+BServiceRecorder.File);
 		intent.setData(uri);
 		return intent;
 		
 		//sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
 		
 	}
-	
 }

@@ -17,30 +17,24 @@ public final class R {
         public static final int abc_slide_out_top=0x7f040005;
     }
     public static final class array {
-        public static final int emerOccur_key=0x7f0d000f;
+        public static final int emerOccur_key=0x7f0d0009;
         /**  위급상활 설정 배열 
          */
-        public static final int emerOccur_value=0x7f0d000e;
-        public static final int illumination_key=0x7f0d0003;
-        public static final int illumination_value=0x7f0d0002;
-        public static final int recPeriod_key=0x7f0d0009;
-        public static final int recPeriod_value=0x7f0d0008;
-        public static final int recQuality_key=0x7f0d0005;
+        public static final int emerOccur_value=0x7f0d0008;
+        public static final int recPeriod_key=0x7f0d0005;
+        public static final int recPeriod_value=0x7f0d0004;
+        public static final int recQuality_key=0x7f0d0003;
         /**  촬영 설정 배열 
          */
-        public static final int recQuality_value=0x7f0d0004;
-        public static final int resolution_key=0x7f0d0007;
-        public static final int resolution_value=0x7f0d0006;
+        public static final int recQuality_value=0x7f0d0002;
         public static final int sensitivity_key=0x7f0d0001;
         /**  센서 설정 배열 
          */
         public static final int sensitivity_value=0x7f0d0000;
-        public static final int storageLocation_key=0x7f0d000b;
+        public static final int storageLocation_key=0x7f0d0007;
         /**  저장 설정 배열 
          */
-        public static final int storageLocation_value=0x7f0d000a;
-        public static final int storageMaximum_key=0x7f0d000d;
-        public static final int storageMaximum_value=0x7f0d000c;
+        public static final int storageLocation_value=0x7f0d0006;
     }
     public static final class attr {
         /**  Custom divider drawable to use for elements in the action bar. 
@@ -1122,7 +1116,7 @@ containing a value of this type.
         public static final int CameraPreview=0x7f06001e;
         public static final int ImageView=0x7f060023;
         public static final int LinearLayout1=0x7f060054;
-        public static final int LinearLayout2=0x7f060055;
+        public static final int LinearLayout2=0x7f060056;
         /**  갤러리 리스트뷰 
          */
         public static final int ListView=0x7f060022;
@@ -1181,6 +1175,7 @@ containing a value of this type.
         public static final int icon=0x7f06003d;
         public static final int ifRoom=0x7f06000a;
         public static final int image=0x7f06003a;
+        public static final int imagegrid=0x7f060055;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f06003c;
         public static final int middle=0x7f060012;
@@ -1188,11 +1183,10 @@ containing a value of this type.
         public static final int none=0x7f060010;
         public static final int normal=0x7f060000;
         public static final int notice_button=0x7f06002b;
-        public static final int parking=0x7f060057;
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
         public static final int radio=0x7f060042;
-        public static final int record_state=0x7f060056;
+        public static final int record_state=0x7f060057;
         public static final int recording_button=0x7f060027;
         public static final int search_badge=0x7f060045;
         public static final int search_bar=0x7f060044;
@@ -1563,9 +1557,10 @@ containing a value of this type.
     public static final class xml {
         public static final int emergency_prefer=0x7f050000;
         public static final int gps_prefer=0x7f050001;
-        public static final int recording_prefer=0x7f050002;
-        public static final int sensor_prefer=0x7f050003;
-        public static final int storage_prefer=0x7f050004;
+        public static final int notice_prefer=0x7f050002;
+        public static final int recording_prefer=0x7f050003;
+        public static final int sensor_prefer=0x7f050004;
+        public static final int storage_prefer=0x7f050005;
     }
     public static final class styleable {
         /**  ============================================ 
