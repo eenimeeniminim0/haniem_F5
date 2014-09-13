@@ -22,15 +22,20 @@ public class BThreadRecorder  {
 	
 	public BThreadRecorder()
 	{
+		initBThreadRecorder();
+		
+	}
+	
+	public synchronized void initBThreadRecorder(){
 		bRecorder=new BRecorder();
 		biostream=new BIOstream(); 
 		bTimer=new BTimer();
 		videotimerUpdateHandler=new Handler();
 		videoCurrentTime=0;
 		isTimeChange=false;
-		
 	}
 	
+
 	//동영상 녹화시간 설정 메소드
 	
 	public void setRecPeriod()
@@ -45,7 +50,7 @@ public class BThreadRecorder  {
 			REC_PERIOD=15;
 		
 	}
-	public void threadStart()
+	public synchronized void threadStart()
 	{
 		setRecPeriod();
 		Log.v("스레드님제발요?","울고싶다?="+20000);
@@ -88,7 +93,7 @@ public class BThreadRecorder  {
 		videotimerUpdate.start();
 	}
 	
-	public void threadStop()
+	public synchronized void threadStop()
 	{
 		if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
 		{
@@ -103,8 +108,6 @@ public class BThreadRecorder  {
 		}
 
 	}
-	
-	
 	
 	public int checkThreadTime(boolean isSensorDetected)
 	{

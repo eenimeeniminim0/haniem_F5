@@ -22,7 +22,7 @@ public class BSensor {
     public BSensor()
     {
     	isSensorDetected=false;
-    	setSensitivity();
+    	//setSensitivity();
     	DATA_X = SensorManager.DATA_X; 
     	DATA_Y = SensorManager.DATA_Y;
     	DATA_Z = SensorManager.DATA_Z;

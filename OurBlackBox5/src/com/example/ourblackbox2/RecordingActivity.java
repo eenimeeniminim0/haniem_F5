@@ -1,10 +1,15 @@
 package com.example.ourblackbox2;
 
+import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ActivityManager.RunningServiceInfo;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -16,6 +21,10 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceHolder.Callback;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -25,7 +34,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
+public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener {
 	
 	private ToggleButton VideoCapture;
 	private Button Home,Accident,parkingGuide;
@@ -33,11 +42,16 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private TextView recordState;
 	private BFileScan bFileScan;
 	private BThreadRecorder bThread;
+
+	private Context context; 
+
 	public static String bRecordingState;
 	public static String a;
+
 	private final static int MESSAGE_ID = 1;
 	private NotificationManager mNotificationManager = null;
 	
+	boolean parkingbool=false;
 
 	PowerManager pm;
 	PowerManager.WakeLock wakeLock;
@@ -46,7 +60,8 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-        		
+
+        
         requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 없애기
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 		WindowManager.LayoutParams.FLAG_FULLSCREEN);//화면풀스크린
@@ -61,12 +76,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         
 		Toast.makeText(getApplicationContext(), "레코딩액티비티 시작", Toast.LENGTH_SHORT).show();
 		
+
+		
 		bSensor=new BSensor();
 		bThread=new BThreadRecorder();
 		bFileScan=new BFileScan();
 
 		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
-		
+
 		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
         Home=(Button)findViewById(R.id.home);
@@ -87,6 +104,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         	
+  
 	}
 	
 
@@ -111,9 +129,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		else
     		{
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
+
+       				bThread.threadStop();	
+       				//sendBroadcast(bThread.fileScan());
+
     				recordState.setText("촬영 준비");
     				bThread.threadStop();	
        				sendBroadcast(bFileScan.fileScan());
+
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
     		        				
@@ -133,6 +156,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		break;
     		
     	case R.id.parkingGuide:
+    		parkingbool=true;
     		Toast.makeText(this, "조심히 주차하세요", Toast.LENGTH_SHORT).show();
     		Intent pintent =new Intent(this,ParkingGuideActivity.class);
     		startActivity(pintent);
@@ -146,6 +170,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	super.onDestroy();
     	bThread.getBRecorder().destroyRecorder();
     	//wakeLock.release();
+    	Log.v("레코딩액티비티","ondestroy?");
     }
 
     @Override
@@ -153,6 +178,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		// TODO Auto-generated method stub
 		
 		 if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {//가속도계 타입의 센서가 감지되면
+			 	bSensor.setSensitivity();
 	            long currentTime = System.currentTimeMillis();
 	            long gabOfTime = (currentTime - bSensor.lastTime);
 	            if (gabOfTime > 100) {
@@ -179,6 +205,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		
 	}
 
+    
 
 	@Override
 	public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -195,9 +222,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		sendBroadcast(intent);
 	}
 		
-	/////LED//////////
-	
-	
+
     public void ledOn(){
     	
     	String ticker = "OurblackBox가 실행중입니다";
@@ -226,19 +251,99 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	
     	notification.setLatestEventInfo(this, title, text, pendingIntent);
     	mNotificationManager.notify(MESSAGE_ID, notification);
-    	
-    	
-    	
-    	
-    	
+    	   	
     }
     
-    public void ledOff(){
+       
+    @Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+    	parkingbool=false;
+		super.onResume();
+	}
+
+
+	@Override
+	protected void onRestart() {
+		// TODO Auto-generated method stub
+    	/*
+    	if(isRecordServiceRunning(RecordingActivity.this, "com.example.ourblackbox2.RecordingService")){
+    		
+    		Toast.makeText(getApplicationContext(), "레코딩중지", Toast.LENGTH_SHORT).show();
+            stopService(new Intent(RecordingActivity.this, RecordingService.class));
+    	}
+    	
+    	*/
+    	Log.v("onRestart()", "다시시작...");
+    	
+		super.onRestart();
+	}
+
+
+	@Override
+	protected void onUserLeaveHint() {
+		// TODO Auto-generated method stub
+    	
+		if(!parkingbool){
+			bThread.threadStop();
+			//sendBroadcast(bThread.fileScan());
+		if (BSensor.sensorManager != null)
+        	BSensor.sensorManager.unregisterListener(this);
+		
+		if(BSurfaceView.bSurface.getCamera()!=null)
+		{
+			Log.v("onUserLeaveHint()", "파........괴카메라");
+			BSurfaceView.bSurface.bCamera.stopPreview();
+			BSurfaceView.bSurface.bCamera.release();
+			BSurfaceView.bSurface.bCamera=null;
+		}
+    	
+		if(!isRecordServiceRunning(RecordingActivity.this, "com.example.ourblackbox2.RecordingService")){
+    		
+    		Toast.makeText(getApplicationContext(), "레코딩시작", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(RecordingActivity.this, RecordingService.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startService(intent);
+            
+            
+		}
+		
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("com.example.ourblackbox2.servicedestroyrecorder");
+
+		
+		super.onUserLeaveHint();
+		
+		finish();
+			
+		}
+    	
+		
+	}
+
+    
+  //서비스실행중인지아닌지 확인
+  	private boolean isRecordServiceRunning(Context ctx, String s_service_name) {
+
+      	ActivityManager manager = (ActivityManager) ctx.getSystemService(Activity.ACTIVITY_SERVICE);
+
+      	for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+
+      	    if (s_service_name.equals(service.service.getClassName())) {
+
+      	        return true;
+      	    }
+      	}
+
+      	return false;
+  }
+
+
+	public void ledOff(){
     	
     	mNotificationManager.cancel(MESSAGE_ID);
     
     }
-	
 	
 
 }
