@@ -28,7 +28,7 @@ import android.widget.ToggleButton;
 public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener  {
 	
 	private ToggleButton VideoCapture;
-	private Button Home,Accident;
+	private Button Home,Accident,parkingGuide;
 	private BSensor bSensor;
 	private TextView recordState;
 	private BFileScan bFileScan;
@@ -72,11 +72,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         Home=(Button)findViewById(R.id.home);
         Accident=(Button)findViewById(R.id.accident);
         recordState = (TextView)findViewById(R.id.record_state);
+        parkingGuide = (Button)findViewById(R.id.parkingGuide);
         
         
         VideoCapture.setOnClickListener(this);
         Home.setOnClickListener(this);
         Accident.setOnClickListener(this);
+        parkingGuide.setOnClickListener(this);
+        
 		mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
         
 		recordState.setText("촬영 준비");
@@ -127,6 +130,12 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		recordState.setText("사고 모드");
     		Toast.makeText(this, "사고가 났나요?", Toast.LENGTH_SHORT).show();
     		//삼총사가 만든 ....?
+    		break;
+    		
+    	case R.id.parkingGuide:
+    		Toast.makeText(this, "조심히 주차하세요", Toast.LENGTH_SHORT).show();
+    		Intent pintent =new Intent(this,ParkingGuideActivity.class);
+    		startActivity(pintent);
     
     	}
     }

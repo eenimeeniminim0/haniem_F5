@@ -1104,11 +1104,12 @@ containing a value of this type.
         public static final int emergency=0x7f02005b;
         public static final int ic_launcher=0x7f02005c;
         public static final int network=0x7f02005d;
-        public static final int recording=0x7f02005e;
-        public static final int save=0x7f02005f;
-        public static final int sensor=0x7f020060;
-        public static final int sensor_button=0x7f020061;
-        public static final int update=0x7f020062;
+        public static final int parking=0x7f02005e;
+        public static final int recording=0x7f02005f;
+        public static final int save=0x7f020060;
+        public static final int sensor=0x7f020061;
+        public static final int sensor_button=0x7f020062;
+        public static final int update=0x7f020063;
     }
     public static final class id {
         /**  레코딩액티비티전용아이디들 
@@ -1143,16 +1144,16 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060037;
-        public static final int action_settings=0x7f06005f;
+        public static final int action_settings=0x7f060060;
         public static final int activity_chooser_view_content=0x7f060038;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
-        public static final int button01=0x7f060059;
-        public static final int button02=0x7f06005a;
-        public static final int button03=0x7f06005b;
-        public static final int button04=0x7f06005c;
-        public static final int button05=0x7f06005d;
-        public static final int button06=0x7f06005e;
+        public static final int button01=0x7f06005a;
+        public static final int button02=0x7f06005b;
+        public static final int button03=0x7f06005c;
+        public static final int button04=0x7f06005d;
+        public static final int button05=0x7f06005e;
+        public static final int button06=0x7f06005f;
         public static final int button1=0x7f060050;
         public static final int button2=0x7f060051;
         public static final int button3=0x7f060052;
@@ -1183,6 +1184,7 @@ containing a value of this type.
         public static final int none=0x7f060010;
         public static final int normal=0x7f060000;
         public static final int notice_button=0x7f06002b;
+        public static final int parkingGuide=0x7f060059;
         public static final int progress_circular=0x7f060018;
         public static final int progress_horizontal=0x7f060019;
         public static final int radio=0x7f060042;
@@ -1271,10 +1273,11 @@ containing a value of this type.
         public static final int gallery=0x7f03001a;
         public static final int list_item=0x7f03001b;
         public static final int notice=0x7f03001c;
-        public static final int recording=0x7f03001d;
-        public static final int setting=0x7f03001e;
-        public static final int setting_activity=0x7f03001f;
-        public static final int support_simple_spinner_dropdown_item=0x7f030020;
+        public static final int parking=0x7f03001d;
+        public static final int recording=0x7f03001e;
+        public static final int setting=0x7f03001f;
+        public static final int setting_activity=0x7f030020;
+        public static final int support_simple_spinner_dropdown_item=0x7f030021;
     }
     public static final class menu {
         public static final int main=0x7f0e0000;

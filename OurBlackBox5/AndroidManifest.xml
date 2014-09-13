@@ -38,6 +38,7 @@
         <activity android:name="NoticeSetting"></activity>
         <activity android:name="GpsSetting"></activity>
         <activity android:name="EmergencySetting"></activity>
+        <activity android:name="ParkingGuideActivity"></activity>
     </application>
     
     <!-- permissions -->
