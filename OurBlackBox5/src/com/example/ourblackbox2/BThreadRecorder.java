@@ -1,7 +1,5 @@
 package com.example.ourblackbox2;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Handler;
 import android.util.Log;
 
@@ -15,7 +13,6 @@ public class BThreadRecorder  {
 	static  boolean isTimeChange;
 	protected  int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
 	protected  int videoCurrentTime;//처음 시작 시간
-	public BTimer bTimer;	
 	protected  int REC_PERIOD;
 
 
@@ -29,7 +26,6 @@ public class BThreadRecorder  {
 	public synchronized void initBThreadRecorder(){
 		bRecorder=new BRecorder();
 		biostream=new BIOstream(); 
-		bTimer=new BTimer();
 		videotimerUpdateHandler=new Handler();
 		videoCurrentTime=0;
 		isTimeChange=false;
@@ -71,7 +67,6 @@ public class BThreadRecorder  {
 						bRecorder.isVideotimerRunning=true;
 					}
 					Log.v("videoCurrentTime","time="+videoCurrentTime);
-					//RecordingActivity.bRecordingState=(String)ongoingTime-startTime;
 					videoCurrentTime++;
 					videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
 					
@@ -80,7 +75,6 @@ public class BThreadRecorder  {
 
 				}else{
 					bRecorder.resetRecorder();
-					fileScan();
 					videoCurrentTime=0;
 					BSensor.isSensorDetected=false;
 					isTimeChange=false;
@@ -102,7 +96,6 @@ public class BThreadRecorder  {
 			bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
 			videotimerUpdate.interrupt();
 			bRecorder.stopRecorder();
-			fileScan();
 			videoCurrentTime=0;
 			BSensor.isSensorDetected=false;
 		}
@@ -140,17 +133,6 @@ public class BThreadRecorder  {
 		return bRecorder;
 	}
 	
-
-	public Intent fileScan()
-	{
-		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!
-		Uri uri= Uri.parse("file://"+BRecorder.Folder);
-		intent.setData(uri);
-		return intent;
-		
-		//sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-		
-	}
 }
 
 

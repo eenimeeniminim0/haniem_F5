@@ -5,23 +5,22 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 public class ParkingGuideActivity extends ActionBarActivity implements OnClickListener {
 	
 
 	private Button Home;
-	
-
 	PowerManager pm;
 	PowerManager.WakeLock wakeLock;
+	BSurfaceView bSurface;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -35,9 +34,11 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
         
         setContentView(R.layout.parking);
         
+    	//bSurface = new BSurfaceView(this);
+        
 		Toast.makeText(getApplicationContext(), "주차가이드 시작", Toast.LENGTH_SHORT).show();
 
-		BSurfaceView.bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
+		bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
 	
         Home=(Button)findViewById(R.id.home);        
         
@@ -53,12 +54,22 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
     		    		
     	case R.id.home:
     		Toast.makeText(this, "뒤로 갈까요?", Toast.LENGTH_SHORT).show();
-    		Intent intent=new Intent(this,MainActivity.class);
+    		finish();
+    		Intent intent=new Intent(this,RecordingActivity.class);
 	    	startActivity(intent);
+	    	
     		break;
     
     	}
     }	
 	
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	//finish();
+    	//wakeLock.release();
+    	Log.v("파킹 가이","ondestroy?");
+    }
 
 }

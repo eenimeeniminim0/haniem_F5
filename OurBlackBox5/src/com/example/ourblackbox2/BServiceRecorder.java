@@ -63,23 +63,11 @@ public class BServiceRecorder
 		mServiceCamera = Camera.open();
 	}
 	
-	// 동영상 설정 관련 메소드
-	/*
-	public void setQuality()
-	{
-		if(SettingActivity.isButtonPushed==true)
-			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
-		else
-			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
-	}
-	*/
 	
 	// 동영상 촬영 관련  메소드
 	public void initRecorder()
 	{
-		
-		
-		
+				
 		   Camera.Parameters params = mServiceCamera.getParameters();
            mServiceCamera.setParameters(params);
            Camera.Parameters p = mServiceCamera.getParameters();
@@ -102,7 +90,6 @@ public class BServiceRecorder
 		
 		File=biostream.createInternalFolder();
 		Path=File+"/"+biostream.createName(System.currentTimeMillis());
-		//biostream.pathSave(Path);
 		
 		if(bRecorder==null){
 			bRecorder= new MediaRecorder();
@@ -119,19 +106,12 @@ public class BServiceRecorder
 		
 		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
 		
-		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); //인코딩 어떻게 할건지
-		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-		//bRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-		//bRecorder.setVideoFrameRate(24);
-		//bRecorder.setVideoSize(720,480);
-		
 		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초
 		bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
 		
-		//biostream.createVideoPath(System.currentTimeMillis());
 		
 	}
 	
@@ -163,8 +143,6 @@ public class BServiceRecorder
 	
 		bRecorder.stop();
 		bRecorder.reset();
-		//fileScan();
-		//registerVideo();
 		isRecording=false;
 	}
 
@@ -172,8 +150,6 @@ public class BServiceRecorder
 	{	
 		bRecorder.stop();
 		bRecorder.reset();
-		//fileScan();
-		//registerVideo();
 		isVideotimerRunning=false;
 		bRecorder=null;
 		isRecording=false;

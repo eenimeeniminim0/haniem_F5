@@ -39,7 +39,7 @@ public class RecordingService extends Service  implements SensorEventListener, S
 	private NotificationManager mNotificationManager = null;
 
 	 private WindowManager windowManager;
-	    private SurfaceView surfaceView;
+	 private SurfaceView surfaceView;
 	   
 
     
