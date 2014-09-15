@@ -120,7 +120,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     			if (BSensor.accelerormeterSensor != null)
     	        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     			Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
-    			ledOn();
+    			//ledOn();
     			
     		}
     		
@@ -228,17 +228,17 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     }    
 
 		
-
-    public void ledOn(){
+/*
+    public Notification ledOn(){
     	
-    	String ticker = "OurblackBox가 실행중입니다";
+    	String ticker = "OurblackBox 백그라운드 녹화중입니다";
     	String title = "OurblackBox";
-    	String text = "실행중";
+    	String text = "녹화중";
     	String ns = Context.NOTIFICATION_SERVICE;
     	NotificationManager mNotificationManager = (NotificationManager)getSystemService(ns);
     	
-    	Intent intent = new Intent(this, RecordingActivity.class);
-    	PendingIntent pendingIntent = PendingIntent.getActivity(RecordingActivity.this, 0, intent, 0);
+    	//Intent intent = new Intent(this, RecordingActivity.class);
+    	//PendingIntent pendingIntent = PendingIntent.getActivity(RecordingActivity.this, 0, intent, 0);
     	
     	int icon = android.R.drawable.ic_input_add;
     	CharSequence tickerText = ticker;
@@ -255,12 +255,14 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	notification.flags |= Notification.FLAG_INSISTENT;
     	//notification.flags |= Notification.FLAG_AUTO_CANCEL; //알림 클릭시 자동으로 알림 취소
     	
-    	notification.setLatestEventInfo(this, title, text, pendingIntent);
-    	mNotificationManager.notify(MESSAGE_ID, notification);
+    	//notification.setLatestEventInfo(this, title, text, pendingIntent);
+    	//mNotificationManager.notify(MESSAGE_ID, notification);
+    	
+    	return notification;
     	   	
     }
     
-       
+  */     
     @Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -337,11 +339,11 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
   }
 
 
-	public void ledOff(){
+/*	public void ledOff(){
     	
     	mNotificationManager.cancel(MESSAGE_ID);
     
     }
-	
+*/
 
 }

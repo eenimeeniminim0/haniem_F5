@@ -4,27 +4,21 @@ package com.example.ourblackbox2;
 
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
-import android.hardware.Camera;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.media.MediaRecorder;
-import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
 import android.view.WindowManager.LayoutParams;
 import android.widget.Toast;
 
@@ -62,12 +56,13 @@ public class RecordingService extends Service  implements SensorEventListener, S
         
         
         // Start foreground service to avoid unexpected kill
-        Notification notification = new Notification.Builder(this)
+      /*  Notification notification = new Notification.Builder(this)
             .setContentTitle("Background Video Recorder")
             .setContentText("")
             .setSmallIcon(R.drawable.ic_launcher)
             .build();
-        startForeground(1234, notification);
+      */
+        startForeground(1234,ledOn());
 
         // Create new SurfaceView, set its size to 1x1, move it to the top left corner and set this service as a callback
         windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
@@ -142,9 +137,9 @@ public class RecordingService extends Service  implements SensorEventListener, S
 	        windowManager.removeView(surfaceView);
 	        Intent intent = new Intent();
 			intent.setAction("com.example.ourblackbox2.servicedestroyrecorder");
-			sendBroadcast(intent);
-
+			sendBroadcast(intent);	
 		super.onDestroy();
+
 	}
 
 	@Override
@@ -177,6 +172,38 @@ public class RecordingService extends Service  implements SensorEventListener, S
 		// TODO Auto-generated method stub
 		
 	}
-	
+    public Notification ledOn(){
+    	
+    	String ticker = "OurblackBox 백그라운드 녹화중입니다";
+    	String title = "OurblackBox Background 녹화중입니다.";
+    	String text = "녹화를 종료하시려면 어플을 다시실행하세요";
+    	String ns = Context.NOTIFICATION_SERVICE;
+    	NotificationManager mNotificationManager = (NotificationManager)getSystemService(ns);
+    	
+    	//Intent intent = new Intent(this, RecordingActivity.class);
+    	//PendingIntent pendingIntent = PendingIntent.getActivity(RecordingActivity.this, 0, intent, 0);
+    	
+    	int icon = android.R.drawable.ic_input_add;
+    	CharSequence tickerText = ticker;
+    	long when = System.currentTimeMillis();
+    	Notification.Builder builder = new Notification.Builder(RecordingService.this);
+    	builder.setSmallIcon(icon).setTicker(tickerText).setWhen(when);
+    	builder.setContentTitle(title);
+    	builder.setContentText(text);
+    	builder.setLights(Color.GREEN,500,500);
+    	builder.build();
+    	
+    	Notification notification = builder.getNotification();
+    	notification.flags |= Notification.FLAG_SHOW_LIGHTS;
+    	notification.flags |= Notification.FLAG_INSISTENT;
+    	//notification.flags |= Notification.FLAG_AUTO_CANCEL; //알림 클릭시 자동으로 알림 취소
+    	
+    	//notification.setLatestEventInfo(this, title, text, pendingIntent);
+    	//mNotificationManager.notify(MESSAGE_ID, notification);
+    	
+    	return notification;
+    	   	
+    }
+    
 
 }
