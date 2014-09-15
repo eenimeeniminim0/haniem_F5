@@ -2,11 +2,10 @@ package com.example.ourblackbox2;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ActivityManager.RunningServiceInfo;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -21,15 +20,12 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -37,7 +33,8 @@ import android.widget.ToggleButton;
 public class RecordingActivity extends ActionBarActivity implements OnClickListener, SensorEventListener {
 	
 	private ToggleButton VideoCapture;
-	private Button Home,Accident,parkingGuide;
+	private ImageButton Home,Accident;
+	private ImageButton parkingGuide;
 	private BSensor bSensor;
 	private TextView recordState;
 	private BFileScan bFileScan;
@@ -86,10 +83,10 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 
 		
 		VideoCapture=(ToggleButton)findViewById(R.id.VideoCapture);
-        Home=(Button)findViewById(R.id.home);
-        Accident=(Button)findViewById(R.id.accident);
+        Home=(ImageButton)findViewById(R.id.home);
+        Accident=(ImageButton)findViewById(R.id.accident);
         recordState = (TextView)findViewById(R.id.record_state);
-        parkingGuide = (Button)findViewById(R.id.parkingGuide);
+        parkingGuide = (ImageButton)findViewById(R.id.parkingGuide);
         
         
         VideoCapture.setOnClickListener(this);
