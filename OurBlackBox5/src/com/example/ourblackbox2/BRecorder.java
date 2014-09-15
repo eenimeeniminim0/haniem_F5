@@ -3,11 +3,9 @@ package com.example.ourblackbox2;
 import java.io.File;
 import java.io.IOException;
 
-import android.content.Intent;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 
@@ -22,7 +20,7 @@ public class BRecorder
 	protected static String Name;
 	//
 	protected boolean isRecording;//현재녹화중인지나타내는것
-	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
+	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌
 		
 	
 	public BRecorder()
@@ -94,19 +92,12 @@ public class BRecorder
 		
 		setQuality();
 		
-		//bRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4); //인코딩 어떻게 할건지
-		//bRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-		//bRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-		//bRecorder.setVideoFrameRate(24);
-		//bRecorder.setVideoSize(720,480);
 		
-		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초
+		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초 고치기!
 		bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
-		
-		//biostream.createVideoPath(System.currentTimeMillis());
 		
 	}
 	
@@ -135,9 +126,6 @@ public class BRecorder
 	
 		bRecorder.stop();
 		bRecorder.reset();
-		Intent intent;
-		//fileScan();
-		//registerVideo();
 		isRecording=false;
 	}
 
@@ -145,8 +133,6 @@ public class BRecorder
 	{	
 		bRecorder.stop();
 		bRecorder.reset();
-		//fileScan();
-		//registerVideo();
 		isVideotimerRunning=false;
 		bRecorder=null;
 		isRecording=false;

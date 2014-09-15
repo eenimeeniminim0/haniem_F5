@@ -2,30 +2,21 @@ package com.example.ourblackbox2;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.Toast;
 
 public class GalleryActivity extends Activity implements OnItemClickListener{
 	
@@ -33,6 +24,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 
 	//MediaStore.Video.Media 로 되어있는 값들을 다 BIOstream에서 만든 함수나 변수들로 바꿔주면 되지않을까...
 	/** Called when the activity is first created. */
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -61,7 +53,10 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 				MediaStore.Video.Media.MIME_TYPE
 		};
 		
+		String[] projection={MediaStore.Video.Media._ID};
+		
 		cursor = managedQuery(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, null);
+		//cursor = managedQuery(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,projection, MediaStore.Video.Media.DATA,new String[]{"%OurblackBox%"}, null);
 		
 		ArrayList<VideoViewInfo> videoRows = new ArrayList<VideoViewInfo>();
 		
@@ -75,7 +70,6 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 				
 				int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
 				
-				//Cursor thumbCursor = managedQuery(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
 				Cursor thumbCursor = managedQuery(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
 				if(thumbCursor.moveToFirst())
 				{
@@ -123,58 +117,5 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 			String title;
 
 		}
-	 
-
-	 public class VideoGalleryAdapter extends BaseAdapter{
-			private Context context;
-			private List<VideoViewInfo> videoItems;
-			
-			LayoutInflater inflater;
-			
-			public VideoGalleryAdapter(Context _context, ArrayList<VideoViewInfo> _items) {
-				context = _context;
-				videoItems = _items;
-				
-				inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			}
-			public int getCount(){
-				return videoItems.size();
-			
-		    }
-			
-			public Object getItem(int position){
-				return videoItems.get(position);
-			}
-			public long getItemId(int position){
-				return position;
-			}
-			
-			public View getView(int position, View convertView, ViewGroup parent) {
-				
-				View videoRow = inflater.inflate(R.layout.list_item, null);
-				
-				//ImageView videoThumb = (ImageView) videoRow.findViewById(R.id.ImageView);
-				Bitmap thumb = MediaStore.Video.Thumbnails.getThumbnail(getContentResolver(), position, MediaStore.Video.Thumbnails.MICRO_KIND, null);
-				ImageView videoThumb = (ImageView) videoRow.findViewById(R.id.ImageView);
-				
-				videoThumb.setImageBitmap(thumb);
-				//videoThumb.setLayoutParams(new GridView.LayoutParams(96, 96));
-				//videoThumb.setPadding(8, 8, 8, 8);
-
-				if(videoItems.get(position).thumbPath != null) {
-					videoThumb.setImageURI(Uri.parse(videoItems.get(position).thumbPath));
-					Toast.makeText(getApplicationContext(), "여기까지 오긴하는거냐고!", Toast.LENGTH_SHORT).show();
-					Log.v("진짜 여기까지 오긴하는거냐고?","궁금합니당="+101010);
-				}
-				TextView videoTitle = (TextView) videoRow.findViewById(R.id.TextView);
-				videoTitle.setText(videoItems.get(position).title);
-				
-				return videoRow;
-			}		
-
-		}
-
-	 
-
 
 }

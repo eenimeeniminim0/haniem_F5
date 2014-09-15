@@ -39,10 +39,7 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 		
 		
 		Log.v("BSurfaceview", "¸¸.........µé¾î");
-	
-
-		
-		
+			
 		bCamera=Camera.open();
 		try{
 			bCamera.setPreviewDisplay(bHolder);

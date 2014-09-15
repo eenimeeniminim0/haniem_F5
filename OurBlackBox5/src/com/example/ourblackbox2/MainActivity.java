@@ -5,6 +5,7 @@ import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	
 	ImageButton recording,gallery, setting, exit;
 	BIOstream sd;
+	boolean controlbool=false;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         }
         return super.onOptionsItemSelected(item);
     }
+    
+    
 
     /**
      * A placeholder fragment containing a simple view.
@@ -97,6 +101,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	@Override
   	protected void onResume() {
   		// TODO Auto-generated method stub
+        controlbool=false;
 		if(isRecordServiceRunning(MainActivity.this, "com.example.ourblackbox2.RecordingService")){
     		
     		Toast.makeText(getApplicationContext(), "·¹ÄÚµùÁßÁö", Toast.LENGTH_SHORT).show();
@@ -173,25 +178,70 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		if(v==recording){
-		//	Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½Úµï¿½ï¿½ï¿½Æ¼ï¿½ï¿½Æ¼ï¿½ï¿½", Toast.LENGTH_SHORT).show();
+			controlbool=true;
+			
 	    	Intent intent=new Intent(this,RecordingActivity.class);
 	    	startActivity(intent);
 			
+	    	finish();
 		}else if(v==gallery){
-		//	Toast.makeText(getApplicationContext(), "È¯ï¿½æ¼³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
+			controlbool=true;
 			Intent intent=new Intent(this,GalleryActivity.class);
 	    	startActivity(intent);	
 		}else if(v==setting){
-		//	Toast.makeText(getApplicationContext(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
+			controlbool=true;
 			Intent intent=new Intent(this,SettingActivity.class);
 	    	startActivity(intent);
 		}else if(v==exit){
+			controlbool=true;
 			Toast.makeText(getApplicationContext(), "Á¾·á!", Toast.LENGTH_SHORT).show();
+			System.exit(0);
 
 	    	
 		}
 		
 	}
+	
+    @Override
+    public void onDestroy()
+    {
+    	super.onDestroy();
+    	//wakeLock.release();
+    	Log.v("¸ÞÀÎ¿¢Æ¼ºñÆ¼","ondestroy?");
+    }
+	
+	
+	@Override
+	protected void onUserLeaveHint() {
+		// TODO Auto-generated method stub
+    	
+	
+		
+		if(!controlbool){
+		if(!isRecordServiceRunning(MainActivity.this, "com.example.ourblackbox2.RecordingService")){
+    		
+    		Toast.makeText(getApplicationContext(), "·¹ÄÚµù½ÃÀÛ", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, RecordingService.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startService(intent);
+            
+            
+		}
+		
+		IntentFilter filter = new IntentFilter();
+		filter.addAction("com.example.ourblackbox2.servicedestroyrecorder");
+
+		
+		super.onUserLeaveHint();
+		
+		finish();
+			
+		}
+	}
+    	
+
+    
+
 	
 	private boolean isRecordServiceRunning(Context ctx, String s_service_name) {
 
