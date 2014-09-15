@@ -8,16 +8,15 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.SurfaceView;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 public class ParkingGuideActivity extends ActionBarActivity implements OnClickListener {
 	
 
-	private Button Home;
+	private ImageButton Home;
 	PowerManager pm;
 	PowerManager.WakeLock wakeLock;
 	BSurfaceView bSurface;
@@ -40,7 +39,7 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
 
 		bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
 	
-        Home=(Button)findViewById(R.id.home);        
+        Home=(ImageButton)findViewById(R.id.home);        
         
         Home.setOnClickListener(this);
         	

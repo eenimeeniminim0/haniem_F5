@@ -2,6 +2,7 @@ package com.example.ourblackbox2;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.NotificationManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
@@ -103,7 +104,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   		// TODO Auto-generated method stub
         controlbool=false;
 		if(isRecordServiceRunning(MainActivity.this, "com.example.ourblackbox2.RecordingService")){
-    		
     		Toast.makeText(getApplicationContext(), "레코딩중지", Toast.LENGTH_SHORT).show();
             stopService(new Intent(MainActivity.this, RecordingService.class));
     	}
@@ -257,5 +257,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
       	return false;
   }
+
+	
 
 }

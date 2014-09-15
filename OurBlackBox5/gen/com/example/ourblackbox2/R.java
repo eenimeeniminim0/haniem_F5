@@ -1097,26 +1097,27 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int button1=0x7f020057;
-        public static final int button2=0x7f020058;
-        public static final int button3=0x7f020059;
-        public static final int button4=0x7f02005a;
-        public static final int emergency=0x7f02005b;
-        public static final int emergencycall=0x7f02005c;
-        public static final int home=0x7f02005d;
-        public static final int ic_launcher=0x7f02005e;
-        public static final int network=0x7f02005f;
-        public static final int parking=0x7f020060;
-        public static final int parkingwheel=0x7f020061;
-        public static final int record=0x7f020062;
-        public static final int recording=0x7f020063;
-        public static final int recordingbutton=0x7f020064;
-        public static final int save=0x7f020065;
-        public static final int sensor=0x7f020066;
-        public static final int sensor_button=0x7f020067;
-        public static final int startrecording=0x7f020068;
-        public static final int stoprecording=0x7f020069;
-        public static final int update=0x7f02006a;
+        public static final int back=0x7f020057;
+        public static final int button1=0x7f020058;
+        public static final int button2=0x7f020059;
+        public static final int button3=0x7f02005a;
+        public static final int button4=0x7f02005b;
+        public static final int emergency=0x7f02005c;
+        public static final int emergencycall=0x7f02005d;
+        public static final int home=0x7f02005e;
+        public static final int ic_launcher=0x7f02005f;
+        public static final int network=0x7f020060;
+        public static final int parking=0x7f020061;
+        public static final int parkingwheel=0x7f020062;
+        public static final int record=0x7f020063;
+        public static final int recording=0x7f020064;
+        public static final int recordingbutton=0x7f020065;
+        public static final int save=0x7f020066;
+        public static final int sensor=0x7f020067;
+        public static final int sensor_button=0x7f020068;
+        public static final int startrecording=0x7f020069;
+        public static final int stoprecording=0x7f02006a;
+        public static final int update=0x7f02006b;
     }
     public static final class id {
         /**  레코딩액티비티전용아이디들 
