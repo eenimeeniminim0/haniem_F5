@@ -127,12 +127,12 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     		else
     		{
     				Toast.makeText(this, "비디오캡쳐Off", Toast.LENGTH_SHORT).show();
-       				bThread.threadStop();	
-       				updateMediaScanMounted();   
+       				bThread.threadStop();	  
     				recordState.setText("촬영 준비");
     				bThread.threadStop();	
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
+    				updateMediaScanMounted();
     		        				
     		}
       		break;
@@ -213,7 +213,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	}
 	
 
-	public void updateMediaScanMounted() {
+/*	public void updateMediaScanMounted() {
         
 		int version = android.os.Build.VERSION.SDK_INT;
 		  
@@ -226,7 +226,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 		   sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
 		  }
     }    
-
+*/
 		
 /*
     public Notification ledOn(){
@@ -337,8 +337,21 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 
       	return false;
   }
-
-
+    public void updateMediaScanMounted() {
+        
+    	   int version = android.os.Build.VERSION.SDK_INT;
+    	     
+    	     if (version > 17) {   
+    	         //Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);  
+    	         //Uri contentUri = Uri.parse("file://" + Environment.getExternalStorageDirectory()+BRecorder.Path);
+    	         //mediaScanIntent.setData(contentUri);
+    	         //sendBroadcast(mediaScanIntent);
+    	         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory()+"/"+BRecorder.Path)));
+    	         Log.v("메인엑티비티","여기로 안오니?");
+    	     } else {
+    	      sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+    	     }
+    }
 /*	public void ledOff(){
     	
     	mNotificationManager.cancel(MESSAGE_ID);

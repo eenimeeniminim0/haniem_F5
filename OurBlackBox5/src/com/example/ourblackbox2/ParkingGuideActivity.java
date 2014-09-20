@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class ParkingGuideActivity extends ActionBarActivity implements OnClickListener {
 	
 
-	private ImageButton Home;
+	private ImageButton Back;
 	PowerManager pm;
 	PowerManager.WakeLock wakeLock;
 	BSurfaceView bSurface;
@@ -39,9 +39,9 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
 
 		bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
 	
-        Home=(ImageButton)findViewById(R.id.home);        
+        Back=(ImageButton)findViewById(R.id.back);        
         
-        Home.setOnClickListener(this);
+        Back.setOnClickListener(this);
         	
 	}
 	
@@ -51,7 +51,7 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
     	
     	switch(v.getId()){
     		    		
-    	case R.id.home:
+    	case R.id.back:
     		Toast.makeText(this, "뒤로 갈까요?", Toast.LENGTH_SHORT).show();
     		finish();
     		Intent intent=new Intent(this,RecordingActivity.class);
