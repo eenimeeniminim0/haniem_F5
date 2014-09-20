@@ -6,13 +6,16 @@
         
         <Preference 
             android:title="버전설명"
-            android:summary="현재 버전 : OurBlackBox_V1.3 //설정 액티비티 추가"
+            android:summary="현재 버전 : OurBlackBox_V2.1 //삼총사랑 합치기 전버전 백그라운드 미디어스캔 녹화 모두 문제없음ㅋ"
             android:key="latest_version" >
          </Preference>
          
         <Preference 
             android:title="버전 업데이트"
-            android:summary="클릭 시 최신 버전으로 업데이트를 실행합니다.// 는 뻥이고 메인 액티비티로 넘어간당"
+            android:summary="클릭 시 최신 버전으로 업데이트를 실행합니다.// 는 뻥이고 메인 액티비티로 넘어간당ㅋㅋ"
+            android:action="android.intent.action.MAIN"
+            android:targetPackage="com.example.ourblackbox2"
+            android:targetClass="com.example.outblackbox2.MainActivity"
             android:key="version_update" >
          </Preference>
                         

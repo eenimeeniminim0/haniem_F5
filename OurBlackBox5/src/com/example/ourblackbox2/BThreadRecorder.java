@@ -1,5 +1,11 @@
 package com.example.ourblackbox2;
 
+import java.io.File;
+
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 
@@ -46,15 +52,12 @@ public class BThreadRecorder  {
 			REC_PERIOD=15;
 		
 	}
-	public synchronized void threadStart()
+	public synchronized void threadStart(final Context appContext)
 	{
 		setRecPeriod();
 		Log.v("스레드님제발요?","울고싶다?="+20000);
 		videotimerUpdate= new Thread(new Runnable(){
-			
-			int i=0;
-			//bTimer.start();
-	
+			int i=0;	
 			public void run(){   
 	
 				if(videoCurrentTime <= checkThreadTime(BSensor.isSensorDetected)){
@@ -68,16 +71,15 @@ public class BThreadRecorder  {
 					}
 					Log.v("videoCurrentTime","time="+videoCurrentTime);
 					videoCurrentTime++;
-					videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
-					
+					videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);									
 					biostream.rename();
 					
-
 				}else{
 					bRecorder.resetRecorder();
 					videoCurrentTime=0;
 					BSensor.isSensorDetected=false;
-					isTimeChange=false;
+					isTimeChange=false;	
+					updateMediaScanMounted(appContext);
 					i++;
 					videotimerUpdateHandler.post(videotimerUpdate);	
 					
@@ -85,9 +87,10 @@ public class BThreadRecorder  {
 			}
 		});
 		videotimerUpdate.start();
+		
 	}
 	
-	public synchronized void threadStop()
+	public synchronized void threadStop(Context appContext)
 	{
 		if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
 		{
@@ -96,6 +99,7 @@ public class BThreadRecorder  {
 			bRecorder.isVideotimerRunning=false;//비디오스레드가 종료되었음
 			videotimerUpdate.interrupt();
 			bRecorder.stopRecorder();
+			updateMediaScanMounted(appContext);
 			videoCurrentTime=0;
 			BSensor.isSensorDetected=false;
 		}
@@ -127,6 +131,22 @@ public class BThreadRecorder  {
 		else 
 			return SECONDS_BETWEEN_VIDEO;
 	}
+	
+	public void updateMediaScanMounted(Context context) {
+	    
+		int version = android.os.Build.VERSION.SDK_INT;
+		  
+		  if (version > 17) {   
+			  	File file = new File(BRecorder.Path);
+			    Uri uri = Uri.fromFile(file);
+			    Intent scanFileIntent = new Intent(
+			            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+			    context.sendBroadcast(scanFileIntent);
+		      Log.v("메인엑티비티","여기로 안오니?"+BRecorder.Path);
+		  } else {
+		   context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+		  }
+	}  
 	
 	
 	public BRecorder getBRecorder(){

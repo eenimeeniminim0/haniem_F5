@@ -1,7 +1,11 @@
 package com.example.ourblackbox2;
 
+import java.io.File;
+
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -13,7 +17,8 @@ public class BServiceThreadRecorder {
 	private Thread videotimerUpdate;
 	private Handler videotimerUpdateHandler;
 	private BServiceRecorder bServiceRecorder;
-	protected  boolean isTimeChange;
+	private BIOstream biostream;
+	protected  static boolean isTimeChange;
 	protected  int SECONDS_BETWEEN_VIDEO=15;//동영상 녹화 간격
 	protected  int videoCurrentTime;//처음 시작 시간
 	
@@ -25,12 +30,13 @@ public class BServiceThreadRecorder {
 		mSurfaceView=sv;
 		bServiceRecorder=new BServiceRecorder(mSurfaceView);
 		videotimerUpdateHandler=new Handler();
+		biostream=new BIOstream();
 		videoCurrentTime=0;
 		isTimeChange=false;
 		
 		
 	}
-	public void threadStart()
+	public void threadStart(final Context appContext)
 	{
 		Log.v("서비스쓰레드","스레드시작");
 		videotimerUpdate= new Thread(new Runnable(){
@@ -38,8 +44,6 @@ public class BServiceThreadRecorder {
 			public void run(){   
 	
 				if(videoCurrentTime <= checkThreadTime(BSensor.isSensorDetected)){
-					//Log.v("충격 감지시 돌아가는 시간은요?","궁금합니당="+SECONDS_BETWEEN_VIDEO);
-					//Log.v("스레드님","몇번돌아갔나요="+i);
 
 					if(videoCurrentTime==0){
 						bServiceRecorder.initRecorder();
@@ -49,22 +53,23 @@ public class BServiceThreadRecorder {
 					Log.v("videoCurrentTime","time="+videoCurrentTime);
 					videoCurrentTime++;
 					videotimerUpdateHandler.postDelayed(videotimerUpdate, 1000);
+					biostream.renameService();
 					
 				}else{
 					bServiceRecorder.resetRecorder();
-					//fileScan();
 					videoCurrentTime=0;
 					BSensor.isSensorDetected=false;
 					isTimeChange=false;
 					i++;
-					videotimerUpdateHandler.post(videotimerUpdate);		
+					videotimerUpdateHandler.post(videotimerUpdate);
+					updateMediaScanMounted(appContext);
 				}
 			}
 		});
 		videotimerUpdate.start();
 	}
 	
-	public void threadStop()
+	public void threadStop(Context appContext)
 	{
 		if(videotimerUpdate != null && videotimerUpdate.isAlive() ||bServiceRecorder.isVideotimerRunning)//만약 비디오스레드가 돌아가고있으면
 		{
@@ -77,6 +82,7 @@ public class BServiceThreadRecorder {
 			//fileScan();
 			videoCurrentTime=0;
 			BSensor.isSensorDetected=false;
+			updateMediaScanMounted(appContext);
 		}
 
 	}
@@ -108,18 +114,24 @@ public class BServiceThreadRecorder {
 			return SECONDS_BETWEEN_VIDEO;
 	}
 	
-	public BServiceRecorder getBRecorder(){
-		return bServiceRecorder;
-	}
 	
-	public Intent fileScan()
-	{
-		Intent intent =new Intent(Intent.ACTION_MEDIA_MOUNTED); //패스 선언을 이 클래스에서!!
-		Uri uri= Uri.parse("file://"+BServiceRecorder.File);
-		intent.setData(uri);
-		return intent;
-		
-		//sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-		
-	}
+	public void updateMediaScanMounted(Context context) {
+	    
+		int version = android.os.Build.VERSION.SDK_INT;
+		  
+		  if (version > 17) {   
+			    
+		      
+			  	File file = new File(BServiceRecorder.Path);
+			    Uri uri = Uri.fromFile(file);
+			    Intent scanFileIntent = new Intent(
+			            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri);
+			    context.sendBroadcast(scanFileIntent);
+		      Log.v("메인엑티비티","여기로 안오니?"+BRecorder.Path);
+		  } else {
+		   context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
+		  }
+	}  
+	
+	
 }

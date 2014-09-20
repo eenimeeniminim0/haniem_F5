@@ -2,7 +2,6 @@ package com.example.ourblackbox2;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.NotificationManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
@@ -48,6 +47,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        Log.v("메인엑티비티","onCreate?");
         
      
   
@@ -108,6 +108,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             stopService(new Intent(MainActivity.this, RecordingService.class));
     	}
   		super.onResume();
+  		Log.v("메인엑티비티","onResume?");
   	}
 
 
@@ -131,21 +132,26 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	       SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
   	       SharedPreferences.Editor editor= prefs.edit();
   	       
-  	       if(prefs.getString("recQuality", "<unset>")=="<unset>")
-  	       {
-  	       
-  	       editor.putString("recQuality", "high");
-  	      // editor.commit();
-  	       
-  	       editor.putString("recPeriod","1min");
-	      // editor.commit();
-	       
-	       editor.putString("sensitivity", "normal");
-  	       //editor.commit();
-  	       
-  	       editor.putString("storageLocation","internal");
-	       editor.commit();
+  	       if(prefs.getString("recQuality", "<unset>")=="<unset>"){   
+  	    	   editor.putString("recQuality", "high");
+  	    	   editor.commit();
   	       }
+  	       
+  	       if(prefs.getString("recPeriod", "<unset>")=="<unset>"){   
+  	    	   	editor.putString("recPeriod","1min");
+  	    	   	editor.commit();
+	       }
+  	       
+  	       if(prefs.getString("sensitivity", "<unset>")=="<unset>"){   
+	    	   	editor.putString("sensitivity","normal");
+	    	   	editor.commit();
+	       }
+  	     
+  	       if(prefs.getString("storageLocation", "<unset>")=="<unset>"){   
+	    	   	editor.putString("storageLocation","internal");
+	    	   	editor.commit();
+	       }
+  	       
   	       
   	     /*--------------------녹화설정--------------------------------------*/
   			Log.v("메인 시작시 녹화 품질이 바뀌나요?","궁금합니당="+prefs.getString("recQuality", "<unset>"));
@@ -166,8 +172,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   			
   			
   			Log.v("외장메모리를 읽어올수 있을까?","궁금합니당="+sd.getExternalMounts());
-  			
-  			
+  			Log.v("메인엑티비티","onStart?");
+  			/*----------------나중에 지우기----------------------------------------*/
   		
   	}
 
@@ -194,6 +200,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	    	startActivity(intent);
 		}else if(v==exit){
 			controlbool=true;
+			Intent intent =new Intent("android.intent.action.Finish");
+			sendBroadcast(intent);
 			Toast.makeText(getApplicationContext(), "종료!", Toast.LENGTH_SHORT).show();
 			System.exit(0);
 
@@ -208,6 +216,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     	super.onDestroy();
     	//wakeLock.release();
     	Log.v("메인엑티비티","ondestroy?");
+
     }
 	
 	
@@ -215,8 +224,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	protected void onUserLeaveHint() {
 		// TODO Auto-generated method stub
     	
-	
-		
 		if(!controlbool){
 		if(!isRecordServiceRunning(MainActivity.this, "com.example.ourblackbox2.RecordingService")){
     		
@@ -238,11 +245,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 			
 		}
 	}
-    	
-
-    
-
-	
+    		
 	private boolean isRecordServiceRunning(Context ctx, String s_service_name) {
 
       	ActivityManager manager = (ActivityManager) ctx.getSystemService(Activity.ACTIVITY_SERVICE);

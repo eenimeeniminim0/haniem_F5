@@ -47,12 +47,13 @@ public class VideoGalleryAdapter extends BaseAdapter{
 		
 		ImageView videoThumb=(ImageView)videoRow.findViewById(R.id.ImageView);
 		
-		
 		if(videoItems.get(position).thumbPath != null) {
 			videoThumb.setImageURI(Uri.parse(videoItems.get(position).thumbPath));
 		}else{
 			Bitmap bmThumbnail= ThumbnailUtils.createVideoThumbnail(videoItems.get(position).filePath.toString(),Thumbnails.MICRO_KIND);
 			videoThumb.setImageBitmap(bmThumbnail);
+			videoThumb.setAdjustViewBounds(true);
+			videoThumb.setScaleType(ImageView.ScaleType.CENTER_CROP);
 		}
 		
 		TextView videoTitle=(TextView)videoRow.findViewById(R.id.TextView);
