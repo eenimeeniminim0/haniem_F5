@@ -1,6 +1,5 @@
 package com.example.ourblackbox2;
 
-import java.io.File;
 import java.io.IOException;
 
 import android.hardware.Camera;
@@ -11,9 +10,7 @@ import android.view.View;
 
 public class BRecorder
 {
-	protected MediaRecorder bRecorder;
-	protected String filePath;	
-	protected File videoFile;
+	protected MediaRecorder bRecorder;	
 	protected BIOstream biostream;
 	protected static String Path;
 	protected static String Folder;
@@ -21,11 +18,10 @@ public class BRecorder
 	//
 	protected boolean isRecording;//현재녹화중인지나타내는것
 	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌
-		
+	
 	
 	public BRecorder()
 	{
-		videoFile=null;
 		isRecording=false;
 		isVideotimerRunning=false;
 		Path="";
@@ -42,10 +38,23 @@ public class BRecorder
 			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_HIGH));
 		
 		else if(BRecordingSetting.recQuality.equals("normal"))
-			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_TIME_LAPSE_HIGH ));
+			setDefaultProfile();
+			//bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_TIME_LAPSE_HIGH ));
 
 		else
 			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));		
+	}
+	
+	public void setDefaultProfile()
+	{
+			if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_1080P))
+				bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_1080P ));
+			else if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_720P))
+				bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT,CamcorderProfile.QUALITY_720P ));
+			else if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_480P))
+				bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_480P ));
+			//else if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_LOW))
+			//	bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW ));
 	}
 
 	
@@ -92,10 +101,7 @@ public class BRecorder
 		
 		setQuality();
 		
-		
-		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초 고치기!
-		bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
-		
+		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초 고치기
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(BSurfaceView.bSurface.getSurfaceHolder().getSurface());
 		
@@ -148,7 +154,6 @@ public class BRecorder
 			bRecorder=null;
 		}
 	}
-	
 	
 }
 	

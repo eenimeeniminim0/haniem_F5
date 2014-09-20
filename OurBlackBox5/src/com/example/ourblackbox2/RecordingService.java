@@ -34,6 +34,8 @@ public class RecordingService extends Service  implements SensorEventListener, S
 
 	 private WindowManager windowManager;
 	 private SurfaceView surfaceView;
+	 
+	private Context appContext;
 	   
 
     
@@ -44,7 +46,7 @@ public class RecordingService extends Service  implements SensorEventListener, S
 		  //센서관련
         BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         BSensor.accelerormeterSensor = BSensor.sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		
+        appContext=getApplicationContext();
         
 		if (BSensor.accelerormeterSensor != null)
         	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
@@ -91,7 +93,7 @@ public class RecordingService extends Service  implements SensorEventListener, S
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
-		  bThread.threadStart();
+		  bThread.threadStart(appContext);
 		
 		return super.onStartCommand(intent, flags, startId);
 	}
@@ -132,7 +134,7 @@ public class RecordingService extends Service  implements SensorEventListener, S
 	@Override
 	public void onDestroy() {
 		// TODO Auto-generated method stub
-		   bThread.threadStop();
+		   bThread.threadStop(appContext);
 		   
 	        windowManager.removeView(surfaceView);
 	        Intent intent = new Intent();

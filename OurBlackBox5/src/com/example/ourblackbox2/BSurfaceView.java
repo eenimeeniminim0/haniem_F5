@@ -5,8 +5,6 @@ import java.util.List;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;

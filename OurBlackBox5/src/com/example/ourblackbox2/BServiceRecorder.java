@@ -35,11 +35,10 @@ public class BServiceRecorder
     private static Camera mServiceCamera;
 	
 	protected MediaRecorder bRecorder;
-	protected String filePath;	
-	protected File videoFile;
 	protected BIOstream biostream;
 	protected static String Path;
-	protected static String File;
+	protected static String Folder;
+	protected static String Name;
 	//
 	protected boolean isRecording;//현재녹화중인지나타내는것
 	protected boolean isVideotimerRunning;//비디오 타이머가 작동중인지 아닌지
@@ -49,15 +48,14 @@ public class BServiceRecorder
 	
 	public BServiceRecorder(SurfaceView sv)
 	{
-		//mSurfaceView=RecordingActivity.RCSurfaceview;
-		//mSurfaceHolder=RecordingActivity.RCSurfaceHolder;
 		mSurfaceView=sv;
 		mSurfaceHolder=sv.getHolder();
-		videoFile=null;
+
 		isRecording=false;
 		isVideotimerRunning=false;
 		Path="";
-		File="";
+		Folder="";
+		
 		bRecorder= new MediaRecorder();
 		biostream=new BIOstream();
 		mServiceCamera = Camera.open();
@@ -88,8 +86,9 @@ public class BServiceRecorder
                e.printStackTrace();
            }	
 		
-		File=biostream.createInternalFolder();
-		Path=File+"/"+biostream.createName(System.currentTimeMillis());
+           Folder=biostream.createInternalFolder();
+           Name=biostream.createName(System.currentTimeMillis());
+           Path=Folder+"/"+ Name;
 		
 		if(bRecorder==null){
 			bRecorder= new MediaRecorder();
@@ -107,11 +106,10 @@ public class BServiceRecorder
 		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
 		
 		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초
-		bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
+		//bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());
-		
 		
 	}
 	
