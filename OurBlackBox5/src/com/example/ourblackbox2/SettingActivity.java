@@ -18,7 +18,8 @@ public class SettingActivity extends Activity implements OnClickListener{
 	ImageButton sensorButton, recordingButton, storageButton, gpsButton,
 			emergencyButton, noticeButton;
 	
-
+	private BEmergencySetting bEmergencySetting;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class SettingActivity extends Activity implements OnClickListener{
 		emergencyButton.setOnClickListener(this);
 		noticeButton.setOnClickListener(this);
 		
+		bEmergencySetting = new BEmergencySetting();
 
 	}
 
@@ -99,6 +101,13 @@ public class SettingActivity extends Activity implements OnClickListener{
 		BStorageSetting.storageLocation=prefs.getString("storageLocation", "<unset>");
 		Log.v("값이 들어갔나용?","궁금합니당="+BStorageSetting.storageLocation);
 		
+		Log.v("전화번호가 바뀌나요?", "궁금합니당=" + prefs.getString("emerPhonenum", "<unset>"));
+	    bEmergencySetting.setEmerNum(prefs.getString("emerPhonenum", "<unset>"));
+	    Log.v("수단이 바뀌나요?", "궁금합니당=" + prefs.getString("emerOccur", "<unset>"));
+	    this.bEmergencySetting.setContactMethod(prefs.getString("emerOccur", "<unset>"));
+	    Log.v("값이 들어갔나용?", "궁금합니당=" + this.bEmergencySetting.getContactMethod().toString());
+	    Log.v("메세지가 바뀌나요?", "궁금합니당=" + prefs.getString("emerMessage", "<unset>"));
+	    this.bEmergencySetting.setMessage(prefs.getString("emerMessage", "<unset>"));
 		
 	}
 

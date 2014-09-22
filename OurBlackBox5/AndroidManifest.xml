@@ -80,7 +80,9 @@
    <uses-permission android:name="android.permission.WAKE_LOCK"/>
    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
    
-   
+   <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+   <uses-permission android:name="android.permission.SEND_SMS" />
+   <uses-permission android:name="android.permission.CALL_PHONE" />
    
     <!-- 특성권한 -->
     <uses-feature android:name="android.hardware.camera"/>		<!-- 특유한카메라의트성사용 -->

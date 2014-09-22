@@ -4,7 +4,7 @@
     <PreferenceCategory 
         android:title="위급상황 설정" >
         
-        <MultiSelectListPreference
+        <ListPreference
             android:dialogTitle="연락 수단 선택"
             android:entries="@array/emerOccur_value"
             android:entryValues="@array/emerOccur_key"
