@@ -34,8 +34,7 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	
 	public void surfaceCreated(SurfaceHolder holder)
 	{
-		
-		
+				
 		Log.v("BSurfaceview", "¸¸.........µé¾î");
 			
 		bCamera=Camera.open();
@@ -54,8 +53,7 @@ public class BSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 	{
 		if(bCamera != null)
 		{
-			Log.v("BSurfaceview", "ÆÄ.........±«");
-			
+			Log.v("BSurfaceview", "ÆÄ.........±«");			
 			bCamera.stopPreview();
 			bCamera.release();
 			bCamera=null;

@@ -1,8 +1,5 @@
 package com.example.ourblackbox2;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -10,9 +7,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.support.v7.app.ActionBarActivity;
@@ -35,13 +30,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
 	private TextView recordState;
 	private BThreadRecorder bThread;
 	private Context appContext;
-
-
-	//public static String bRecordingState;
-	//public static String a;
-
-	//private final static int MESSAGE_ID = 1;
-	//private NotificationManager mNotificationManager = null;
 	
 	boolean parkingbool=false;
 	boolean homebool=false;
@@ -57,7 +45,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         
         requestWindowFeature(Window.FEATURE_NO_TITLE);//타이틀 없애기
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);//화면풀스크린
-		//getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//화면 가로로 설정
 		
 		bpm=(PowerManager)getSystemService(Context.POWER_SERVICE);
@@ -85,10 +72,7 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
         VideoCapture.setOnClickListener(this);
         Home.setOnClickListener(this);
         Accident.setOnClickListener(this);
-        parkingGuide.setOnClickListener(this);
-        
-        //mNotificationManager = (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-        
+        parkingGuide.setOnClickListener(this);        
 		recordState.setText("촬영 준비");
 		//센서관련
         BSensor.sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -112,7 +96,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     			if (BSensor.accelerormeterSensor != null)
     	        	BSensor.sensorManager.registerListener(this, BSensor.accelerormeterSensor,SensorManager.SENSOR_DELAY_GAME);
     			Toast.makeText(this, "비디오캡쳐On", Toast.LENGTH_SHORT).show();
-    			//ledOn();
     			
     		}
     		
@@ -124,15 +107,13 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     				recordState.setText("촬영 준비");
     				if (BSensor.sensorManager != null)
     		        	BSensor.sensorManager.unregisterListener(this);
-    				updateMediaScanMounted();
     		        				
     		}
       		break;
     		    		
     	case R.id.home:
     		homebool=true;
-    		Toast.makeText(this, "뒤로 갈까요?", Toast.LENGTH_SHORT).show();
-    		
+    		Toast.makeText(this, "뒤로 갈까요?", Toast.LENGTH_SHORT).show();  		
     		Intent intent=new Intent(this,MainActivity.class);
 	    	startActivity(intent);
 	    	finish();
@@ -159,8 +140,6 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     {
     	super.onDestroy();
     	bThread.getBRecorder().destroyRecorder();
-    	
-    	//wakeLock.release();
     	Log.v("레코딩액티비티","ondestroy?");
     }
 
@@ -230,38 +209,5 @@ public class RecordingActivity extends ActionBarActivity implements OnClickListe
     	
 		super.onRestart();
 	}
-
-
-    
-  //서비스실행중인지아닌지 확인
-  	private boolean isRecordServiceRunning(Context ctx, String s_service_name) {
-
-      	ActivityManager manager = (ActivityManager) ctx.getSystemService(Activity.ACTIVITY_SERVICE);
-
-      	for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-
-      	    if (s_service_name.equals(service.service.getClassName())) {
-
-      	        return true;
-      	    }
-      	}
-
-      	return false;
-  }
-    public void updateMediaScanMounted() {
-        
-    	   int version = android.os.Build.VERSION.SDK_INT;
-    	     
-    	     if (version > 17) {   
-    	         //Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);  
-    	         //Uri contentUri = Uri.parse("file://" + Environment.getExternalStorageDirectory()+BRecorder.Path);
-    	         //mediaScanIntent.setData(contentUri);
-    	         //sendBroadcast(mediaScanIntent);
-    	         sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + Environment.getExternalStorageDirectory()+"/"+BRecorder.Path)));
-    	         Log.v("메인엑티비티","여기로 안오니?");
-    	     } else {
-    	      sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory())));
-    	     }
-    }
 
 }

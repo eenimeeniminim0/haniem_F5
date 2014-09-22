@@ -100,13 +100,6 @@ public class SettingActivity extends Activity implements OnClickListener{
 		Log.v("값이 들어갔나용?","궁금합니당="+BStorageSetting.storageLocation);
 		
 		
-		//checkbox.setText(new Boolean(prefs.getBoolean("checkbox", false))
-		//		.toString());
-		//ringtone.setText(prefs.getString("ringtone", "<unset>"));
-		//checkbox2.setText(new Boolean(prefs.getBoolean("checkbox2", false))
-		//		.toString());
-		//text.setText(prefs.getString("text", "<unset>"));
-		//list.setText(prefs.getString("list", "<unset>"));
 	}
 
 }

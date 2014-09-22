@@ -120,8 +120,7 @@ public class BServiceThreadRecorder {
 		int version = android.os.Build.VERSION.SDK_INT;
 		  
 		  if (version > 17) {   
-			    
-		      
+			    		      
 			  	File file = new File(BServiceRecorder.Path);
 			    Uri uri = Uri.fromFile(file);
 			    Intent scanFileIntent = new Intent(

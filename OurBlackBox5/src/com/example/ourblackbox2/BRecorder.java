@@ -39,7 +39,6 @@ public class BRecorder
 		
 		else if(BRecordingSetting.recQuality.equals("normal"))
 			setDefaultProfile();
-			//bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_TIME_LAPSE_HIGH ));
 
 		else
 			bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));		

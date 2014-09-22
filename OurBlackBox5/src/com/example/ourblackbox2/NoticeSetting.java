@@ -38,9 +38,7 @@ public class NoticeSetting extends PreferenceActivity{
 		
 		registerFinishedReceiver();
 		
-		//Intent intent= new Intent(NoticeSetting.this,MainActivity.class);
 		Preference versionUpdate=findPreference("version_update");
-		//versionUpdate.setIntent(intent);
 		
 		
 	}
@@ -64,7 +62,6 @@ public class NoticeSetting extends PreferenceActivity{
 	
 	@Override
 	protected void onPause(){	
-		//unregisterFinishedReceiver();
 		Log.i("NottieSetting","온퍼즈?");
 		super.onPause();
 		//finish();
@@ -72,7 +69,6 @@ public class NoticeSetting extends PreferenceActivity{
 	
 	@Override
 	protected void onStop(){	
-		//unregisterFinishedReceiver();
 		Log.i("NottieSetting","온스탑?");
 		super.onStop();
 	}

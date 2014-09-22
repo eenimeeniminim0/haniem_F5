@@ -106,7 +106,6 @@ public class BServiceRecorder
 		bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW));
 		
 		bRecorder.setMaxDuration(60000);//최대캡쳐시간 60초
-		//bRecorder.setMaxFileSize(10000000);//최대파일크기 10메가
 		
 		bRecorder.setOutputFile(Path);
 		bRecorder.setPreviewDisplay(mSurfaceHolder.getSurface());

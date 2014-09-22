@@ -25,13 +25,10 @@ import android.widget.Toast;
 public class RecordingService extends Service  implements SensorEventListener, SurfaceHolder.Callback{
 
 
-    private BSensor bSensor;
-	private BServiceThreadRecorder bThread;
+     private BSensor bSensor;
+	 private BServiceThreadRecorder bThread;
 	
-	private Context context; 
-	private final static int MESSAGE_ID = 1;
-	private NotificationManager mNotificationManager = null;
-
+	 private Context context; 
 	 private WindowManager windowManager;
 	 private SurfaceView surfaceView;
 	 
@@ -56,14 +53,6 @@ public class RecordingService extends Service  implements SensorEventListener, S
         
         Toast.makeText(this, "The new Service was Created", Toast.LENGTH_LONG).show();
         
-        
-        // Start foreground service to avoid unexpected kill
-      /*  Notification notification = new Notification.Builder(this)
-            .setContentTitle("Background Video Recorder")
-            .setContentText("")
-            .setSmallIcon(R.drawable.ic_launcher)
-            .build();
-      */
         startForeground(1234,ledOn());
 
         // Create new SurfaceView, set its size to 1x1, move it to the top left corner and set this service as a callback
@@ -182,9 +171,6 @@ public class RecordingService extends Service  implements SensorEventListener, S
     	String ns = Context.NOTIFICATION_SERVICE;
     	NotificationManager mNotificationManager = (NotificationManager)getSystemService(ns);
     	
-    	//Intent intent = new Intent(this, RecordingActivity.class);
-    	//PendingIntent pendingIntent = PendingIntent.getActivity(RecordingActivity.this, 0, intent, 0);
-    	
     	int icon = android.R.drawable.ic_input_add;
     	CharSequence tickerText = ticker;
     	long when = System.currentTimeMillis();
@@ -198,10 +184,6 @@ public class RecordingService extends Service  implements SensorEventListener, S
     	Notification notification = builder.getNotification();
     	notification.flags |= Notification.FLAG_SHOW_LIGHTS;
     	notification.flags |= Notification.FLAG_INSISTENT;
-    	//notification.flags |= Notification.FLAG_AUTO_CANCEL; //알림 클릭시 자동으로 알림 취소
-    	
-    	//notification.setLatestEventInfo(this, title, text, pendingIntent);
-    	//mNotificationManager.notify(MESSAGE_ID, notification);
     	
     	return notification;
     	   	

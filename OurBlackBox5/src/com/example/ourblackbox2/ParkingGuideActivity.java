@@ -33,14 +33,11 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
         
         setContentView(R.layout.parking);
         
-    	//bSurface = new BSurfaceView(this);
-        
 		Toast.makeText(getApplicationContext(), "주차가이드 시작", Toast.LENGTH_SHORT).show();
 
 		bSurface = (BSurfaceView)findViewById(R.id.CameraPreview);
 	
-        Back=(ImageButton)findViewById(R.id.back);        
-        
+        Back=(ImageButton)findViewById(R.id.back);                
         Back.setOnClickListener(this);
         	
 	}
@@ -66,9 +63,7 @@ public class ParkingGuideActivity extends ActionBarActivity implements OnClickLi
     public void onDestroy()
     {
     	super.onDestroy();
-    	//finish();
-    	//wakeLock.release();
-    	Log.v("파킹 가이","ondestroy?");
+    	Log.v("파킹 가이드","ondestroy?");
     }
 
 }

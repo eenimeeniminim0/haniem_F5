@@ -22,7 +22,6 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 	
 	Cursor cursor;
 
-	//MediaStore.Video.Media 로 되어있는 값들을 다 BIOstream에서 만든 함수나 변수들로 바꿔주면 되지않을까...
 	/** Called when the activity is first created. */
 	@SuppressWarnings("deprecation")
 	@Override
@@ -56,7 +55,6 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 		String[] projection={MediaStore.Video.Media._ID};
 		
 		cursor = managedQuery(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, null);
-		//cursor = managedQuery(MediaStore.Video.Media.EXTERNAL_CONTENT_URI,projection, MediaStore.Video.Media.DATA,new String[]{"%OurblackBox%"}, null);
 		
 		ArrayList<VideoViewInfo> videoRows = new ArrayList<VideoViewInfo>();
 		
@@ -64,10 +62,7 @@ public class GalleryActivity extends Activity implements OnItemClickListener{
 		{
 			do{
 				VideoViewInfo newVVI = new VideoViewInfo();
-				//Outer.Inner oi = ot.new Inner();
-
-
-				
+			
 				int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
 				
 				Cursor thumbCursor = managedQuery(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
