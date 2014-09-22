@@ -52,8 +52,8 @@ public class BRecorder
 				bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT,CamcorderProfile.QUALITY_720P ));
 			else if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_480P))
 				bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_480P ));
-			//else if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_LOW))
-			//	bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW ));
+			else if (CamcorderProfile.hasProfile(CamcorderProfile.QUALITY_LOW))
+				bRecorder.setProfile(CamcorderProfile.get(Camera.CameraInfo.CAMERA_FACING_FRONT, CamcorderProfile.QUALITY_LOW ));
 	}
 
 	
