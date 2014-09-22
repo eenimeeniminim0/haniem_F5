@@ -1,31 +1,16 @@
 package com.example.ourblackbox2;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-
-
-
-import android.content.ContentValues;
 
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
-import android.os.Environment;
-import android.os.IBinder;
-import android.provider.MediaStore;
-import android.provider.MediaStore.Video;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Toast;
-import android.content.Intent;
-import android.app.Service;
 
 public class BServiceRecorder
 {

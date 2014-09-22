@@ -10,9 +10,18 @@ public class BRecordingSetting {
 		return recQuality; 
 	}
 	
+	public void setRecQuality(String s)
+	{
+		recQuality=s; 
+	}
+	
 	public String getRecPeriod()
 	{
 		return recPeriod;
+	}
+	public void setRecPeriod(String s)
+	{
+		recPeriod=s;
 	}
 
 }

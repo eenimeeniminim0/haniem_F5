@@ -28,7 +28,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	
 	ImageButton recording,gallery, setting, exit;
-	BIOstream sd;
 	boolean controlbool=false;
 	
 	@Override
@@ -113,8 +112,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	protected void onStart() {
   		// TODO Auto-generated method stub
   		super.onStart();
-  			
-  		   sd=new BIOstream();
   		   recording=(ImageButton)findViewById(R.id.button1);//
   	       gallery=(ImageButton)findViewById(R.id.button2);//
   	       setting=(ImageButton)findViewById(R.id.button3);//
@@ -125,52 +122,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	       setting.setOnClickListener(this);
   	       exit.setOnClickListener(this);
   	       
-  	       
-  	       SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
-  	       SharedPreferences.Editor editor= prefs.edit();
-  	       
-  	       if(prefs.getString("recQuality", "<unset>")=="<unset>"){   
-  	    	   editor.putString("recQuality", "high");
-  	    	   editor.commit();
-  	       }
-  	       
-  	       if(prefs.getString("recPeriod", "<unset>")=="<unset>"){   
-  	    	   	editor.putString("recPeriod","1min");
-  	    	   	editor.commit();
-	       }
-  	       
-  	       if(prefs.getString("sensitivity", "<unset>")=="<unset>"){   
-	    	   	editor.putString("sensitivity","normal");
-	    	   	editor.commit();
-	       }
-  	     
-  	       if(prefs.getString("storageLocation", "<unset>")=="<unset>"){   
-	    	   	editor.putString("storageLocation","internal");
-	    	   	editor.commit();
-	       }
-  	       
-  	       
-  	     /*--------------------녹화설정--------------------------------------*/
-  			Log.v("메인 시작시 녹화 품질이 바뀌나요?","궁금합니당="+prefs.getString("recQuality", "<unset>"));
-  			BRecordingSetting.recQuality=prefs.getString("recQuality", "<unset>");
-  			Log.v("메인 시작시 값이 들어갔나용?","궁금합니당="+BRecordingSetting.recQuality);
-  			
-  			Log.v("메인 시작시 녹화 시간이 바뀌나요?","궁금합니당="+prefs.getString("recPeriod", "<unset>"));
-  			BRecordingSetting.recPeriod=prefs.getString("recPeriod", "<unset>");
-  			Log.v("메인 시작시 값이 들어갔나용?","궁금합니당="+BRecordingSetting.recPeriod);
-  			
-  			Log.v("충격 감도가 바뀌나요?","궁금합니당="+prefs.getString("sensitivity", "<unset>"));
-  			BSensorSetting.sensitivity=prefs.getString("sensitivity", "<unset>");
-  			Log.v("값이 들어갔나용?","궁금합니당="+BSensorSetting.sensitivity);
-  			
-  			Log.v("저장소의 위치가 바뀌나요?","궁금합니당="+prefs.getString("storageLocation", "<unset>"));
-  			BStorageSetting.storageLocation=prefs.getString("storageLocation", "<unset>");
-  			Log.v("값이 들어갔나용?","궁금합니당="+BStorageSetting.storageLocation);
-  			
-  			
-  			Log.v("외장메모리를 읽어올수 있을까?","궁금합니당="+sd.getExternalMounts());
-  			Log.v("메인엑티비티","onStart?");
-  			/*----------------나중에 지우기----------------------------------------*/
+  	       initSetting();
   		
   	}
 
@@ -204,6 +156,67 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 	    	
 		}
+		
+	}
+	
+	public void initSetting(){
+		
+	       SharedPreferences prefs=PreferenceManager.getDefaultSharedPreferences(this);
+	       SharedPreferences.Editor editor= prefs.edit();
+	       
+	       if(prefs.getString("recQuality", "<unset>")=="<unset>"){   
+  	    	   editor.putString("recQuality", "high");
+  	    	   editor.commit();
+  	       }
+  	       
+  	       if(prefs.getString("recPeriod", "<unset>")=="<unset>"){   
+  	    	   	editor.putString("recPeriod","1min");
+  	    	   	editor.commit();
+	       }
+  	       
+  	       if(prefs.getString("sensitivity", "<unset>")=="<unset>"){   
+	    	   	editor.putString("sensitivity","normal");
+	    	   	editor.commit();
+	       }
+  	     
+  	       if(prefs.getString("storageLocation", "<unset>")=="<unset>"){   
+	    	   	editor.putString("storageLocation","internal");
+	    	   	editor.commit();
+	       }
+  	       
+    	     /*--------------------녹화설정--------------------------------------*/
+    			Log.v("메인 시작시 녹화 품질이 바뀌나요?","궁금합니당="+prefs.getString("recQuality", "<unset>"));
+    			BRecordingSetting.recQuality=prefs.getString("recQuality", "<unset>");
+    			Log.v("메인 시작시 값이 들어갔나용?","궁금합니당="+BRecordingSetting.recQuality);
+    			
+    			Log.v("메인 시작시 녹화 시간이 바뀌나요?","궁금합니당="+prefs.getString("recPeriod", "<unset>"));
+    			BRecordingSetting.recPeriod=prefs.getString("recPeriod", "<unset>");
+    			Log.v("메인 시작시 값이 들어갔나용?","궁금합니당="+BRecordingSetting.recPeriod);
+    			
+    			Log.v("충격 감도가 바뀌나요?","궁금합니당="+prefs.getString("sensitivity", "<unset>"));
+    			BSensorSetting.sensitivity=prefs.getString("sensitivity", "<unset>");
+    			Log.v("값이 들어갔나용?","궁금합니당="+BSensorSetting.sensitivity);
+    			
+    			Log.v("저장소의 위치가 바뀌나요?","궁금합니당="+prefs.getString("storageLocation", "<unset>"));
+    			BStorageSetting.storageLocation=prefs.getString("storageLocation", "<unset>");
+    			Log.v("값이 들어갔나용?","궁금합니당="+BStorageSetting.storageLocation);
+    			
+    			Log.v("메인 시작시 녹화 품질이 바뀌나요?","궁금합니당="+prefs.getString("recQuality", "<unset>"));
+    			BEmergencySetting.emerNum=prefs.getString("recQuality", "<unset>");
+    			Log.v("메인 시작시 값이 들어갔나용?","궁금합니당="+BEmergencySetting.emerNum);
+    		  			
+    			Log.v("전화번호가 바뀌나요?", "궁금합니당=" + prefs.getString("emerPhonenum", "<unset>"));
+    		    BEmergencySetting.emerNum=prefs.getString("emerPhonenum", "<unset>");
+    		    Log.v("수단이 바뀌나요?", "궁금합니당=" + prefs.getString("emerOccur", "<unset>"));
+    		    BEmergencySetting.contactMethod=prefs.getString("emerOccur", "<unset>");
+    		    Log.v("값이 들어갔나용?", "궁금합니당=" + BEmergencySetting.contactMethod.toString());
+    		    BEmergencySetting.emerMessage=prefs.getString("emerMessage", "<unset>");
+    		    Log.v("메세지가 바뀌나요?", "궁금합니당=" + prefs.getString("emerMessage", "<unset>"));
+    		    
+    
+    			
+    			/*----------------나중에 지우기----------------------------------------*/
+  	       
 		
 	}
 	

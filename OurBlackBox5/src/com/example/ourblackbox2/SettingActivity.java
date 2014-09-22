@@ -104,10 +104,10 @@ public class SettingActivity extends Activity implements OnClickListener{
 		Log.v("전화번호가 바뀌나요?", "궁금합니당=" + prefs.getString("emerPhonenum", "<unset>"));
 	    bEmergencySetting.setEmerNum(prefs.getString("emerPhonenum", "<unset>"));
 	    Log.v("수단이 바뀌나요?", "궁금합니당=" + prefs.getString("emerOccur", "<unset>"));
-	    this.bEmergencySetting.setContactMethod(prefs.getString("emerOccur", "<unset>"));
+	    bEmergencySetting.setContactMethod(prefs.getString("emerOccur", "<unset>"));
 	    Log.v("값이 들어갔나용?", "궁금합니당=" + this.bEmergencySetting.getContactMethod().toString());
 	    Log.v("메세지가 바뀌나요?", "궁금합니당=" + prefs.getString("emerMessage", "<unset>"));
-	    this.bEmergencySetting.setMessage(prefs.getString("emerMessage", "<unset>"));
+	    bEmergencySetting.setMessage(prefs.getString("emerMessage", "<unset>"));
 		
 	}
 
