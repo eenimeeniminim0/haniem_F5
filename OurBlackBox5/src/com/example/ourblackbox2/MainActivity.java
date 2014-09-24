@@ -149,8 +149,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	    	startActivity(intent);
 		}else if(v==exit){
 			controlbool=true;
-			Intent intent =new Intent("android.intent.action.Finish");
-			sendBroadcast(intent);
+			//Intent intent =new Intent("android.intent.action.Finish");
+			//sendBroadcast(intent);
 			Toast.makeText(getApplicationContext(), "종료!", Toast.LENGTH_SHORT).show();
 			System.exit(0);
 
@@ -184,6 +184,21 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	    	   	editor.commit();
 	       }
   	       
+  	     if(prefs.getString("emerPhonenum", "<unset>")=="<unset>"){   
+	    	   	editor.putString("emerPhonenum","01052881019");
+	    	   	editor.commit();
+	       }
+  	     
+  	     if(prefs.getString("emerOccur", "<unset>")=="<unset>"){   
+  	    	 editor.putString("emerOccur","call");
+  	    	 editor.commit();
+  	     }
+  	     
+  	    if(prefs.getString("emerMessage", "<unset>")=="<unset>"){   
+	    	 editor.putString("emerMessage","살려주세요?");
+	    	 editor.commit();
+	     }
+  	       
     	     /*--------------------녹화설정--------------------------------------*/
     			Log.v("메인 시작시 녹화 품질이 바뀌나요?","궁금합니당="+prefs.getString("recQuality", "<unset>"));
     			BRecordingSetting.recQuality=prefs.getString("recQuality", "<unset>");
@@ -207,9 +222,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     		  			
     			Log.v("전화번호가 바뀌나요?", "궁금합니당=" + prefs.getString("emerPhonenum", "<unset>"));
     		    BEmergencySetting.emerNum=prefs.getString("emerPhonenum", "<unset>");
+    		    
     		    Log.v("수단이 바뀌나요?", "궁금합니당=" + prefs.getString("emerOccur", "<unset>"));
     		    BEmergencySetting.contactMethod=prefs.getString("emerOccur", "<unset>");
     		    Log.v("값이 들어갔나용?", "궁금합니당=" + BEmergencySetting.contactMethod.toString());
+    		    
     		    BEmergencySetting.emerMessage=prefs.getString("emerMessage", "<unset>");
     		    Log.v("메세지가 바뀌나요?", "궁금합니당=" + prefs.getString("emerMessage", "<unset>"));
     		    

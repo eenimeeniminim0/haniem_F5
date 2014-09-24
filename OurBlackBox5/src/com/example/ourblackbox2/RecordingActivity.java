@@ -128,9 +128,10 @@ public class RecordingActivity extends ActionBarActivity implements
 			break;
 
 		case R.id.home:
+			finish();
 			Intent intent = new Intent(this, MainActivity.class);
 			startActivity(intent);
-			finish();
+
 			break;
 
 		case R.id.accident:
@@ -142,10 +143,9 @@ public class RecordingActivity extends ActionBarActivity implements
 
 		case R.id.parkingGuide:
 			Toast.makeText(this, "조심히 주차하세요", Toast.LENGTH_SHORT).show();
+			finish();
 			Intent pintent = new Intent(this, ParkingGuideActivity.class);
 			startActivity(pintent);
-			finish();
-
 		}
 	}
 
