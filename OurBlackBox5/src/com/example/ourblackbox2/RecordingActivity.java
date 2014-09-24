@@ -142,10 +142,9 @@ public class RecordingActivity extends ActionBarActivity implements
 
 		case R.id.parkingGuide:
 			Toast.makeText(this, "조심히 주차하세요", Toast.LENGTH_SHORT).show();
+			finish();
 			Intent pintent = new Intent(this, ParkingGuideActivity.class);
 			startActivity(pintent);
-			finish();
-
 		}
 	}
 
