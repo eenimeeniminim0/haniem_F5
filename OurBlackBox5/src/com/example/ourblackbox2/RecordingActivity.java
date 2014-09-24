@@ -128,9 +128,10 @@ public class RecordingActivity extends ActionBarActivity implements
 			break;
 
 		case R.id.home:
+			finish();
 			Intent intent = new Intent(this, MainActivity.class);
 			startActivity(intent);
-			finish();
+
 			break;
 
 		case R.id.accident:
