@@ -146,6 +146,7 @@ public class RecordingActivity extends ActionBarActivity implements
 			finish();
 			Intent pintent = new Intent(this, ParkingGuideActivity.class);
 			startActivity(pintent);
+			
 		}
 	}
 
@@ -227,8 +228,8 @@ public class RecordingActivity extends ActionBarActivity implements
 			startActivity(phoneIntent);
 			
 		} else if (bEmergencySetting.getContactMethod().equals("message")) {
-			Toast.makeText(getApplicationContext(), "위도 경도 : " + lat + " " + lng,
-					Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getApplicationContext(), "위도 경도 : " + lat + " " + lng,
+			//		Toast.LENGTH_SHORT).show();
 		      Intent smsIntent = new Intent(Intent.ACTION_VIEW);
 		      String t = "<사고발생 지점>" + "\n" + getAddress(lat, lng) + "\n" + bEmergencySetting.getMessage();
 		      smsIntent.putExtra("sms_body", t); 
@@ -299,11 +300,11 @@ public class RecordingActivity extends ActionBarActivity implements
 
 					Log.v("모래반지 빵야빵야", "허허허허=" + 20000000);
 					BSensor.isSensorDetected = true;
-					Toast.makeText(getApplicationContext(), "충격 감지",
-							Toast.LENGTH_SHORT).show();
+					//Toast.makeText(getApplicationContext(), "충격 감지",
+							//Toast.LENGTH_SHORT).show();
 					
-					//
-					if(bSensor.speed>5000){
+					
+					//if(bSensor.speed>5000){
 					
 						Toast.makeText(getApplicationContext(), "사고 발생!",
 								Toast.LENGTH_SHORT).show();
@@ -313,7 +314,7 @@ public class RecordingActivity extends ActionBarActivity implements
 					finish();
 				}
 
-				}	
+				//}	
 					
 			}
 

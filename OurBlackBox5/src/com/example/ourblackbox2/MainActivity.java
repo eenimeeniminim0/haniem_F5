@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -30,6 +32,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 	ImageButton recording,gallery, setting, exit;
 	boolean controlbool=false;
 	
+	private PowerManager bPowerManager;
+	private WakeLock bWakeLock;
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,9 +43,12 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        
+		
         setContentView(R.layout.activity_main);
-
+        
+		bPowerManager=(PowerManager)getSystemService(Context.POWER_SERVICE);
+		bWakeLock=bPowerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK, "되나요?");
+		
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -92,6 +100,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
   	protected void onPause() {
   		// TODO Auto-generated method stub
   		super.onPause();
+		if(bWakeLock.isHeld()){
+			bWakeLock.release();
+		}
+
   	}
 
 
@@ -104,6 +116,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             stopService(new Intent(MainActivity.this, RecordingService.class));
     	}
   		super.onResume();
+		bWakeLock.acquire();
   		Log.v("메인엑티비티","onResume?");
   	}
 
@@ -134,7 +147,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 		// TODO Auto-generated method stub
 		if(v==recording){
 			controlbool=true;
-			
+			//finish();
 	    	Intent intent=new Intent(this,RecordingActivity.class);
 	    	startActivity(intent);
 			

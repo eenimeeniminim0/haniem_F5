@@ -165,13 +165,13 @@ public class RecordingService extends Service  implements SensorEventListener, S
 	}
     public Notification ledOn(){
     	
-    	String ticker = "OurblackBox 백그라운드 녹화중입니다";
-    	String title = "OurblackBox Background 녹화중입니다.";
+    	String ticker = "오호레이디 백그라운드 녹화중입니다";
+    	String title = "오호레이디 녹화중입니다.";
     	String text = "녹화를 종료하시려면 어플을 다시실행하세요";
     	String ns = Context.NOTIFICATION_SERVICE;
     	NotificationManager mNotificationManager = (NotificationManager)getSystemService(ns);
     	
-    	int icon = android.R.drawable.ic_input_add;
+    	int icon = R.drawable.ic_launcher;
     	CharSequence tickerText = ticker;
     	long when = System.currentTimeMillis();
     	Notification.Builder builder = new Notification.Builder(RecordingService.this);
